@@ -25,4 +25,9 @@ public class UIScripts : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void Btn_ToVisualNovel()
+    {
+        SceneManager.LoadScene("VisualNovel");
+
+    }
 }
