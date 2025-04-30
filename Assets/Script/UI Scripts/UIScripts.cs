@@ -6,6 +6,22 @@ using UnityEngine.UI; //To access UI elements in Unity, add this.
 
 public class UIScripts : MonoBehaviour
 {
+    // To declare the animator or smth idk
+    private Animator animator;
+
+    // 3D Canvas Navigation using animation Parameters' name
+    public void PlayCameraAnimation(string triggerName)
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger(triggerName);
+        }
+        else
+        {
+            Debug.LogWarning("No Animator found on the Camera!");
+        }
+    }
+
     public void Btn_PlayGame()
     {
         //Load scene by <Build Index> -> SceneManager.LoadSccene(X);

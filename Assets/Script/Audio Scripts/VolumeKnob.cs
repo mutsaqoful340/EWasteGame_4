@@ -8,17 +8,16 @@ public class VolumeKnob : MonoBehaviour
     public float minRotation = -90f;
     public float maxRotation = 90f;
 
+    public enum RotationAxis { X, Y, Z }
+    public RotationAxis rotationAxis = RotationAxis.Z; // Default to Z
+
     private float currentRotation = 0f;
     private bool isDragging = false;
+    private bool isHovering = false;
     private Vector3 lastMousePos;
 
     private float minVolume = 0.0001f;
     private float maxVolume = 1f;
-
-    // Cursors
-    public Texture2D defaultCursor;
-    public Texture2D grabCursor;
-    public Vector2 hotspot = Vector2.zero;
 
     void Start()
     {
@@ -26,28 +25,53 @@ public class VolumeKnob : MonoBehaviour
         float savedVolume = PlayerPrefs.GetFloat(exposedParamName + "Volume", 0.5f);
         float startRotation = Mathf.Lerp(minRotation, maxRotation, savedVolume);
         currentRotation = startRotation;
-        transform.localEulerAngles = new Vector3(0, currentRotation, 0);
 
+        ApplyRotation(currentRotation);
         SetVolume(savedVolume);
     }
 
     void Update()
     {
-        // Check if player clicks on this knob
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        bool hitThisKnob = false;
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if (hit.transform == transform)
+            {
+                hitThisKnob = true;
+            }
+        }
+
+        // Hover logic (only if not dragging)
+        if (!isDragging)
+        {
+            if (hitThisKnob)
+            {
+                if (!isHovering)
+                {
+                    isHovering = true;
+                    CursorManager.Instance.SetGrabableCursor();
+                }
+            }
+            else
+            {
+                if (isHovering)
+                {
+                    isHovering = false;
+                    CursorManager.Instance.SetDefaultCursor();
+                }
+            }
+        }
+
+        // Start dragging
         if (Input.GetMouseButtonDown(0))
         {
-            isDragging = false;
-            Cursor.SetCursor(defaultCursor, hotspot, CursorMode.Auto); // Switch back to default
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (hitThisKnob)
             {
-                if (hit.transform == transform)
-                {
-                    Cursor.SetCursor(grabCursor, hotspot, CursorMode.Auto);
-                    isDragging = true;
-                    lastMousePos = Input.mousePosition;
-                }
+                CursorManager.Instance.StartDragging(); // Global drag flag
+                isDragging = true;
+                lastMousePos = Input.mousePosition;
             }
         }
 
@@ -59,8 +83,7 @@ public class VolumeKnob : MonoBehaviour
             currentRotation += rotationAmount;
             currentRotation = Mathf.Clamp(currentRotation, minRotation, maxRotation);
 
-            // Apply rotation
-            transform.localEulerAngles = new Vector3(0, currentRotation, 0);
+            ApplyRotation(currentRotation);
 
             // Map rotation to 0-1 volume
             float volume01 = Mathf.InverseLerp(minRotation, maxRotation, currentRotation);
@@ -72,7 +95,37 @@ public class VolumeKnob : MonoBehaviour
         // Release
         if (Input.GetMouseButtonUp(0))
         {
-            isDragging = false;
+            if (isDragging)
+            {
+                isDragging = false;
+                CursorManager.Instance.StopDragging(); // End global drag
+
+                // After release: if still hovering, show Grabable cursor
+                if (isHovering)
+                {
+                    CursorManager.Instance.SetGrabableCursor();
+                }
+                else
+                {
+                    CursorManager.Instance.SetDefaultCursor();
+                }
+            }
+        }
+    }
+
+    private void ApplyRotation(float rotation)
+    {
+        switch (rotationAxis)
+        {
+            case RotationAxis.X:
+                transform.localEulerAngles = new Vector3(rotation, 0, 0);
+                break;
+            case RotationAxis.Y:
+                transform.localEulerAngles = new Vector3(0, rotation, 0);
+                break;
+            case RotationAxis.Z:
+                transform.localEulerAngles = new Vector3(0, 43.764f, rotation);
+                break;
         }
     }
 
