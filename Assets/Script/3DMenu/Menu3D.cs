@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Menu3D : MonoBehaviour
 {
+    Audio_Manager audioManager;
+
     public float rotationAmount = 15f; // How much to rotate in degrees
     public float rotationSpeed = 5f;    // How fast it rotates
 
@@ -46,6 +49,7 @@ public class Menu3D : MonoBehaviour
     {
         if (animator != null)
         {
+            audioManager.PlaySFX(audioManager.buttonClick);
             animator.SetTrigger(triggerName);
         }
         else
