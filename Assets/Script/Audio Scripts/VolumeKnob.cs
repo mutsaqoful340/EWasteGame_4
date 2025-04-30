@@ -15,10 +15,6 @@ public class VolumeKnob : MonoBehaviour
     private float minVolume = 0.0001f;
     private float maxVolume = 1f;
 
-    // Cursors
-    public Texture2D defaultCursor;
-    public Texture2D grabCursor;
-    public Vector2 hotspot = Vector2.zero;
 
     void Start()
     {
@@ -26,7 +22,7 @@ public class VolumeKnob : MonoBehaviour
         float savedVolume = PlayerPrefs.GetFloat(exposedParamName + "Volume", 0.5f);
         float startRotation = Mathf.Lerp(minRotation, maxRotation, savedVolume);
         currentRotation = startRotation;
-        transform.localEulerAngles = new Vector3(0, currentRotation, 0);
+        transform.localEulerAngles = new Vector3(0, 0, currentRotation);
 
         SetVolume(savedVolume);
     }
@@ -37,14 +33,14 @@ public class VolumeKnob : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             isDragging = false;
-            Cursor.SetCursor(defaultCursor, hotspot, CursorMode.Auto); // Switch back to default
+            CursorManager.Instance.SetDefaultCursor(); // Switch back to default
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 if (hit.transform == transform)
                 {
-                    Cursor.SetCursor(grabCursor, hotspot, CursorMode.Auto);
+                    CursorManager.Instance.SetGrabCursor(); // Switch to grab cursor
                     isDragging = true;
                     lastMousePos = Input.mousePosition;
                 }
@@ -60,7 +56,7 @@ public class VolumeKnob : MonoBehaviour
             currentRotation = Mathf.Clamp(currentRotation, minRotation, maxRotation);
 
             // Apply rotation
-            transform.localEulerAngles = new Vector3(0, currentRotation, 0);
+            transform.localEulerAngles = new Vector3(0, 0, currentRotation);
 
             // Map rotation to 0-1 volume
             float volume01 = Mathf.InverseLerp(minRotation, maxRotation, currentRotation);
