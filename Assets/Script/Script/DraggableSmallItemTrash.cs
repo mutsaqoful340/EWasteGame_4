@@ -1,7 +1,7 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections; // Tambahkan namespace ini agar IEnumerator dikenali
 
-public class DraggableSmallItem : MonoBehaviour
+public class DraggableTrashItem : MonoBehaviour
 {
     private Vector3 startPos; // Posisi awal objek
     private bool isDragging = false; // Status apakah objek sedang di-drag
@@ -44,15 +44,18 @@ public class DraggableSmallItem : MonoBehaviour
     {
         if (other.CompareTag("TrashZone"))
         {
-            // Kembalikan objek ke posisi awal jika masuk ke TrashZone
-            Debug.Log(itemType + " masuk ke TrashZone dan kembali ke posisi awal.");
-            StartCoroutine(BalikKeAwal()); // Kembalikan objek ke posisi awal
+            // Hancurkan item yang masuk ke TrashZone
+            if (itemType == "SDCard" || itemType == "RAM")  // Bisa menambah item lain sesuai kebutuhan
+            {
+                Debug.Log(itemType + " diterima di TrashZone dan dihancurkan.");
+                Destroy(gameObject); // Hancurkan objek yang masuk ke TrashZone
+            }
         }
         else if (other.CompareTag("StorageZone"))
         {
-            // Hancurkan item yang masuk ke StorageZone
-            Debug.Log(itemType + " masuk ke StorageZone dan dihancurkan.");
-            Destroy(gameObject); // Menghancurkan objek yang masuk ke StorageZone
+            // Kembalikan objek ke posisi awal jika masuk ke StorageZone
+            Debug.Log(itemType + " ditolak di StorageZone dan kembali ke posisi awal.");
+            StartCoroutine(BalikKeAwal()); // Kembalikan objek ke posisi awal
         }
     }
 
