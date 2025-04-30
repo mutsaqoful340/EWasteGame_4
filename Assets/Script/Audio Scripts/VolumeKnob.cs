@@ -13,7 +13,6 @@ public class VolumeKnob : MonoBehaviour
 
     private float currentRotation = 0f;
     private bool isDragging = false;
-    private bool isHovering = false;
     private Vector3 lastMousePos;
 
     private float minVolume = 0.0001f;
@@ -32,46 +31,21 @@ public class VolumeKnob : MonoBehaviour
 
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        bool hitThisKnob = false;
-
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            if (hit.transform == transform)
-            {
-                hitThisKnob = true;
-            }
-        }
-
-        // Hover logic (only if not dragging)
-        if (!isDragging)
-        {
-            if (hitThisKnob)
-            {
-                if (!isHovering)
-                {
-                    isHovering = true;
-                    CursorManager.Instance.SetGrabableCursor();
-                }
-            }
-            else
-            {
-                if (isHovering)
-                {
-                    isHovering = false;
-                    CursorManager.Instance.SetDefaultCursor();
-                }
-            }
-        }
-
-        // Start dragging
+        // Check if player clicks on this knob
         if (Input.GetMouseButtonDown(0))
         {
-            if (hitThisKnob)
+            isDragging = false;
+            CursorManager.Instance.SetDefaultCursor(); // Switch back to default
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                CursorManager.Instance.StartDragging(); // Global drag flag
-                isDragging = true;
-                lastMousePos = Input.mousePosition;
+                if (hit.transform == transform)
+                {
+                    CursorManager.Instance.SetGrabCursor(); // Switch to grab cursor
+                    isDragging = true;
+                    lastMousePos = Input.mousePosition;
+                }
             }
         }
 
@@ -95,21 +69,7 @@ public class VolumeKnob : MonoBehaviour
         // Release
         if (Input.GetMouseButtonUp(0))
         {
-            if (isDragging)
-            {
-                isDragging = false;
-                CursorManager.Instance.StopDragging(); // End global drag
-
-                // After release: if still hovering, show Grabable cursor
-                if (isHovering)
-                {
-                    CursorManager.Instance.SetGrabableCursor();
-                }
-                else
-                {
-                    CursorManager.Instance.SetDefaultCursor();
-                }
-            }
+            isDragging = false;
         }
     }
 
