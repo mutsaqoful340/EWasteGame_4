@@ -2,16 +2,29 @@
 
 public class HPUnpack : MonoBehaviour
 {
-    public GameObject Top_EnclosurePrefab;     // Prefab Top Enclosure
-    public GameObject LCDPrefab;               // Prefab LCD
-    public GameObject MachinePrefab;           // Prefab Machine
-    public GameObject SIMCardPrefab;           // Prefab SIM Card
-    public GameObject batteryPrefab;           // Prefab Battery
-    public GameObject Bottom_EnclosurePrefab;  // Prefab Bottom Enclosure
+    public GameObject Top_EnclosurePrefab;
+    public GameObject LCDPrefab;
+    public GameObject MachinePrefab;
+    public GameObject SIMCardPrefab;
+    public GameObject batteryPrefab;
+    public GameObject Bottom_EnclosurePrefab;
 
-    // Fungsi untuk spawn item berdasarkan tipe
-    public void SpawnItem(Vector3 spawnPos, string itemType)
+    // Tambahan prefab baru
+    public GameObject kertasPrefab;
+    public GameObject pensilPrefab;
+
+    public Transform[] spawnSlots; // Slot-slot spawn
+
+    // Fungsi untuk spawn item berdasarkan slot dan tipe
+    public void SpawnItem(int slotIndex, string itemType)
     {
+        if (slotIndex < 0 || slotIndex >= spawnSlots.Length)
+        {
+            Debug.LogWarning("Index slot spawn tidak valid.");
+            return;
+        }
+
+        Vector3 spawnPos = spawnSlots[slotIndex].position;
         GameObject spawnedItem = null;
 
         switch (itemType)
@@ -33,6 +46,12 @@ public class HPUnpack : MonoBehaviour
                 break;
             case "Bottom_Enclosure":
                 spawnedItem = Instantiate(Bottom_EnclosurePrefab, spawnPos, Quaternion.identity);
+                break;
+            case "kertas":
+                spawnedItem = Instantiate(kertasPrefab, spawnPos, Quaternion.identity);
+                break;
+            case "pensil":
+                spawnedItem = Instantiate(pensilPrefab, spawnPos, Quaternion.identity);
                 break;
             default:
                 Debug.LogWarning("Tipe item tidak dikenal: " + itemType);

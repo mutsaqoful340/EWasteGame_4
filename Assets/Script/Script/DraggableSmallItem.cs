@@ -44,16 +44,13 @@ public class DraggableSmallItem : MonoBehaviour
     {
         if (other.CompareTag("TrashZone"))
         {
-            // Tolak item jika masuk ke TrashZone
-            if (itemType == "SDCard" || itemType == "RAM")  // Bisa menambah item lain sesuai kebutuhan
-            {
-                Debug.Log(itemType + " ditolak di TrashZone!");
-                StartCoroutine(BalikKeAwal()); // Kembalikan objek ke posisi awal
-            }
+            // Kembalikan objek ke posisi awal jika masuk ke TrashZone
+            Debug.Log(itemType + " masuk ke TrashZone dan kembali ke posisi awal.");
+            StartCoroutine(BalikKeAwal()); // Kembalikan objek ke posisi awal
         }
         else if (other.CompareTag("StorageZone"))
         {
-            // Jika item kecil masuk ke StorageZone, hancurkan item
+            // Hancurkan item yang masuk ke StorageZone
             Debug.Log(itemType + " masuk ke StorageZone dan dihancurkan.");
             Destroy(gameObject); // Menghancurkan objek yang masuk ke StorageZone
         }
@@ -65,7 +62,7 @@ public class DraggableSmallItem : MonoBehaviour
         float t = 0;
         Vector3 start = transform.position; // Posisi awal objek
 
-        // Mental balik ke posisi spawn dengan efek smooth
+        // Gerakkan objek kembali ke posisi spawn dengan efek smooth
         while (t < 1)
         {
             t += Time.deltaTime * 3f; // Kecepatan pergerakan balik
