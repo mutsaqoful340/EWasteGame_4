@@ -6,7 +6,7 @@ public class BoxPenyimpanan : MonoBehaviour
     public float totalTime = 300f;
     private float timer;
 
-    public int maxItems = 2;
+    public int maxItems = 3;  // Maksimum item untuk satu jenis
     private int currentItems = 0;
 
     public GameObject winPanel;
@@ -17,11 +17,16 @@ public class BoxPenyimpanan : MonoBehaviour
     public TextMeshProUGUI moneyText;
 
     private bool isGameOver = false;
-    private int money = 0;
+    private int initialReward = 50000;
+    private int currentReward;
+    private int lastMinuteChecked = -1;
+
+    private int topEnclosureCount = 0;  // Hitung berapa kali "Top_Enclosure" dimasukkan
 
     void Start()
     {
         timer = totalTime;
+        currentReward = initialReward;
         UpdateTimerUI();
         UpdateMoneyUI();
 
@@ -34,26 +39,54 @@ public class BoxPenyimpanan : MonoBehaviour
         if (isGameOver) return;
 
         timer -= Time.deltaTime;
+        if (timer < 0f) timer = 0f;
+
         UpdateTimerUI();
+
+        // Hitung menit yang sudah berlalu dan kurangi reward jika perlu
+        int minutesPassed = Mathf.FloorToInt((totalTime - timer) / 60f);
+        if (minutesPassed > lastMinuteChecked)
+        {
+            lastMinuteChecked = minutesPassed;
+            currentReward = Mathf.Max(0, initialReward - (minutesPassed * 10000));
+            UpdateMoneyUI();
+        }
 
         if (timer <= 0f)
         {
-            timer = 0f;
             GameOver(false);
         }
     }
 
-    public void AddItem()
+    // Fungsi AddItem yang diubah untuk memeriksa jumlah item
+    public void AddItem(string itemType)
     {
-        if (isGameOver || IsFull()) return;
+        if (isGameOver) return;
 
-        currentItems++;
+        if (itemType == "Top_Enclosure")
+        {
+            if (topEnclosureCount >= maxItems)
+            {
+                Debug.Log("Batas item Top_Enclosure sudah tercapai.");
+                return;  // Tidak bisa menambahkan item lagi jika sudah mencapai batas
+            }
+            topEnclosureCount++;  // Tambahkan hitungan untuk Top_Enclosure
+        }
+
+        currentItems++;  // Tambahkan total item yang dimasukkan
         Debug.Log($"Item ditambahkan: {currentItems}/{maxItems}");
 
         if (currentItems >= maxItems)
         {
-            GameOver(true);
+            GameOver(true);  // Menang jika jumlah item sudah mencapai max
         }
+    }
+
+    // Fungsi untuk mengurangi jumlah item jika dihancurkan di TrashZone
+    public void RemoveItem()
+    {
+        currentItems--;
+        Debug.Log($"Item dihancurkan. Item sekarang: {currentItems}/{maxItems}");
     }
 
     public bool IsFull()
@@ -71,23 +104,17 @@ public class BoxPenyimpanan : MonoBehaviour
         if (winPanel != null)
             winPanel.SetActive(true);
 
-        if (isWin)
+        if (winText != null)
         {
-            int minutesPassed = Mathf.FloorToInt((totalTime - timer) / 60f);
-            int reward = Mathf.Max(0, 50000 - (minutesPassed * 10000));
-            money += reward;
+            winText.gameObject.SetActive(true);
 
-            if (winText != null)
+            if (isWin)
             {
-                winText.gameObject.SetActive(true);
-                winText.text = "Kamu Menang!\nUpah: Rp" + reward.ToString("N0");
+                winText.text = "Kamu Menang!\nUpah: Rp" + currentReward.ToString("N0");
             }
-        }
-        else
-        {
-            if (winText != null)
+            else
             {
-                winText.gameObject.SetActive(true);
+                currentReward = 0;
                 winText.text = "Kamu Kalah!\nWaktu Habis.";
             }
         }
@@ -107,6 +134,6 @@ public class BoxPenyimpanan : MonoBehaviour
     void UpdateMoneyUI()
     {
         if (moneyText != null)
-            moneyText.text = "Uang: Rp" + money.ToString("N0");
+            moneyText.text = "Uang: Rp" + currentReward.ToString("N0");
     }
 }
