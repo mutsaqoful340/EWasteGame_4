@@ -4,7 +4,9 @@ using UnityEngine.Audio;
 public class VolumeKnob : MonoBehaviour
 {
     public AudioMixer myMixer;
-    public string exposedParamName = "BGM";
+
+    public VolumeType volumeType = VolumeType.BGM;  // Choose via dropdown!
+
     public float minRotation = -90f;
     public float maxRotation = 90f;
 
@@ -19,10 +21,12 @@ public class VolumeKnob : MonoBehaviour
     private float minVolume = 0.0001f;
     private float maxVolume = 1f;
 
+    private string ExposedParamName => volumeType.ToString(); // Auto map enum to string
+
     void Start()
     {
         // Load saved volume
-        float savedVolume = PlayerPrefs.GetFloat(exposedParamName + "Volume", 0.5f);
+        float savedVolume = PlayerPrefs.GetFloat(ExposedParamName + "Volume", 0.5f);
         float startRotation = Mathf.Lerp(minRotation, maxRotation, savedVolume);
         currentRotation = startRotation;
 
@@ -43,7 +47,7 @@ public class VolumeKnob : MonoBehaviour
             }
         }
 
-        // Hover logic (only if not dragging)
+        // Hover logic
         if (!isDragging)
         {
             if (hitThisKnob)
@@ -69,7 +73,7 @@ public class VolumeKnob : MonoBehaviour
         {
             if (hitThisKnob)
             {
-                CursorManager.Instance.StartDragging(); // Global drag flag
+                CursorManager.Instance.StartDragging();
                 isDragging = true;
                 lastMousePos = Input.mousePosition;
             }
@@ -79,13 +83,12 @@ public class VolumeKnob : MonoBehaviour
         if (isDragging && Input.GetMouseButton(0))
         {
             Vector3 delta = Input.mousePosition - lastMousePos;
-            float rotationAmount = delta.x * 0.2f; // Drag horizontally
+            float rotationAmount = delta.x * 0.2f;
             currentRotation += rotationAmount;
             currentRotation = Mathf.Clamp(currentRotation, minRotation, maxRotation);
 
             ApplyRotation(currentRotation);
 
-            // Map rotation to 0-1 volume
             float volume01 = Mathf.InverseLerp(minRotation, maxRotation, currentRotation);
             SetVolume(volume01);
 
@@ -98,9 +101,8 @@ public class VolumeKnob : MonoBehaviour
             if (isDragging)
             {
                 isDragging = false;
-                CursorManager.Instance.StopDragging(); // End global drag
+                CursorManager.Instance.StopDragging();
 
-                // After release: if still hovering, show Grabable cursor
                 if (isHovering)
                 {
                     CursorManager.Instance.SetGrabableCursor();
@@ -132,7 +134,13 @@ public class VolumeKnob : MonoBehaviour
     private void SetVolume(float volume01)
     {
         volume01 = Mathf.Clamp(volume01, minVolume, maxVolume);
-        myMixer.SetFloat(exposedParamName, Mathf.Log10(volume01) * 20f);
-        PlayerPrefs.SetFloat(exposedParamName + "Volume", volume01);
+        myMixer.SetFloat(ExposedParamName, Mathf.Log10(volume01) * 20f);
+        PlayerPrefs.SetFloat(ExposedParamName + "Volume", volume01);
     }
+}
+
+public enum VolumeType
+{
+    BGM,
+    SFX
 }
