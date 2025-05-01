@@ -17,6 +17,7 @@ public class Menu3D : MonoBehaviour
     {
         targetRotation = transform.rotation; // Set initial rotation
         animator = GetComponent<Animator>(); // Get Animator component
+        audioManager = FindObjectOfType<Audio_Manager>();
     }
 
     void Update()
