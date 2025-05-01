@@ -19,18 +19,12 @@ public class BoxPenyimpanan : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Masuk collider dengan tag: " + other.tag);  // Debug untuk melihat tag yang terbaca
+        Debug.Log("==> Masuk collider: " + other.name + " | Tag: " + other.tag);
 
-        if (other.CompareTag("Ewaste"))
-        {
-            Debug.Log("Item dengan tag 'Ewaste' tidak boleh masuk ke BoxPenyimpanan.");
-            return; // Langsung keluar jika Ewaste
-        }
-
-        if (other.CompareTag("Barang"))
+        if (other.CompareTag("BARANG"))
         {
             currentItems++;
-            Debug.Log("Item Barang masuk! Total: " + currentItems);
+            Debug.Log("Item BARANG masuk! Total: " + currentItems);
 
             other.gameObject.SetActive(false);
 
@@ -38,6 +32,21 @@ public class BoxPenyimpanan : MonoBehaviour
             {
                 Debug.Log("Semua barang sudah dimasukkan. Menyelesaikan permainan.");
                 gameplayTimer.SelesaikanPermainan();
+            }
+        }
+        else if (other.CompareTag("EWASTE"))
+        {
+            Debug.Log("Item dengan tag 'EWASTE' tidak boleh masuk ke BoxPenyimpanan.");
+
+            ItemPositionReset resetScript = other.GetComponent<ItemPositionReset>();
+            if (resetScript != null)
+            {
+                resetScript.ResetPosition();
+                Debug.Log("Posisi item 'EWASTE' dikembalikan.");
+            }
+            else
+            {
+                Debug.LogWarning("Item 'EWASTE' tidak memiliki komponen ItemPositionReset.");
             }
         }
         else

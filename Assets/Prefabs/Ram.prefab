@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 6263441345131997315}
   - component: {fileID: 9057037941760139297}
   - component: {fileID: -9054784187549084140}
+  - component: {fileID: 7640454956444969627}
   m_Layer: 0
   m_Name: Ram
-  m_TagString: Barang
+  m_TagString: EWASTE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,7 +131,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -146,4 +147,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7708ed3861030204c82733654dccbeac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: RAM
+  itemType: EWASTE
+--- !u!114 &7640454956444969627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3544303028059060415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3eb2ab229dd7af41b3d63324ea09035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
