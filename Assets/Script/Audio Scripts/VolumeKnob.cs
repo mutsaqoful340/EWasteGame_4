@@ -142,5 +142,5 @@ public class VolumeKnob : MonoBehaviour
 public enum VolumeType
 {
     BGM,
-    SFX
+    SFX,
 }
