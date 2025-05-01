@@ -3,55 +3,110 @@ using TMPro;
 
 public class BoxPenyimpanan : MonoBehaviour
 {
-    public GameplayTimer gameplayTimer;
-    public int maxItems = 4;
+    public float totalTime = 300f;
+    private float timer;
+
+    public int maxItems = 2;
     private int currentItems = 0;
 
     public GameObject winPanel;
-    public TextMeshProUGUI winText;
     public GameObject buttonsPanel;
+    public TextMeshProUGUI winText;
+
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI moneyText;
+
+    private bool isGameOver = false;
+    private int money = 0;
 
     void Start()
     {
-        winPanel.SetActive(false);
-        buttonsPanel.SetActive(false);
+        timer = totalTime;
+        UpdateTimerUI();
+        UpdateMoneyUI();
+
+        if (winPanel != null)
+            winPanel.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void Update()
     {
-        Debug.Log("==> Masuk collider: " + other.name + " | Tag: " + other.tag);
+        if (isGameOver) return;
 
-        if (other.CompareTag("BARANG"))
+        timer -= Time.deltaTime;
+        UpdateTimerUI();
+
+        if (timer <= 0f)
         {
-            currentItems++;
-            Debug.Log("Item BARANG masuk! Total: " + currentItems);
-
-            other.gameObject.SetActive(false);
-
-            if (currentItems >= maxItems)
-            {
-                Debug.Log("Semua barang sudah dimasukkan. Menyelesaikan permainan.");
-                gameplayTimer.SelesaikanPermainan();
-            }
+            timer = 0f;
+            GameOver(false);
         }
-        else if (other.CompareTag("EWASTE"))
-        {
-            Debug.Log("Item dengan tag 'EWASTE' tidak boleh masuk ke BoxPenyimpanan.");
+    }
 
-            ItemPositionReset resetScript = other.GetComponent<ItemPositionReset>();
-            if (resetScript != null)
+    public void AddItem()
+    {
+        if (isGameOver || IsFull()) return;
+
+        currentItems++;
+        Debug.Log($"Item ditambahkan: {currentItems}/{maxItems}");
+
+        if (currentItems >= maxItems)
+        {
+            GameOver(true);
+        }
+    }
+
+    public bool IsFull()
+    {
+        return currentItems >= maxItems;
+    }
+
+    void GameOver(bool isWin)
+    {
+        isGameOver = true;
+
+        if (buttonsPanel != null)
+            buttonsPanel.SetActive(false);
+
+        if (winPanel != null)
+            winPanel.SetActive(true);
+
+        if (isWin)
+        {
+            int minutesPassed = Mathf.FloorToInt((totalTime - timer) / 60f);
+            int reward = Mathf.Max(0, 50000 - (minutesPassed * 10000));
+            money += reward;
+
+            if (winText != null)
             {
-                resetScript.ResetPosition();
-                Debug.Log("Posisi item 'EWASTE' dikembalikan.");
-            }
-            else
-            {
-                Debug.LogWarning("Item 'EWASTE' tidak memiliki komponen ItemPositionReset.");
+                winText.gameObject.SetActive(true);
+                winText.text = "Kamu Menang!\nUpah: Rp" + reward.ToString("N0");
             }
         }
         else
         {
-            Debug.Log("Tag tidak dikenali, tidak diproses: " + other.tag);
+            if (winText != null)
+            {
+                winText.gameObject.SetActive(true);
+                winText.text = "Kamu Kalah!\nWaktu Habis.";
+            }
         }
+
+        UpdateMoneyUI();
+    }
+
+    void UpdateTimerUI()
+    {
+        if (timerText == null) return;
+
+        int minutes = Mathf.FloorToInt(timer / 60f);
+        int seconds = Mathf.FloorToInt(timer % 60f);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    void UpdateMoneyUI()
+    {
+        if (moneyText != null)
+            moneyText.text = "Uang: Rp" + money.ToString("N0");
     }
 }
