@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class VolumeKnob : MonoBehaviour
+public class VolumeKnob1 : MonoBehaviour
 {
     public AudioMixer myMixer;
-
-    public VolumeType volumeType = VolumeType.BGM;  // Choose via dropdown!
-
+    public string exposedParamName = "SFX";
     public float minRotation = -90f;
     public float maxRotation = 90f;
 
@@ -15,18 +13,15 @@ public class VolumeKnob : MonoBehaviour
 
     private float currentRotation = 0f;
     private bool isDragging = false;
-    private bool isHovering = false;
     private Vector3 lastMousePos;
 
     private float minVolume = 0.0001f;
     private float maxVolume = 1f;
 
-    private string ExposedParamName => volumeType.ToString(); // Auto map enum to string
-
     void Start()
     {
         // Load saved volume
-        float savedVolume = PlayerPrefs.GetFloat(ExposedParamName + "Volume", 0.5f);
+        float savedVolume = PlayerPrefs.GetFloat(exposedParamName + "Volume", 0.5f);
         float startRotation = Mathf.Lerp(minRotation, maxRotation, savedVolume);
         currentRotation = startRotation;
 
@@ -36,46 +31,21 @@ public class VolumeKnob : MonoBehaviour
 
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        bool hitThisKnob = false;
-
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            if (hit.transform == transform)
-            {
-                hitThisKnob = true;
-            }
-        }
-
-        // Hover logic
-        if (!isDragging)
-        {
-            if (hitThisKnob)
-            {
-                if (!isHovering)
-                {
-                    isHovering = true;
-                    CursorManager.Instance.SetGrabableCursor();
-                }
-            }
-            else
-            {
-                if (isHovering)
-                {
-                    isHovering = false;
-                    CursorManager.Instance.SetDefaultCursor();
-                }
-            }
-        }
-
-        // Start dragging
+        // Check if player clicks on this knob
         if (Input.GetMouseButtonDown(0))
         {
-            if (hitThisKnob)
+            isDragging = false;
+            CursorManager.Instance.SetDefaultCursor(); // Switch back to default
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                CursorManager.Instance.StartDragging();
-                isDragging = true;
-                lastMousePos = Input.mousePosition;
+                if (hit.transform == transform)
+                {
+                    CursorManager.Instance.SetGrabCursor(); // Switch to grab cursor
+                    isDragging = true;
+                    lastMousePos = Input.mousePosition;
+                }
             }
         }
 
@@ -83,12 +53,13 @@ public class VolumeKnob : MonoBehaviour
         if (isDragging && Input.GetMouseButton(0))
         {
             Vector3 delta = Input.mousePosition - lastMousePos;
-            float rotationAmount = delta.x * 0.2f;
+            float rotationAmount = delta.x * 0.2f; // Drag horizontally
             currentRotation += rotationAmount;
             currentRotation = Mathf.Clamp(currentRotation, minRotation, maxRotation);
 
             ApplyRotation(currentRotation);
 
+            // Map rotation to 0-1 volume
             float volume01 = Mathf.InverseLerp(minRotation, maxRotation, currentRotation);
             SetVolume(volume01);
 
@@ -98,20 +69,7 @@ public class VolumeKnob : MonoBehaviour
         // Release
         if (Input.GetMouseButtonUp(0))
         {
-            if (isDragging)
-            {
-                isDragging = false;
-                CursorManager.Instance.StopDragging();
-
-                if (isHovering)
-                {
-                    CursorManager.Instance.SetGrabableCursor();
-                }
-                else
-                {
-                    CursorManager.Instance.SetDefaultCursor();
-                }
-            }
+            isDragging = false;
         }
     }
 
@@ -134,13 +92,7 @@ public class VolumeKnob : MonoBehaviour
     private void SetVolume(float volume01)
     {
         volume01 = Mathf.Clamp(volume01, minVolume, maxVolume);
-        myMixer.SetFloat(ExposedParamName, Mathf.Log10(volume01) * 20f);
-        PlayerPrefs.SetFloat(ExposedParamName + "Volume", volume01);
+        myMixer.SetFloat(exposedParamName, Mathf.Log10(volume01) * 20f);
+        PlayerPrefs.SetFloat(exposedParamName + "Volume", volume01);
     }
-}
-
-public enum VolumeType
-{
-    BGM,
-    SFX
 }
