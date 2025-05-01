@@ -1,65 +1,49 @@
 using UnityEngine;
-using System.Collections;
 
-public class SpawnComponents : MonoBehaviour
+public class SpawnOnClick : MonoBehaviour
 {
-    public GameObject[] componentPrefabs;
-    public float radius = 0.5f;
-    public float moveDuration = 0.5f;
+    public GameObject[] prefabsToSpawn;     // Prefab yang akan di-spawn
+    public Transform centerPoint;           // Titik pusat spawn
+    public float radius = 1.5f;             // Jarak dari pusat ke posisi spawn
+    private bool hasSpawned = false;        // Cegah spawn ulang
 
-    void Update()
+    void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!hasSpawned)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    SpawnComponentsAround();
-                }
-            }
+            if (centerPoint == null) centerPoint = this.transform; // fallback ke object ini
+            SpawnInCircle();
+            hasSpawned = true;
         }
     }
 
-    void SpawnComponentsAround()
+    void SpawnInCircle()
     {
-        int total = componentPrefabs.Length;
+        if (prefabsToSpawn == null || prefabsToSpawn.Length == 0)
+        {
+            Debug.LogError("Prefab belum diisi!");
+            return;
+        }
+
+        int total = prefabsToSpawn.Length;
+        float angleStep = 360f / total;
 
         for (int i = 0; i < total; i++)
         {
-            if (componentPrefabs[i] != null)
+            GameObject prefab = prefabsToSpawn[i];
+
+            if (prefab == null)
             {
-                float angle = i * Mathf.PI * 2f / total;
-                Vector3 offset = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
-
-                Vector3 startPos = transform.position;
-                Vector3 targetPos = transform.position + offset;
-
-                // Rotasi untuk membaringkan objek (misalnya 90 derajat di X)
-                Quaternion rotasiBaring = Quaternion.Euler(90f, 0f, 0f);
-
-                // Spawn dan rotasi sesuai orientasi baring
-                GameObject obj = Instantiate(componentPrefabs[i], startPos, rotasiBaring);
-                StartCoroutine(MoveToPosition(obj.transform, targetPos, moveDuration));
+                Debug.LogWarning($"Prefab pada index {i} kosong!");
+                continue;
             }
+
+            float angle = angleStep * i * Mathf.Deg2Rad;
+            Vector3 spawnPos = centerPoint.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+
+            // Terbaring ke atas (horizontal)
+            GameObject spawned = Instantiate(prefab, spawnPos, Quaternion.Euler(90f, 0f, 0f));
+            spawned.name = prefab.name + "_Spawned";
         }
-    }
-
-    IEnumerator MoveToPosition(Transform obj, Vector3 target, float duration)
-    {
-        Vector3 start = obj.position;
-        float t = 0;
-
-        while (t < 1)
-        {
-            t += Time.deltaTime / duration;
-            obj.position = Vector3.Lerp(start, target, t);
-            yield return null;
-        }
-
-        obj.position = target;
     }
 }

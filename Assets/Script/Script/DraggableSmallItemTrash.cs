@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections; // Tambahkan namespace ini agar IEnumerator dikenali
+using System.Collections; // Untuk IEnumerator
 
 public class DraggableTrashItem : MonoBehaviour
 {
@@ -44,8 +44,8 @@ public class DraggableTrashItem : MonoBehaviour
     {
         if (other.CompareTag("TrashZone"))
         {
-            // Hancurkan item yang masuk ke TrashZone
-            if (itemType == "SDCard" || itemType == "RAM")  // Bisa menambah item lain sesuai kebutuhan
+            // Hancurkan item yang masuk ke TrashZone jika jenis item cocok
+            if (itemType == "SDCard" || itemType == "RAM")  // Tambahkan lebih banyak tipe item sesuai kebutuhan
             {
                 Debug.Log(itemType + " diterima di TrashZone dan dihancurkan.");
                 Destroy(gameObject); // Hancurkan objek yang masuk ke TrashZone
