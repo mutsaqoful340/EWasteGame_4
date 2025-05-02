@@ -27,15 +27,25 @@ public class VolumeKnob : MonoBehaviour
     {
         // Load saved volume
         float savedVolume = PlayerPrefs.GetFloat(ExposedParamName + "Volume", 0.5f);
-        float startRotation = Mathf.Lerp(minRotation, maxRotation, savedVolume);
-        currentRotation = startRotation;
 
-        ApplyRotation(currentRotation);
+        // Set the volume first, this should immediately affect the AudioMixer
         SetVolume(savedVolume);
+
+        // Map the saved volume to a rotation value
+        currentRotation = Mathf.Lerp(minRotation, maxRotation, savedVolume);
+
+        // Apply the rotation after the volume is set
+        ApplyRotation(currentRotation);
+
+        // Ensure the AudioMixer picks up the volume
+        ApplyInitialVolume();
     }
 
     void Update()
     {
+        // Force the volume to be correct in case any changes were missed during initialization
+        ForceVolumeUpdate();
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool hitThisKnob = false;
 
@@ -134,8 +144,26 @@ public class VolumeKnob : MonoBehaviour
     private void SetVolume(float volume01)
     {
         volume01 = Mathf.Clamp(volume01, minVolume, maxVolume);
+
+        // Set the volume in the AudioMixer
         myMixer.SetFloat(ExposedParamName, Mathf.Log10(volume01) * 20f);
+
+        // Save the volume for next time
         PlayerPrefs.SetFloat(ExposedParamName + "Volume", volume01);
+    }
+
+    private void ApplyInitialVolume()
+    {
+        // Force an update of the AudioMixer volume immediately upon startup.
+        float initialVolume = PlayerPrefs.GetFloat(ExposedParamName + "Volume", 0.5f);
+        myMixer.SetFloat(ExposedParamName, Mathf.Log10(initialVolume) * 20f);
+    }
+
+    private void ForceVolumeUpdate()
+    {
+        // Ensure the volume is applied immediately if there are any issues after the game starts.
+        float savedVolume = PlayerPrefs.GetFloat(ExposedParamName + "Volume", 0.5f);
+        SetVolume(savedVolume);
     }
 }
 
