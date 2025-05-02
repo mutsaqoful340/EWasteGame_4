@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
@@ -34,41 +34,21 @@ public class BoxPenyimpanan : MonoBehaviour
     private float delayToSummary = 2f;
 
     void Start()
-    {
-        timer = totalTime;
-        currentReward = initialReward;
-        UpdateTimerUI();
-        UpdateMoneyUI();
+{
+    timer = totalTime;
 
-        if (financeSummaryPanel != null)
-            financeSummaryPanel.SetActive(false);
-    }
+    // Muat sisa uang dari level sebelumnya
+    int sisaUangDariLevelSebelumnya = PlayerPrefs.GetInt("SisaUang", initialReward);
 
-    void Update()
-    {
-        if (isGameOver) return;
+    // Tambahkan sisa uang level sebelumnya ke pemasukan level 2
+    currentReward = sisaUangDariLevelSebelumnya + initialReward; // Menambahkan pemasukan level sebelumnya ke level 2
 
-        // Update timer
-        timer -= Time.deltaTime;
-        if (timer < 0f) timer = 0f;
+    UpdateTimerUI();
+    UpdateMoneyUI();
 
-        UpdateTimerUI();
-
-        // Menghitung reward berdasarkan waktu yang tersisa
-        int minutesPassed = Mathf.FloorToInt((totalTime - timer) / 60f);
-        if (minutesPassed > lastMinuteChecked)
-        {
-            lastMinuteChecked = minutesPassed;
-            currentReward = Mathf.Max(0, initialReward - (minutesPassed * 10000));
-            UpdateMoneyUI();
-        }
-
-        // Jika waktu habis, panggil GameOver()
-        if (timer <= 0f)
-        {
-            GameOver();
-        }
-    }
+    if (financeSummaryPanel != null)
+        financeSummaryPanel.SetActive(false);
+}
 
     public void AddItem(string itemType)
     {
@@ -138,12 +118,16 @@ public class BoxPenyimpanan : MonoBehaviour
         // Hitung sisa uang
         int sisa = currentReward - totalPengeluaran;
 
-        // Pastikan tidak ada nilai yang negatif
+        // Pastikan tidak negatif
         sisa = Mathf.Max(0, sisa);
 
-        // Perbarui UI dengan nilai sisa uang
+        // Update UI
         if (sisaUangText != null)
             sisaUangText.text = "Sisa: Rp" + sisa.ToString("N0");
+
+        // Simpan ke PlayerPrefs
+        PlayerPrefs.SetInt("SisaUang", sisa);
+        PlayerPrefs.Save();
     }
 
     void UpdateTimerUI()
