@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BoxPenyimpanan : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class BoxPenyimpanan : MonoBehaviour
 
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI moneyText;
-
     public TextMeshProUGUI pemasukanText;
     public TextMeshProUGUI sisaUangText;
 
@@ -23,8 +23,11 @@ public class BoxPenyimpanan : MonoBehaviour
     public Toggle toggleJajan;
 
     private bool isGameOver = false;
-    private int initialReward = 50000;
+
+    [Header("Reward Settings")]
+    public int initialReward = 50000; // Bisa diubah dari Inspector
     private int currentReward;
+
     private int lastMinuteChecked = -1;
 
     private int makanCost = 15000;
@@ -34,21 +37,50 @@ public class BoxPenyimpanan : MonoBehaviour
     private float delayToSummary = 2f;
 
     void Start()
-{
-    timer = totalTime;
+    {
+        timer = totalTime;
 
-    // Muat sisa uang dari level sebelumnya
-    int sisaUangDariLevelSebelumnya = PlayerPrefs.GetInt("SisaUang", initialReward);
+        if (SceneManager.GetActiveScene().name == "3DLV1")
+        {
+            PlayerPrefs.DeleteKey("SisaUang");
+        }
 
-    // Tambahkan sisa uang level sebelumnya ke pemasukan level 2
-    currentReward = sisaUangDariLevelSebelumnya + initialReward; // Menambahkan pemasukan level sebelumnya ke level 2
+        // Ambil sisa uang dari level sebelumnya
+        int sisaUangDariLevelSebelumnya = PlayerPrefs.GetInt("SisaUang", 0);
 
-    UpdateTimerUI();
-    UpdateMoneyUI();
+        // Tambahkan reward awal level sekarang
+        currentReward = sisaUangDariLevelSebelumnya + initialReward;
 
-    if (financeSummaryPanel != null)
-        financeSummaryPanel.SetActive(false);
-}
+        UpdateTimerUI();
+        UpdateMoneyUI();
+
+        if (financeSummaryPanel != null)
+            financeSummaryPanel.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (isGameOver) return;
+
+        timer -= Time.deltaTime;
+        if (timer < 0f) timer = 0f;
+
+        UpdateTimerUI();
+
+        // Mengurangi reward setiap menit
+        int minutesPassed = Mathf.FloorToInt((totalTime - timer) / 60f);
+        if (minutesPassed > lastMinuteChecked)
+        {
+            lastMinuteChecked = minutesPassed;
+            currentReward = Mathf.Max(0, currentReward - (minutesPassed * 10000));
+            UpdateMoneyUI();
+        }
+
+        if (timer <= 0f)
+        {
+            GameOver();
+        }
+    }
 
     public void AddItem(string itemType)
     {
@@ -78,29 +110,24 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         isGameOver = true;
 
-        // Pastikan currentReward diset ke 0 jika waktu habis
         if (timer <= 0f)
         {
             currentReward = 0;
         }
 
-        ShowFinanceSummary();  // Menampilkan ringkasan keuangan setelah game selesai
+        ShowFinanceSummary();
     }
 
     void ShowFinanceSummary()
     {
-        // Menampilkan panel ringkasan keuangan setelah game selesai
         if (financeSummaryPanel != null)
             financeSummaryPanel.SetActive(true);
 
-        // Menampilkan pemasukan sesuai currentReward
         if (pemasukanText != null)
             pemasukanText.text = "Pemasukan: Rp" + currentReward.ToString("N0");
 
-        // Perbarui sisa uang
         UpdateSisaUang();
 
-        // Tambahkan listener agar toggle update sisa uang saat dicentang/diubah
         toggleMakan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
@@ -110,22 +137,16 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         int totalPengeluaran = 0;
 
-        // Periksa toggle dan hitung pengeluaran
         if (toggleMakan.isOn) totalPengeluaran += makanCost;
         if (toggleNabung.isOn) totalPengeluaran += nabungCost;
         if (toggleJajan.isOn) totalPengeluaran += jajanCost;
 
-        // Hitung sisa uang
         int sisa = currentReward - totalPengeluaran;
-
-        // Pastikan tidak negatif
         sisa = Mathf.Max(0, sisa);
 
-        // Update UI
         if (sisaUangText != null)
             sisaUangText.text = "Sisa: Rp" + sisa.ToString("N0");
 
-        // Simpan ke PlayerPrefs
         PlayerPrefs.SetInt("SisaUang", sisa);
         PlayerPrefs.Save();
     }
