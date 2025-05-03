@@ -34,6 +34,8 @@ public class BoxPenyimpanan : MonoBehaviour
     private int nabungCost = 15000;
     private int jajanCost = 10000;
 
+
+
     private float delayToSummary = 2f;
 
     void Start()
