@@ -38,9 +38,19 @@ public class BoxPenyimpanan : MonoBehaviour
 
     private float delayToSummary = 2f;
 
+    private bool buffJajanSudahDipakai = false;
+    private bool jajanSudahDiterapkan = false;
+
     void Start()
     {
+
         timer = totalTime;
+
+        if (PlayerPrefs.GetInt("BuffJajanAktif", 0) == 1)
+        {
+            timer += 300f; // Tambah waktu 5 menit
+            PlayerPrefs.SetInt("BuffJajanAktif", 0); // Reset agar hanya 1 kali
+        }
 
         if (SceneManager.GetActiveScene().name == "3DLV1")
         {
@@ -151,6 +161,27 @@ public class BoxPenyimpanan : MonoBehaviour
 
         PlayerPrefs.SetInt("SisaUang", sisa);
         PlayerPrefs.Save();
+    }
+
+    public void TerapkanPilihan()
+    {
+        if (jajanSudahDiterapkan) return;
+
+        // Cek Jajan
+        if (toggleJajan.isOn && !buffJajanSudahDipakai && currentReward >= jajanCost)
+        {
+            currentReward -= jajanCost;
+            timer += 300f; // Tambah 5 menit
+            buffJajanSudahDipakai = true;
+            Debug.Log("Buff jajan aktif! Waktu bertambah 5 menit.");
+        }
+
+        PlayerPrefs.SetInt("BuffJajanAktif", 1); // Simpan status buff
+        PlayerPrefs.Save();
+
+        jajanSudahDiterapkan = true;
+        UpdateMoneyUI();
+        UpdateTimerUI();
     }
 
     void UpdateTimerUI()
