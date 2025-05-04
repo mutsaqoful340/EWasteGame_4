@@ -2,9 +2,18 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class BoxPenyimpanan : MonoBehaviour
 {
+    [Header("Peringatan & Ending")]
+    public GameObject overlayPeringatan;
+    public GameObject efekBuram;
+    public GameObject endingPanel;
+
+    private bool sudahMakanHariIni = false;
+    private int hariTidakMakan = 0;
+
     public float totalTime = 300f;
     private float timer;
 
@@ -21,6 +30,9 @@ public class BoxPenyimpanan : MonoBehaviour
     public Toggle toggleMakan;
     public Toggle toggleNabung;
     public Toggle toggleJajan;
+
+    public Button btnLihatRingkasan;
+    public Button btnAkhiriGame;
 
     private bool isGameOver = false;
 
@@ -40,6 +52,7 @@ public class BoxPenyimpanan : MonoBehaviour
 
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
+
 
     void Start()
     {
@@ -167,22 +180,90 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         if (jajanSudahDiterapkan) return;
 
-        // Cek Jajan
+        // === JAJAN LOGIC ===
         if (toggleJajan.isOn && !buffJajanSudahDipakai && currentReward >= jajanCost)
         {
             currentReward -= jajanCost;
-            timer += 300f; // Tambah 5 menit
+            timer += 300f;
             buffJajanSudahDipakai = true;
             Debug.Log("Buff jajan aktif! Waktu bertambah 5 menit.");
+
+            PlayerPrefs.SetInt("BuffJajanAktif", 1); // hanya simpan jika benar-benar jajan
         }
 
-        PlayerPrefs.SetInt("BuffJajanAktif", 1); // Simpan status buff
+        // === MAKAN LOGIC ===
+        if (toggleMakan.isOn && currentReward >= makanCost)
+        {
+            currentReward -= makanCost;
+            sudahMakanHariIni = true;
+        }
+        else
+        {
+            sudahMakanHariIni = false;
+        }
+
+        // === CEK MAKAN KEMARIN ===
+        int kemarinTidakMakan = PlayerPrefs.GetInt("TidakMakanKemarin", 0);
+
+        if (!sudahMakanHariIni)
+        {
+            PlayerPrefs.SetInt("TidakMakanKemarin", 1);
+
+            if (overlayPeringatan != null)
+                overlayPeringatan.SetActive(true);
+
+            if (kemarinTidakMakan == 1)
+            {
+                if (overlayPeringatan != null)
+                {
+                    overlayPeringatan.SetActive(true);
+
+                    // Aktifkan tombol dan beri listener
+                    if (btnLihatRingkasan != null && btnAkhiriGame != null)
+                    {
+                        btnLihatRingkasan.onClick.RemoveAllListeners();
+                        btnAkhiriGame.onClick.RemoveAllListeners();
+
+                        btnLihatRingkasan.onClick.AddListener(() =>
+                        {
+                            overlayPeringatan.SetActive(false);
+                            ShowFinanceSummary(); // Lanjut ke ringkasan keuangan
+                        });
+
+                        btnAkhiriGame.onClick.AddListener(() =>
+                        {
+                            overlayPeringatan.SetActive(false);
+                            EndingGameOver(); // Langsung game over
+                        });
+                    }
+                }
+
+                return; // Hentikan eksekusi di sini, tunggu input pemain
+            }
+            else
+            {
+                timer = Mathf.Max(0, timer - 120);
+                if (efekBuram != null)
+                    efekBuram.SetActive(true);
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetInt("TidakMakanKemarin", 0);
+
+            if (overlayPeringatan != null)
+                overlayPeringatan.SetActive(false);
+            if (efekBuram != null)
+                efekBuram.SetActive(false);
+        }
+
         PlayerPrefs.Save();
 
         jajanSudahDiterapkan = true;
         UpdateMoneyUI();
         UpdateTimerUI();
     }
+
 
     void UpdateTimerUI()
     {
@@ -198,4 +279,21 @@ public class BoxPenyimpanan : MonoBehaviour
         if (moneyText != null)
             moneyText.text = "Uang: Rp" + currentReward.ToString("N0");
     }
+
+    void EndingGameOver()
+    {
+        isGameOver = true;
+
+        if (endingPanel != null)
+            endingPanel.SetActive(true);
+
+        Time.timeScale = 0f; // Pause game
+    }
+
+    IEnumerator DelayEnding()
+    {
+        yield return new WaitForSeconds(2f); // Biarkan overlay tampil selama 2 detik
+        EndingGameOver();
+    }
+
 }
