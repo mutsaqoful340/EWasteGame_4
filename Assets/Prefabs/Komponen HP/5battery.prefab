@@ -86,7 +86,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3e057e8827fef914e8cf85591288cc50,
         type: 3}
       propertyPath: m_TagString
-      value: SmallEwaste
+      value: SmallEWaste
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -95,15 +95,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3e057e8827fef914e8cf85591288cc50,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: -6006904416043590052}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3e057e8827fef914e8cf85591288cc50,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3881418088669863140}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3e057e8827fef914e8cf85591288cc50,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2031593728607208819}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3e057e8827fef914e8cf85591288cc50,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5173893979089451162}
   m_SourcePrefab: {fileID: 100100000, guid: 3e057e8827fef914e8cf85591288cc50, type: 3}
 --- !u!1 &1502466790159806574 stripped
 GameObject:
@@ -111,19 +111,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1736344657505733951}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-6006904416043590052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1502466790159806574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7708ed3861030204c82733654dccbeac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemType: SmallEwaste
 --- !u!54 &3881418088669863140
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -166,9 +153,22 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.020000001, y: 0.02, z: 0.00062652933}
   m_Center: {x: 0, y: 0, z: -0.000047522262}
+--- !u!114 &-5173893979089451162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502466790159806574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: TrashItem

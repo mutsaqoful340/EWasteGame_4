@@ -7,43 +7,17 @@ public class Menu3D : MonoBehaviour
 {
     Audio_Manager audioManager;
 
-    public float rotationAmount = 15f; // How much to rotate in degrees
-    public float rotationSpeed = 5f;    // How fast it rotates
-
-    private Quaternion targetRotation;
     private Animator animator; // Reference to Animator
 
     void Start()
     {
-        targetRotation = transform.rotation; // Set initial rotation
-        animator = GetComponent<Animator>(); // Get Animator component
+        animator = GetComponent<Animator>();
         audioManager = FindObjectOfType<Audio_Manager>();
     }
 
     void Update()
     {
-        // Smoothly rotate towards the target rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-    }
 
-    public void RotateCameraRight()
-    {
-        targetRotation *= Quaternion.Euler(0, rotationAmount, 0);
-    }
-
-    public void RotateCameraLeft()
-    {
-        targetRotation *= Quaternion.Euler(0, -rotationAmount, 0);
-    }
-
-    public void RotateCameraUp()
-    {
-        targetRotation *= Quaternion.Euler(-rotationAmount, 0, 0);
-    }
-
-    public void RotateCameraDown()
-    {
-        targetRotation *= Quaternion.Euler(rotationAmount, 0, 0);
     }
 
     public void PlayCameraAnimation(string triggerName)
@@ -58,4 +32,32 @@ public class Menu3D : MonoBehaviour
             Debug.LogWarning("No Animator found on the Camera!");
         }
     }
+
+    // Call this to show the canvas
+    public void ActivateCanvas(GameObject canvasToShow)
+    {
+        if (canvasToShow != null)
+        {
+            canvasToShow.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("No Canvas assigned to activate.");
+        }
+    }
+
+    // Call this to hide the canvas
+    public void DeactivateCanvas(GameObject canvasToHide)
+    {
+        if (canvasToHide != null)
+        {
+            canvasToHide.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("No Canvas assigned to deactivate.");
+        }
+    }
+
+
 }

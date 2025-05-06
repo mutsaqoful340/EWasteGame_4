@@ -42,17 +42,18 @@ public class DraggableSmallItem : MonoBehaviour
     // Ketika objek bertabrakan dengan zona
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("TrashZone"))
+        if (other.CompareTag("StorageZone"))
         {
-            // Kembalikan objek ke posisi awal jika masuk ke TrashZone
-            Debug.Log(itemType + " masuk ke TrashZone dan kembali ke posisi awal.");
-            StartCoroutine(BalikKeAwal()); // Kembalikan objek ke posisi awal
-        }
-        else if (other.CompareTag("StorageZone"))
-        {
-            // Hancurkan item yang masuk ke StorageZone
-            Debug.Log(itemType + " masuk ke StorageZone dan dihancurkan.");
-            Destroy(gameObject); // Menghancurkan objek yang masuk ke StorageZone
+            // Cari komponen BoxPenyimpanan di zona
+            BoxPenyimpanan boxPenyimpanan = other.GetComponent<BoxPenyimpanan>();
+            if (boxPenyimpanan != null)
+            {
+                // Panggil AddItem dengan parameter itemType
+                boxPenyimpanan.AddItem(itemType);  // Pastikan itemType dikirim ke AddItem
+            }
+
+            // Kembalikan objek ke posisi awal
+            StartCoroutine(BalikKeAwal());
         }
     }
 
