@@ -133,10 +133,10 @@ public class VolumeKnob : MonoBehaviour
                 transform.localEulerAngles = new Vector3(rotation, 0, 0);
                 break;
             case RotationAxis.Y:
-                transform.localEulerAngles = new Vector3(0, rotation, 0);
+                transform.localEulerAngles = new Vector3(0, rotation, -90);
                 break;
             case RotationAxis.Z:
-                transform.localEulerAngles = new Vector3(0, 43.764f, rotation);
+                transform.localEulerAngles = new Vector3(0, 90, rotation);
                 break;
         }
     }
