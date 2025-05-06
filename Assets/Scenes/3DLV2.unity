@@ -258,8 +258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f96ce88f328746408a9dfda7ff7a05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationAmount: 15
-  rotationSpeed: 5
 --- !u!1 &50219773
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,6 +950,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276159569}
+  m_CullTransparentMesh: 1
+--- !u!1 &276473389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276473390}
+  - component: {fileID: 276473392}
+  - component: {fileID: 276473391}
+  m_Layer: 5
+  m_Name: OverlayWarning
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &276473390
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276473389}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1084317734}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &276473391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276473389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.5882353}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &276473392
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276473389}
   m_CullTransparentMesh: 1
 --- !u!1001 &299870299
 PrefabInstance:
@@ -2212,9 +2285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a03df7a2415414ea8ec63009113a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  tvPosition: {fileID: 0}
-  moveSpeed: 5
 --- !u!4 &733595529
 Transform:
   m_ObjectHideFlags: 0
@@ -3281,8 +3351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f96ce88f328746408a9dfda7ff7a05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationAmount: 15
-  rotationSpeed: 5
 --- !u!114 &973448818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3295,9 +3363,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a03df7a2415414ea8ec63009113a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  tvPosition: {fileID: 0}
-  moveSpeed: 5
 --- !u!95 &973448819
 Animator:
   serializedVersion: 5
@@ -3570,6 +3635,7 @@ RectTransform:
   - {fileID: 617260691}
   - {fileID: 1728035659}
   - {fileID: 1209859758}
+  - {fileID: 276473390}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3875,7 +3941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1209859758
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5204,6 +5270,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d1569a154bd434f98518451cc48f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overlayPeringatan: {fileID: 276473389}
+  efekBuram: {fileID: 0}
+  endingPanel: {fileID: 0}
   totalTime: 300
   maxItems: 1
   financeSummaryPanel: {fileID: 1209859757}
@@ -5214,6 +5283,9 @@ MonoBehaviour:
   toggleMakan: {fileID: 2011836404}
   toggleNabung: {fileID: 1731966252}
   toggleJajan: {fileID: 862648196}
+  btnLihatRingkasan: {fileID: 0}
+  btnAkhiriGame: {fileID: 0}
+  initialReward: 50000
 --- !u!1 &1763143747
 GameObject:
   m_ObjectHideFlags: 0
@@ -5557,6 +5629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sisaUangText: {fileID: 106612367}
+  boxPenyimpanan: {fileID: 0}
 --- !u!114 &1847767124
 MonoBehaviour:
   m_ObjectHideFlags: 0

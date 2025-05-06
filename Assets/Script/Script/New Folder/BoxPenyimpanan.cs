@@ -53,35 +53,62 @@ public class BoxPenyimpanan : MonoBehaviour
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
 
+    private bool overlaySudahTampil = false;
+
 
     void Start()
     {
+        // Reset overlay flag saat masuk ke level baru
+        if (SceneManager.GetActiveScene().name == "3DLV2")
+        {
+            overlaySudahTampil = false; // Reset flag agar overlay bisa muncul lagi jika diperlukan
+        }
 
         timer = totalTime;
 
+        // Cek apakah sudah ada buff jajan yang aktif
         if (PlayerPrefs.GetInt("BuffJajanAktif", 0) == 1)
         {
-            timer += 300f; // Tambah waktu 5 menit
-            PlayerPrefs.SetInt("BuffJajanAktif", 0); // Reset agar hanya 1 kali
+            timer += 300f;
+            PlayerPrefs.SetInt("BuffJajanAktif", 0);
         }
 
+        // Reset sisa uang hanya di level 1
         if (SceneManager.GetActiveScene().name == "3DLV1")
         {
             PlayerPrefs.DeleteKey("SisaUang");
+            PlayerPrefs.SetInt("TidakMakanKemarin", 0); // Reset status makan
         }
 
-        // Ambil sisa uang dari level sebelumnya
         int sisaUangDariLevelSebelumnya = PlayerPrefs.GetInt("SisaUang", 0);
-
-        // Tambahkan reward awal level sekarang
         currentReward = sisaUangDariLevelSebelumnya + initialReward;
 
         UpdateTimerUI();
         UpdateMoneyUI();
 
-        if (financeSummaryPanel != null)
-            financeSummaryPanel.SetActive(false);
+        // Pastikan hanya tampilkan overlay jika pemain belum makan hari sebelumnya dan belum pernah tampil
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "3DLV1" && PlayerPrefs.GetInt("TidakMakanKemarin", 0) == 1 && !sudahMakanHariIni)
+        {
+            if (overlayPeringatan != null)
+            {
+                overlayPeringatan.SetActive(true);
+            }
+
+            StartCoroutine(TungguDanLanjut());
+        }
+        else if (currentScene == "3DLV2")
+        {
+            // Di level 2, pastikan overlay tidak muncul
+            if (overlayPeringatan != null)
+            {
+                overlayPeringatan.SetActive(false);
+            }
+        }
     }
+
+
 
     void Update()
     {
@@ -135,18 +162,22 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         isGameOver = true;
 
+        // Jangan langsung mengubah reward menjadi 0
         if (timer <= 0f)
         {
             currentReward = 0;
         }
 
+        // Tampilkan ringkasan keuangan hanya jika game sudah selesai
         ShowFinanceSummary();
     }
 
     void ShowFinanceSummary()
     {
-        if (financeSummaryPanel != null)
-            financeSummaryPanel.SetActive(true);
+        if (financeSummaryPanel != null && isGameOver)
+        {
+            financeSummaryPanel.SetActive(true); // Pastikan hanya muncul saat game over
+        }
 
         if (pemasukanText != null)
             pemasukanText.text = "Pemasukan: Rp" + currentReward.ToString("N0");
@@ -157,6 +188,7 @@ public class BoxPenyimpanan : MonoBehaviour
         toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
     }
+
 
     void UpdateSisaUang()
     {
@@ -180,19 +212,21 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         if (jajanSudahDiterapkan) return;
 
-        // === JAJAN LOGIC ===
-        if (toggleJajan.isOn && !buffJajanSudahDipakai && currentReward >= jajanCost)
+        // Tentukan apakah player makan dulu
+        bool playerMakan = toggleMakan.isOn;
+        bool playerJajan = toggleJajan.isOn;
+
+        // === BUFF JAJAN ===
+        if (playerJajan && !buffJajanSudahDipakai && currentReward >= jajanCost)
         {
             currentReward -= jajanCost;
             timer += 300f;
             buffJajanSudahDipakai = true;
-            Debug.Log("Buff jajan aktif! Waktu bertambah 5 menit.");
-
-            PlayerPrefs.SetInt("BuffJajanAktif", 1); // hanya simpan jika benar-benar jajan
+            PlayerPrefs.SetInt("BuffJajanAktif", 1);
         }
 
-        // === MAKAN LOGIC ===
-        if (toggleMakan.isOn && currentReward >= makanCost)
+        // === CEK MAKAN ===
+        if (playerMakan && currentReward >= makanCost)
         {
             currentReward -= makanCost;
             sudahMakanHariIni = true;
@@ -202,67 +236,35 @@ public class BoxPenyimpanan : MonoBehaviour
             sudahMakanHariIni = false;
         }
 
-        // === CEK MAKAN KEMARIN ===
-        int kemarinTidakMakan = PlayerPrefs.GetInt("TidakMakanKemarin", 0);
-
-        if (!sudahMakanHariIni)
+        // Simpan status tidak makan untuk level berikutnya
+        if (sudahMakanHariIni)
         {
-            PlayerPrefs.SetInt("TidakMakanKemarin", 1);
-
-            if (overlayPeringatan != null)
-                overlayPeringatan.SetActive(true);
-
-            if (kemarinTidakMakan == 1)
-            {
-                if (overlayPeringatan != null)
-                {
-                    overlayPeringatan.SetActive(true);
-
-                    // Aktifkan tombol dan beri listener
-                    if (btnLihatRingkasan != null && btnAkhiriGame != null)
-                    {
-                        btnLihatRingkasan.onClick.RemoveAllListeners();
-                        btnAkhiriGame.onClick.RemoveAllListeners();
-
-                        btnLihatRingkasan.onClick.AddListener(() =>
-                        {
-                            overlayPeringatan.SetActive(false);
-                            ShowFinanceSummary(); // Lanjut ke ringkasan keuangan
-                        });
-
-                        btnAkhiriGame.onClick.AddListener(() =>
-                        {
-                            overlayPeringatan.SetActive(false);
-                            EndingGameOver(); // Langsung game over
-                        });
-                    }
-                }
-
-                return; // Hentikan eksekusi di sini, tunggu input pemain
-            }
-            else
-            {
-                timer = Mathf.Max(0, timer - 120);
-                if (efekBuram != null)
-                    efekBuram.SetActive(true);
-            }
+            PlayerPrefs.SetInt("TidakMakanKemarin", 0);
         }
         else
         {
-            PlayerPrefs.SetInt("TidakMakanKemarin", 0);
-
-            if (overlayPeringatan != null)
-                overlayPeringatan.SetActive(false);
-            if (efekBuram != null)
-                efekBuram.SetActive(false);
+            PlayerPrefs.SetInt("TidakMakanKemarin", 1);
         }
 
-        PlayerPrefs.Save();
+        PlayerPrefs.Save(); // ⬅️ PENTING
 
-        jajanSudahDiterapkan = true;
         UpdateMoneyUI();
         UpdateTimerUI();
+
+        // **Penting**: Hapus overlay jika sudah makan
+        if (sudahMakanHariIni && overlayPeringatan != null)
+        {
+            overlayPeringatan.SetActive(false); // Menyembunyikan overlay jika pemain memilih makan
+        }
+
+        // Jika pemain tidak memilih makan, pastikan overlay tetap aktif
+        if (!sudahMakanHariIni && overlayPeringatan != null && !overlaySudahTampil)
+        {
+            overlayPeringatan.SetActive(true); // Tampilkan overlay jika belum memilih makan
+        }
     }
+
+
 
 
     void UpdateTimerUI()
@@ -280,20 +282,32 @@ public class BoxPenyimpanan : MonoBehaviour
             moneyText.text = "Uang: Rp" + currentReward.ToString("N0");
     }
 
-    void EndingGameOver()
-    {
-        isGameOver = true;
 
-        if (endingPanel != null)
-            endingPanel.SetActive(true);
-
-        Time.timeScale = 0f; // Pause game
-    }
 
     IEnumerator DelayEnding()
     {
-        yield return new WaitForSeconds(2f); // Biarkan overlay tampil selama 2 detik
-        EndingGameOver();
+        yield return new WaitForSeconds(4f); // Biarkan overlay tampil selama 2 detik
+        ShowFinanceSummary(); // Ganti dengan ShowFinanceSummary() jika tidak perlu EndingGameOver
+    }
+
+
+    IEnumerator TungguDanLanjut()
+    {
+        yield return new WaitForSeconds(4f); // Tunggu selama 4 detik setelah overlay muncul
+
+        if (overlayPeringatan != null)
+        {
+            overlayPeringatan.SetActive(false); // Hilangkan overlay setelah 4 detik
+        }
+
+        // Pindah ke level berikutnya jika sudah selesai
+        SceneManager.LoadScene("3DLV2"); // Ganti dengan nama scene level 2
+    }
+
+    IEnumerator ShowFinanceSummaryAfterDelay()
+    {
+        yield return new WaitForSeconds(delayToSummary);  // Menunggu selama delayToSummary
+        ShowFinanceSummary();  // Tampilkan ringkasan keuangan setelah delay
     }
 
 }
