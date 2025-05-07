@@ -896,13 +896,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d1569a154bd434f98518451cc48f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overlayPeringatan: {fileID: 0}
+  efekBuram: {fileID: 0}
+  endingPanel: {fileID: 0}
   totalTime: 300
   maxItems: 64
-  winPanel: {fileID: 396618493}
-  buttonsPanel: {fileID: 363454642}
-  winText: {fileID: 1675129746}
+  financeSummaryPanel: {fileID: 0}
   timerText: {fileID: 0}
   moneyText: {fileID: 0}
+  pemasukanText: {fileID: 0}
+  sisaUangText: {fileID: 0}
+  toggleMakan: {fileID: 0}
+  toggleNabung: {fileID: 0}
+  toggleJajan: {fileID: 0}
+  btnLihatRingkasan: {fileID: 0}
+  btnAkhiriGame: {fileID: 0}
+  btnExitOverlay: {fileID: 0}
+  initialReward: 50000
 --- !u!1 &684092785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,11 +1314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956010ba6ca365444b4e318176ffc026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  componentPrefabs:
-  - {fileID: 3544303028059060415, guid: 1268e37067b7d3542a793b73506fbfd3, type: 3}
-  - {fileID: 9083758962842653030, guid: 7bc7918ff6b3fc040a9f5141a42ecab5, type: 3}
+  prefabsToSpawn: []
+  centerPoint: {fileID: 0}
   radius: 1.31
-  moveDuration: 0.5
 --- !u!114 &798866389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,6 +1338,74 @@ MonoBehaviour:
   kertasPrefab: {fileID: 0}
   pensilPrefab: {fileID: 0}
   spawnSlots: []
+--- !u!1001 &918675350
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 31.338577
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.060947
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.50000006
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.50000006
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.49999994
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.49999997
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c66ddd2407dea7a49a960562b30f0e1f,
+        type: 3}
+      propertyPath: m_Name
+      value: taplak.fbx_Scene
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c66ddd2407dea7a49a960562b30f0e1f, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2355,3 +2431,4 @@ SceneRoots:
   - {fileID: 12990791}
   - {fileID: 1864510687}
   - {fileID: 1899073801}
+  - {fileID: 918675350}
