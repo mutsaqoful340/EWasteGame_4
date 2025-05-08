@@ -2,8 +2,11 @@
 
 public class InteractableButton : MonoBehaviour
 {
-    // Reference to your camera animator
-    public Animator cameraAnimator;
+    public Animator animator;
+    public Audio_Manager audioManager;
+
+    [Header("Animation Settings")]
+    public string triggerName; // 👈 You can set this in Inspector now!
 
     void Update()
     {
@@ -16,22 +19,19 @@ public class InteractableButton : MonoBehaviour
                 // Click
                 if (Input.GetMouseButtonDown(0))
                 {
-                    OnButtonClicked();
+                    PlayCameraAnimation();  // ✅ Call the function
                 }
             }
         }
     }
 
-    private void OnButtonClicked()
+    // ✅ This is the function definition, outside of Update
+    private void PlayCameraAnimation()
     {
-        PlayCameraAnimation("Radio");
-    }
-
-    public void PlayCameraAnimation(string triggerName)
-    {
-        if (cameraAnimator != null)
+        if (animator != null)
         {
-            cameraAnimator.SetTrigger(triggerName);
+            audioManager.PlaySFX(audioManager.buttonClick);
+            animator.SetTrigger(triggerName);
         }
         else
         {
