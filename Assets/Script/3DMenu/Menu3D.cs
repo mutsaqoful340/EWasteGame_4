@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class Menu3D : MonoBehaviour
 {
@@ -58,6 +59,4 @@ public class Menu3D : MonoBehaviour
             Debug.LogWarning("No Canvas assigned to deactivate.");
         }
     }
-
-
 }
