@@ -12,9 +12,10 @@ public class NextButton : MonoBehaviour
     public GameObject warningOverlay; // Referensi ke overlay warning
     public Button closeButton; // Referensi ke tombol Close
 
+    private bool warningSudahMuncul = false; // Flag untuk status warning
+
     void Start()
     {
-        // Pastikan closeButton sudah terhubung dan tambahkan listener
         if (closeButton != null)
         {
             closeButton.onClick.AddListener(CloseWarningOverlay);
@@ -23,12 +24,12 @@ public class NextButton : MonoBehaviour
 
     public void OnNextLevelButtonPressed()
     {
-        // Cek apakah Makan dicentang
-        if (!makanToggle.isOn)
+        // Jika toggle makan belum dicentang dan warning belum pernah muncul
+        if (!makanToggle.isOn && !warningSudahMuncul)
         {
-            // Tampilkan warning overlay jika Makan tidak dicentang
             warningOverlay.SetActive(true);
-            return; // Jangan lanjutkan ke level berikutnya
+            warningSudahMuncul = true; // Tandai bahwa warning sudah pernah muncul
+            return;
         }
 
         // Terapkan pilihan dulu sebelum lanjut
@@ -44,11 +45,10 @@ public class NextButton : MonoBehaviour
         PlayerPrefs.SetInt("SisaUang", sisa);
         PlayerPrefs.Save();
 
-        // Ambil index scene sekarang
+        // Pindah ke scene berikutnya
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
 
-        // Cek apakah next scene masih dalam daftar
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
             SceneManager.LoadScene(nextSceneIndex);
@@ -56,33 +56,12 @@ public class NextButton : MonoBehaviour
         else
         {
             Debug.Log("Semua level sudah selesai!");
-            // Kamu bisa tambahkan scene khusus seperti "GameSelesai" kalau mau
         }
     }
 
-    // Menutup warning overlay
     public void CloseWarningOverlay()
     {
         warningOverlay.SetActive(false);
-
-        // Langsung lanjut ke level berikutnya
-        if (boxPenyimpanan != null)
-        {
-            boxPenyimpanan.TerapkanPilihan();
-        }
-
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = currentSceneIndex + 1;
-
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            SceneManager.LoadScene(nextSceneIndex);
-        }
-        else
-        {
-            Debug.Log("Semua level sudah selesai!");
-            // Kamu bisa tambahkan scene khusus seperti "GameSelesai" kalau mau
-        }
+        // Tidak pindah scene di sini. User harus klik Next lagi.
     }
-
 }

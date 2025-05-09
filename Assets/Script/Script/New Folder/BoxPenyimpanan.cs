@@ -211,7 +211,9 @@ public class BoxPenyimpanan : MonoBehaviour
             PlayerPrefs.SetInt("TidakMakanKemarin", 1);
         }
 
+        PlayerPrefs.SetInt("SisaUang", currentReward);
         PlayerPrefs.Save();
+
 
         UpdateMoneyUI();
         UpdateTimerUI();
