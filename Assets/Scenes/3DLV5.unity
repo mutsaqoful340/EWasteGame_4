@@ -258,8 +258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f96ce88f328746408a9dfda7ff7a05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationAmount: 15
-  rotationSpeed: 5
 --- !u!1 &50219773
 GameObject:
   m_ObjectHideFlags: 0
@@ -3281,8 +3279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f96ce88f328746408a9dfda7ff7a05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationAmount: 15
-  rotationSpeed: 5
 --- !u!114 &973448818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3706,7 +3702,6 @@ RectTransform:
   - {fileID: 617260691}
   - {fileID: 1728035659}
   - {fileID: 1209859758}
-  - {fileID: 1457762650}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4012,7 +4007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1209859758
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4031,6 +4026,7 @@ RectTransform:
   - {fileID: 2011836403}
   - {fileID: 1731966251}
   - {fileID: 862648195}
+  - {fileID: 1457762650}
   m_Father: {fileID: 1084317734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4521,15 +4517,15 @@ RectTransform:
   m_GameObject: {fileID: 1457762649}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.9607844, y: 1.9607844, z: 1.9607844}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1067401080}
-  m_Father: {fileID: 1084317734}
+  m_Father: {fileID: 1209859758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -209.10004}
+  m_AnchoredPosition: {x: 0, y: -410.00006}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457762651
@@ -4544,7 +4540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4490288a9cd8b1b4695c2ea96f4cf51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sisaUangText: {fileID: 106612367}
+  boxPenyimpanan: {fileID: 0}
 --- !u!114 &1457762652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5351,6 +5347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d1569a154bd434f98518451cc48f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endingPanel: {fileID: 0}
   totalTime: 300
   maxItems: 1
   financeSummaryPanel: {fileID: 1209859757}
@@ -5361,6 +5358,9 @@ MonoBehaviour:
   toggleMakan: {fileID: 2011836404}
   toggleNabung: {fileID: 1731966252}
   toggleJajan: {fileID: 862648196}
+  btnLihatRingkasan: {fileID: 0}
+  btnAkhiriGame: {fileID: 0}
+  initialReward: 50000
 --- !u!1 &1763143747
 GameObject:
   m_ObjectHideFlags: 0
