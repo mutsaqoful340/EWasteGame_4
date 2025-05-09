@@ -22,15 +22,20 @@ public class NextButton : MonoBehaviour
             closeButton.onClick.AddListener(CloseWarningOverlay);
         }
 
-        // Reset pelanggaran saat game mulai untuk debugging
-        if (!PlayerPrefs.HasKey("PelanggaranMakan"))
+        // Cek pelanggaran saat level dimulai
+        int pelanggaran = PlayerPrefs.GetInt("PelanggaranMakan", 0);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        if (pelanggaran >= 4 && currentSceneIndex != 0)
         {
-            PlayerPrefs.SetInt("PelanggaranMakan", 0); // Mulai dari 0 jika belum ada
-            PlayerPrefs.Save();
+            Debug.Log("Pelanggaran mencapai 4 saat masuk level ini, pindah ke EndingScene.");
+            SceneManager.LoadScene(endingSceneName);
+            return;
         }
 
-        Debug.Log("Pelanggaran Makan di Start: " + PlayerPrefs.GetInt("PelanggaranMakan"));
+        Debug.Log("Pelanggaran Makan di Start: " + pelanggaran);
     }
+
 
     public void OnNextLevelButtonPressed()
     {
@@ -38,7 +43,7 @@ public class NextButton : MonoBehaviour
         if (!makanToggle.isOn && !warningSudahMuncul)
         {
             warningOverlay.SetActive(true);
-            warningSudahMuncul = true; // Tandai agar warning hanya muncul sekali
+            warningSudahMuncul = true;
             return;
         }
 
@@ -48,45 +53,46 @@ public class NextButton : MonoBehaviour
             boxPenyimpanan.TerapkanPilihan();
         }
 
-        // Simpan sisa uang yang ada di UI
+        // Simpan sisa uang
         int sisa = int.Parse(sisaUangText.text.Split(' ')[1].Replace("Rp", "").Replace(",", ""));
         PlayerPrefs.SetInt("SisaUang", sisa);
 
-        // Periksa apakah toggle Makan belum dipilih, jika ya tambah pelanggaran
+        // Ambil index scene saat ini sekali saja
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        // Tambah pelanggaran jika toggle makan tidak dicentang
         if (!makanToggle.isOn)
         {
-            int pelanggaran = PlayerPrefs.GetInt("PelanggaranMakan", 0);  // Ambil nilai pelanggaran yang ada
-            pelanggaran++;  // Tambah pelanggaran
-            PlayerPrefs.SetInt("PelanggaranMakan", pelanggaran); // Simpan pelanggaran ke PlayerPrefs
-            PlayerPrefs.Save(); // Jangan lupa simpan perubahan ke PlayerPrefs
+            int pelanggaran = PlayerPrefs.GetInt("PelanggaranMakan", 0);
+            pelanggaran++;
+            PlayerPrefs.SetInt("PelanggaranMakan", pelanggaran);
+            PlayerPrefs.Save();
 
-            Debug.Log("Pelanggaran Makan setelah update: " + pelanggaran);  // Cek apakah pelanggaran terupdate
+            Debug.Log("Pelanggaran Makan setelah update: " + pelanggaran);
 
-            // Cek apakah pelanggaran >= 4
-            if (pelanggaran >= 4)
+            // Jika pelanggaran mencapai 4 dan bukan di level awal (misal index 0), pindah ke Ending
+            if (pelanggaran >= 4 && currentSceneIndex != 0)
             {
                 Debug.Log("Pelanggaran mencapai 4, pindah ke EndingScene.");
-                SceneManager.LoadScene(endingSceneName);  // Pindah ke scene Ending jika pelanggaran >= 4
+                SceneManager.LoadScene(endingSceneName);
                 return;
             }
         }
 
-        // Lanjutkan ke level berikutnya
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // Lanjut ke level berikutnya
         int nextSceneIndex = currentSceneIndex + 1;
-
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene(nextSceneIndex);  // Pindah ke scene berikutnya
+            SceneManager.LoadScene(nextSceneIndex);
         }
         else
         {
-            Debug.Log("Semua level sudah selesai!");  // Semua level selesai
+            Debug.Log("Semua level sudah selesai!");
         }
     }
 
     public void CloseWarningOverlay()
     {
-        warningOverlay.SetActive(false);  // Tutup overlay jika user menekan tombol Close
+        warningOverlay.SetActive(false);
     }
 }
