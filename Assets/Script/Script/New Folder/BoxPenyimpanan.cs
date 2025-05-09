@@ -68,6 +68,8 @@ public class BoxPenyimpanan : MonoBehaviour
         int sisaUangDariLevelSebelumnya = PlayerPrefs.GetInt("SisaUang", 0);
         currentReward = sisaUangDariLevelSebelumnya + initialReward;
 
+        btnAkhiriGame.gameObject.SetActive(false);
+
 
         UpdateTimerUI();
         UpdateMoneyUI();
@@ -132,7 +134,7 @@ public class BoxPenyimpanan : MonoBehaviour
         ShowFinanceSummary();
 
         // Setelah delay tertentu, pindah ke level berikutnya
-        Invoke("GoToNextLevel", delayToSummary); // delayToSummary adalah waktu delay yang diinginkan
+         // delayToSummary adalah waktu delay yang diinginkan
     }
 
     void ShowFinanceSummary()
@@ -150,6 +152,11 @@ public class BoxPenyimpanan : MonoBehaviour
         toggleMakan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+
+        if (btnAkhiriGame != null)
+        {
+            btnAkhiriGame.gameObject.SetActive(true);
+        }
     }
 
     void UpdateSisaUang()

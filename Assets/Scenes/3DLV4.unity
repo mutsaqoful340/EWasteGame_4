@@ -1980,7 +1980,7 @@ PrefabInstance:
     - target: {fileID: 5212425308737117480, guid: 02bab5425968b8f44862752cab33ecac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.0282
+      value: -5.247
       objectReference: {fileID: 0}
     - target: {fileID: 5212425308737117480, guid: 02bab5425968b8f44862752cab33ecac,
         type: 3}
@@ -2022,7 +2022,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5702951374306375916, guid: 02bab5425968b8f44862752cab33ecac, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -2098,7 +2099,7 @@ MonoBehaviour:
   - {fileID: 9020572196620790085, guid: 0eec2e6383b5a6f42bbffa2d285e004b, type: 3}
   - {fileID: 2378756653938947825, guid: b9210b20a9970114aa8641bab836da6d, type: 3}
   centerPoint: {fileID: 447664082}
-  radius: 0.7
+  radius: 0.4
 --- !u!65 &447664085
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2686,9 +2687,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a03df7a2415414ea8ec63009113a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  tvPosition: {fileID: 0}
-  moveSpeed: 5
 --- !u!4 &733595529
 Transform:
   m_ObjectHideFlags: 0
@@ -3755,9 +3753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a03df7a2415414ea8ec63009113a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  tvPosition: {fileID: 0}
-  moveSpeed: 5
 --- !u!95 &973448819
 Animator:
   serializedVersion: 5
@@ -4030,7 +4025,6 @@ RectTransform:
   - {fileID: 617260691}
   - {fileID: 1728035659}
   - {fileID: 1209859758}
-  - {fileID: 1756519997}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4336,7 +4330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1209859758
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4355,6 +4349,7 @@ RectTransform:
   - {fileID: 2011836403}
   - {fileID: 1731966251}
   - {fileID: 862648195}
+  - {fileID: 1756519997}
   m_Father: {fileID: 1084317734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5571,15 +5566,15 @@ RectTransform:
   m_GameObject: {fileID: 1756519996}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.9607844, y: 1.9607844, z: 1.9607844}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2129146756}
-  m_Father: {fileID: 1084317734}
+  m_Father: {fileID: 1209859758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -209.10004}
+  m_AnchoredPosition: {x: 0, y: -410.00006}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1756519998
@@ -5594,7 +5589,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4490288a9cd8b1b4695c2ea96f4cf51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sisaUangText: {fileID: 106612367}
   boxPenyimpanan: {fileID: 0}
 --- !u!114 &1756519999
 MonoBehaviour:
@@ -7215,12 +7209,12 @@ PrefabInstance:
     - target: {fileID: 5212425308737117480, guid: 02bab5425968b8f44862752cab33ecac,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.018721
+      value: -0.709
       objectReference: {fileID: 0}
     - target: {fileID: 5212425308737117480, guid: 02bab5425968b8f44862752cab33ecac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.0282
+      value: -5.237
       objectReference: {fileID: 0}
     - target: {fileID: 5212425308737117480, guid: 02bab5425968b8f44862752cab33ecac,
         type: 3}
@@ -7311,7 +7305,7 @@ MonoBehaviour:
   - {fileID: 9020572196620790085, guid: 0eec2e6383b5a6f42bbffa2d285e004b, type: 3}
   - {fileID: 2378756653938947825, guid: b9210b20a9970114aa8641bab836da6d, type: 3}
   centerPoint: {fileID: 9088470367997256294}
-  radius: 0.7
+  radius: 0.4
 --- !u!65 &9088470367997256296
 BoxCollider:
   m_ObjectHideFlags: 0

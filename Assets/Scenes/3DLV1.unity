@@ -921,7 +921,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 230676216}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &230676216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6398,7 +6410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4490288a9cd8b1b4695c2ea96f4cf51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sisaUangText: {fileID: 0}
   boxPenyimpanan: {fileID: 0}
 --- !u!4 &1727043890
 Transform:
@@ -6748,7 +6759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endingPanel: {fileID: 515289318}
   totalTime: 300
-  maxItems: 5
+  maxItems: 2
   financeSummaryPanel: {fileID: 1209859757}
   timerText: {fileID: 359947316}
   moneyText: {fileID: 617260692}
@@ -7445,7 +7456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4490288a9cd8b1b4695c2ea96f4cf51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sisaUangText: {fileID: 106612367}
   boxPenyimpanan: {fileID: 1754014261}
 --- !u!114 &1947309545
 MonoBehaviour:
