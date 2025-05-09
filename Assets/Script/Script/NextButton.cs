@@ -8,11 +8,12 @@ public class NextButton : MonoBehaviour
     public TextMeshProUGUI sisaUangText;
     public BoxPenyimpanan boxPenyimpanan;
 
-    public Toggle makanToggle; // Referensi ke Toggle "Makan"
-    public GameObject warningOverlay; // Referensi ke overlay warning
-    public Button closeButton; // Referensi ke tombol Close
+    public Toggle makanToggle;
+    public GameObject warningOverlay;
+    public Button closeButton;
 
-    private bool warningSudahMuncul = false; // Flag untuk status warning
+    private bool warningSudahMuncul = false;
+    public string endingSceneName = "EndingScene"; // Ganti dengan nama scene yang sesuai
 
     void Start()
     {
@@ -20,48 +21,72 @@ public class NextButton : MonoBehaviour
         {
             closeButton.onClick.AddListener(CloseWarningOverlay);
         }
+
+        // Reset pelanggaran saat game mulai untuk debugging
+        if (!PlayerPrefs.HasKey("PelanggaranMakan"))
+        {
+            PlayerPrefs.SetInt("PelanggaranMakan", 0); // Mulai dari 0 jika belum ada
+            PlayerPrefs.Save();
+        }
+
+        Debug.Log("Pelanggaran Makan di Start: " + PlayerPrefs.GetInt("PelanggaranMakan"));
     }
 
     public void OnNextLevelButtonPressed()
     {
-        // Jika toggle makan belum dicentang dan warning belum pernah muncul
+        // Cek apakah makan belum dipilih, dan warning belum muncul
         if (!makanToggle.isOn && !warningSudahMuncul)
         {
             warningOverlay.SetActive(true);
-            warningSudahMuncul = true; // Tandai bahwa warning sudah pernah muncul
+            warningSudahMuncul = true; // Tandai agar warning hanya muncul sekali
             return;
         }
 
-        // Terapkan pilihan dulu sebelum lanjut
+        // Terapkan pilihan ke BoxPenyimpanan jika ada
         if (boxPenyimpanan != null)
         {
             boxPenyimpanan.TerapkanPilihan();
         }
 
-        // Ambil sisa uang dari UI
+        // Simpan sisa uang yang ada di UI
         int sisa = int.Parse(sisaUangText.text.Split(' ')[1].Replace("Rp", "").Replace(",", ""));
-
-        // Simpan sisa uang ke PlayerPrefs
         PlayerPrefs.SetInt("SisaUang", sisa);
-        PlayerPrefs.Save();
 
-        // Pindah ke scene berikutnya
+        // Periksa apakah toggle Makan belum dipilih, jika ya tambah pelanggaran
+        if (!makanToggle.isOn)
+        {
+            int pelanggaran = PlayerPrefs.GetInt("PelanggaranMakan", 0);  // Ambil nilai pelanggaran yang ada
+            pelanggaran++;  // Tambah pelanggaran
+            PlayerPrefs.SetInt("PelanggaranMakan", pelanggaran); // Simpan pelanggaran ke PlayerPrefs
+            PlayerPrefs.Save(); // Jangan lupa simpan perubahan ke PlayerPrefs
+
+            Debug.Log("Pelanggaran Makan setelah update: " + pelanggaran);  // Cek apakah pelanggaran terupdate
+
+            // Cek apakah pelanggaran >= 4
+            if (pelanggaran >= 4)
+            {
+                Debug.Log("Pelanggaran mencapai 4, pindah ke EndingScene.");
+                SceneManager.LoadScene(endingSceneName);  // Pindah ke scene Ending jika pelanggaran >= 4
+                return;
+            }
+        }
+
+        // Lanjutkan ke level berikutnya
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
 
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene(nextSceneIndex);
+            SceneManager.LoadScene(nextSceneIndex);  // Pindah ke scene berikutnya
         }
         else
         {
-            Debug.Log("Semua level sudah selesai!");
+            Debug.Log("Semua level sudah selesai!");  // Semua level selesai
         }
     }
 
     public void CloseWarningOverlay()
     {
-        warningOverlay.SetActive(false);
-        // Tidak pindah scene di sini. User harus klik Next lagi.
+        warningOverlay.SetActive(false);  // Tutup overlay jika user menekan tombol Close
     }
 }
