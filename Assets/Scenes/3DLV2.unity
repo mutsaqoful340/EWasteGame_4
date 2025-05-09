@@ -3796,7 +3796,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5ea3ec58e47744e4aaf29d65c4ef7017,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1126513897}
+      addedObject: {fileID: 1126513901}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5ea3ec58e47744e4aaf29d65c4ef7017,
         type: 3}
       insertIndex: -1
@@ -5290,26 +5290,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 747228796}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1126513897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1126513896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 956010ba6ca365444b4e318176ffc026, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabsToSpawn:
-  - {fileID: 8216910310576448625, guid: 7fc31d4ed3ba61a46853aade298cf613, type: 3}
-  - {fileID: 9134185269321641129, guid: 5be74596827c3aa4e8839551507c9a98, type: 3}
-  - {fileID: 2491408542721063412, guid: 455dca68e50cecf45a0eed761fba6d45, type: 3}
-  - {fileID: 2223349669583661189, guid: ac8bf48f33ddfcc4e8ad78b98b341aba, type: 3}
-  - {fileID: 3692027083002876853, guid: 8ef4a0780c624934f8db085575c8ce46, type: 3}
-  centerPoint: {fileID: 1369030150}
-  radius: 0.5
 --- !u!54 &1126513898
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5363,6 +5343,25 @@ MonoBehaviour:
   kertasPrefab: {fileID: 0}
   pensilPrefab: {fileID: 0}
   spawnSlots: []
+--- !u!114 &1126513901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126513896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43264a2f56a70204fb17c9d3a21c08d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laptopComponents:
+  - {fileID: 8216910310576448625, guid: 7fc31d4ed3ba61a46853aade298cf613, type: 3}
+  - {fileID: 9134185269321641129, guid: 5be74596827c3aa4e8839551507c9a98, type: 3}
+  - {fileID: 2491408542721063412, guid: 455dca68e50cecf45a0eed761fba6d45, type: 3}
+  - {fileID: 3692027083002876853, guid: 8ef4a0780c624934f8db085575c8ce46, type: 3}
+  centerPoint: {fileID: 1369030150}
+  radius: 0.45
 --- !u!1 &1132074999
 GameObject:
   m_ObjectHideFlags: 0
