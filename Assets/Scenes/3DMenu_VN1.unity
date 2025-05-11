@@ -8908,11 +8908,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1869798370}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1601417187
@@ -9904,7 +9904,6 @@ RectTransform:
   - {fileID: 230094381}
   - {fileID: 815005096}
   - {fileID: 1410117876}
-  - {fileID: 1601417186}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -11486,6 +11485,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dummy Room
       objectReference: {fileID: 0}
+    - target: {fileID: 8027770713214905367, guid: 2e083663a3c8b02429b86571a9c5ce10,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8414682709550185103, guid: 2e083663a3c8b02429b86571a9c5ce10,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -11513,6 +11517,7 @@ SceneRoots:
   - {fileID: 97461648}
   - {fileID: 973448814}
   - {fileID: 1869798370}
+  - {fileID: 1601417186}
   - {fileID: 985483457}
   - {fileID: 1558707229}
   - {fileID: 203335535}
