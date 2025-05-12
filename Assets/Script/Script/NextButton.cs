@@ -20,13 +20,13 @@ public class NextButton : MonoBehaviour
     void Start()
     {
         // Reset pelanggaran hanya pada level pertama (buildIndex == 0)
-        // Menghapus reset pelanggaran agar tetap bertahan antar level
-        // Jika kamu tidak ingin reset pelanggaran, maka hapus atau komentar bagian berikut:
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            // PlayerPrefs.DeleteKey("PelanggaranMakan"); // Hapus data pelanggaran makan
-            // PlayerPrefs.DeleteKey("PelanggaranNabung"); // Hapus data pelanggaran nabung
-            Debug.Log("Pelanggaran Makan dan Nabung tidak di-reset di level pertama");
+            // Reset pelanggaran nabung di level pertama
+            PlayerPrefs.SetInt("PelanggaranNabung", 0);
+            PlayerPrefs.Save();  // Jangan lupa untuk menyimpan perubahan
+
+            Debug.Log("Pelanggaran Nabung direset di level pertama.");
         }
 
         // Cek pelanggaran pada saat level dimulai
@@ -111,7 +111,7 @@ public class NextButton : MonoBehaviour
             Debug.Log("Pelanggaran Nabung setelah update: " + pelanggaranNabung);
 
             // Jika pelanggaran nabung sudah mencapai 10, langsung ke Ending2
-            if (pelanggaranNabung >= 8)
+            if (pelanggaranNabung >= 4)
             {
                 Debug.Log("Tidak nabung 10 kali, pindah ke Ending2.");
                 SceneManager.LoadScene(endingSceneName2);
