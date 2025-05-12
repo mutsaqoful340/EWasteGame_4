@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -13,33 +13,41 @@ public class NextButton : MonoBehaviour
     public Button closeButton;
 
     private bool warningSudahMuncul = false;
-    public string endingSceneName = "EndingScene"; // Ganti dengan nama scene yang sesuai
+    public string endingSceneName = "EndingScene"; // Nama scene ending
 
     void Start()
     {
-        if (closeButton != null)
+        // Reset pelanggaran hanya pada level pertama (buildIndex == 0)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            closeButton.onClick.AddListener(CloseWarningOverlay);
+            PlayerPrefs.DeleteKey("PelanggaranMakan"); // Hapus data pelanggaran pada level pertama
+            Debug.Log("Pelanggaran Makan direset di level pertama");
         }
 
-        // Cek pelanggaran saat level dimulai
+        // Cek pelanggaran pada saat level dimulai
         int pelanggaran = PlayerPrefs.GetInt("PelanggaranMakan", 0);
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
-        if (pelanggaran >= 4 && currentSceneIndex != 0)
+        // Debug log untuk pelanggaran yang ada
+        Debug.Log("Pelanggaran Makan pada Start level: " + pelanggaran);
+
+        // Cek apakah pelanggaran sudah mencapai 4 → langsung ke ending
+        if (pelanggaran >= 4)
         {
-            Debug.Log("Pelanggaran mencapai 4 saat masuk level ini, pindah ke EndingScene.");
+            Debug.Log("Pelanggaran mencapai 4, langsung pindah ke EndingScene.");
             SceneManager.LoadScene(endingSceneName);
             return;
         }
 
-        Debug.Log("Pelanggaran Makan di Start: " + pelanggaran);
+        // Jika close button ada, tambahkan listener untuk menutup overlay
+        if (closeButton != null)
+        {
+            closeButton.onClick.AddListener(CloseWarningOverlay);
+        }
     }
-
 
     public void OnNextLevelButtonPressed()
     {
-        // Cek apakah makan belum dipilih, dan warning belum muncul
+        // Jika makan belum dipilih, dan warning belum muncul
         if (!makanToggle.isOn && !warningSudahMuncul)
         {
             warningOverlay.SetActive(true);
@@ -57,21 +65,18 @@ public class NextButton : MonoBehaviour
         int sisa = int.Parse(sisaUangText.text.Split(' ')[1].Replace("Rp", "").Replace(",", ""));
         PlayerPrefs.SetInt("SisaUang", sisa);
 
-        // Ambil index scene saat ini sekali saja
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-        // Tambah pelanggaran jika toggle makan tidak dicentang
+        // Tambah pelanggaran jika tidak makan
         if (!makanToggle.isOn)
         {
             int pelanggaran = PlayerPrefs.GetInt("PelanggaranMakan", 0);
             pelanggaran++;
             PlayerPrefs.SetInt("PelanggaranMakan", pelanggaran);
-            PlayerPrefs.Save();
+            PlayerPrefs.Save();  // Jangan lupa simpan perubahan
 
             Debug.Log("Pelanggaran Makan setelah update: " + pelanggaran);
 
-            // Jika pelanggaran mencapai 4 dan bukan di level awal (misal index 0), pindah ke Ending
-            if (pelanggaran >= 4 && currentSceneIndex != 0)
+            // Jika pelanggaran sudah mencapai 4, langsung ke EndingScene
+            if (pelanggaran >= 2)
             {
                 Debug.Log("Pelanggaran mencapai 4, pindah ke EndingScene.");
                 SceneManager.LoadScene(endingSceneName);
@@ -80,7 +85,7 @@ public class NextButton : MonoBehaviour
         }
 
         // Lanjut ke level berikutnya
-        int nextSceneIndex = currentSceneIndex + 1;
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
             SceneManager.LoadScene(nextSceneIndex);
