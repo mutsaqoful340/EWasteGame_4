@@ -64,6 +64,7 @@ public class NextButton : MonoBehaviour
         // Simpan sisa uang
         int sisa = int.Parse(sisaUangText.text.Split(' ')[1].Replace("Rp", "").Replace(",", ""));
         PlayerPrefs.SetInt("SisaUang", sisa);
+        PlayerPrefs.Save(); // Simpan perubahan uang ke PlayerPrefs
 
         // Tambah pelanggaran jika tidak makan
         if (!makanToggle.isOn)
@@ -76,7 +77,7 @@ public class NextButton : MonoBehaviour
             Debug.Log("Pelanggaran Makan setelah update: " + pelanggaran);
 
             // Jika pelanggaran sudah mencapai 4, langsung ke EndingScene
-            if (pelanggaran >= 2)
+            if (pelanggaran >= 4)
             {
                 Debug.Log("Pelanggaran mencapai 4, pindah ke EndingScene.");
                 SceneManager.LoadScene(endingSceneName);
