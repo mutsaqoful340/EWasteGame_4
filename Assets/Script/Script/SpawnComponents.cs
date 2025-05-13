@@ -41,7 +41,7 @@ public class SpawnOnClick : MonoBehaviour
             float angle = angleStep * i * Mathf.Deg2Rad;
             Vector3 spawnPos = centerPoint.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
 
-            // Terbaring ke atas (horizontal)
+
             GameObject spawned = Instantiate(prefab, spawnPos, Quaternion.Euler(90f, 0f, 0f));
             spawned.name = prefab.name + "_Spawned";
         }

@@ -100,17 +100,16 @@ public class NextButton : MonoBehaviour
             }
         }
 
-        // Tambah pelanggaran jika tidak nabung
-        if (!nabungToggle.isOn)
+        
         {
             int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0);
             pelanggaranNabung++;
             PlayerPrefs.SetInt("PelanggaranNabung", pelanggaranNabung);
-            PlayerPrefs.Save();  // Jangan lupa simpan perubahan
+            PlayerPrefs.Save(); 
 
             Debug.Log("Pelanggaran Nabung setelah update: " + pelanggaranNabung);
 
-            // Jika pelanggaran nabung sudah mencapai 10, langsung ke Ending2
+            
             if (pelanggaranNabung >= 4)
             {
                 Debug.Log("Tidak nabung 10 kali, pindah ke Ending2.");
@@ -119,7 +118,7 @@ public class NextButton : MonoBehaviour
             }
         }
 
-        // Lanjut ke level berikutnya
+        
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
