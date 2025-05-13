@@ -1,59 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-    public class Anim_Manager : MonoBehaviour
+public class UIAnim_Script : MonoBehaviour
+{
+    public Animator animator;
+    public string triggerIn = "IN";   // Set this to your IN trigger name
+    public string triggerOut = "OUT"; // Set this to your OUT trigger name
+
+    private bool isShowing = false;
+
+    void Update()
     {
-        Audio_Manager audioManager;
-
-        private void Awake()
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<Audio_Manager>(); //To awake the "AudioManager" game object when the game started.
-
-        }
-
-        public GameObject popPCB, popMenuButtons;
-        private Animator animator1, animator2;
-        //animator1 > popup PCB
-        //animator2 > popup MenuButtons
-
-        private bool isPaused = false; // track menu state
-
-        private void Start()
-        {
-            animator1 = popPCB.GetComponent<Animator>();
-            animator2 = popMenuButtons.GetComponent<Animator>();
-        }
-        
-        
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape)) // To open Pause Menu popup
+            if (isShowing)
             {
-                if (isPaused)
-                {
-                   HidePopup();
-                }
-                else
-                {
-                    ShowPopup();
-                }
-
-                isPaused = !isPaused;
+                animator.SetTrigger(triggerOut);
             }
-        }
+            else
+            {
+                animator.SetTrigger(triggerIn);
+            }
 
-        public void ShowPopup() // To show popup
-        {
-            audioManager.PlaySFX(audioManager.buttonClick);
-            animator1.Play("PCB_IN");
-            animator2.Play("BTN_IN");
-        }
-
-        public void HidePopup() // To hide popup
-        {
-            audioManager.PlaySFX(audioManager.buttonClick);
-            animator1.Play("PCB_OUT");
-            animator2.Play("BTN_OUT");
+            isShowing = !isShowing;
         }
     }
+}
