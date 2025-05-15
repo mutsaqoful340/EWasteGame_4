@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UI_CUrsor2D3D : MonoBehaviour
+public class UI_Cursor2D3D : MonoBehaviour
 {
     private bool isDragging = false;
     private bool isHovering = false;
