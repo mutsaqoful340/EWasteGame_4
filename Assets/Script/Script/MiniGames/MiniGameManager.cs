@@ -14,7 +14,6 @@ public class MiniGameManager : MonoBehaviour
 
     public void StartMiniGame()
     {
-        gameplayUI.SetActive(false);
         mainCamera.SetActive(false);
         miniGameCamera.SetActive(true);
 
