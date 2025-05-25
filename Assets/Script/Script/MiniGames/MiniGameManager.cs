@@ -14,11 +14,16 @@ public class MiniGameManager : MonoBehaviour
 
     public void StartMiniGame()
     {
+        Debug.Log("StartMiniGame() dipanggil");
+
         mainCamera.SetActive(false);
         miniGameCamera.SetActive(true);
 
         pcbOnTable.SetActive(true);
         miniGameUIPanel.SetActive(true);
+
+        gameplayUI.SetActive(false); // tambahkan log setelah ini juga
+        Debug.Log("gameplayUI disembunyikan");
 
         StartCoroutine(StartZoomDelayed());
     }

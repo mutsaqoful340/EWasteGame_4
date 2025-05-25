@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class CameraTransition : MonoBehaviour
 {
-    public CameraZoomTransition zoomTransition;
-
-
     public Transform target;
     public float speed = 2f;
 
