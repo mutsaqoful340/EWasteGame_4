@@ -2478,6 +2478,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2620938400205119160, guid: 1ca43ea734fa0a04ebbb21c2bf7109d6,
         type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2620938400205119160, guid: 1ca43ea734fa0a04ebbb21c2bf7109d6,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -5132,6 +5137,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2620938400205119160, guid: 1ca43ea734fa0a04ebbb21c2bf7109d6,
         type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2620938400205119160, guid: 1ca43ea734fa0a04ebbb21c2bf7109d6,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -5490,6 +5500,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Phone (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2620938400205119160, guid: 1ca43ea734fa0a04ebbb21c2bf7109d6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2620938400205119160, guid: 1ca43ea734fa0a04ebbb21c2bf7109d6,
         type: 3}
@@ -6268,7 +6283,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -6292,9 +6307,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6712544a2a497914381e7e49cac5465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {fileID: 1054321266}
+  targetPosition: {fileID: 1038306490}
   komponenTambahanPrefab: {fileID: 0}
   spawnPosisi: {fileID: 0}
+  boxTransform: {fileID: 6487958636427000193}
+  boxPosisiBaru: {x: -1.572, y: -0.138, z: -0.693}
+  durasiAnimasi: 1
 --- !u!1 &886675592
 GameObject:
   m_ObjectHideFlags: 0
@@ -9059,7 +9077,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -9083,9 +9101,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6712544a2a497914381e7e49cac5465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {fileID: 1038306490}
+  targetPosition: {fileID: 1054321266}
   komponenTambahanPrefab: {fileID: 0}
   spawnPosisi: {fileID: 0}
+  boxTransform: {fileID: 6487958636427000193}
+  boxPosisiBaru: {x: -1.572, y: -0.138, z: -0.693}
+  durasiAnimasi: 1
 --- !u!1 &1209859757
 GameObject:
   m_ObjectHideFlags: 0
@@ -12719,7 +12740,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -12746,6 +12767,9 @@ MonoBehaviour:
   targetPosition: {fileID: 1664940600}
   komponenTambahanPrefab: {fileID: 0}
   spawnPosisi: {fileID: 0}
+  boxTransform: {fileID: 6487958636427000193}
+  boxPosisiBaru: {x: -1.572, y: -0.138, z: -0.693}
+  durasiAnimasi: 1
 --- !u!1 &1731966250
 GameObject:
   m_ObjectHideFlags: 0
@@ -16555,7 +16579,7 @@ Transform:
   m_GameObject: {fileID: 4767678125474247435}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.572, y: -0.138, z: -2.301}
+  m_LocalPosition: {x: -1.572, y: -0.138, z: -1.752}
   m_LocalScale: {x: 2.06, y: 2.06, z: 2.06}
   m_ConstrainProportionsScale: 1
   m_Children:
