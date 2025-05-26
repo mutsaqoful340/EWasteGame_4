@@ -6340,6 +6340,7 @@ MonoBehaviour:
   spawnPosisi: {fileID: 0}
   boxTransform: {fileID: 6487958636427000193}
   boxPosisiBaru: {x: -1.572, y: -0.138, z: -0.693}
+  tongSampahTransform: {fileID: 1985160420}
   durasiAnimasi: 1
   isTaken: 0
 --- !u!1 &886675592
@@ -9188,6 +9189,7 @@ MonoBehaviour:
   spawnPosisi: {fileID: 0}
   boxTransform: {fileID: 6487958636427000193}
   boxPosisiBaru: {x: -1.572, y: -0.138, z: -0.693}
+  tongSampahTransform: {fileID: 1985160420}
   durasiAnimasi: 1
   isTaken: 0
 --- !u!114 &1208156975
@@ -12890,6 +12892,7 @@ MonoBehaviour:
   spawnPosisi: {fileID: 0}
   boxTransform: {fileID: 6487958636427000193}
   boxPosisiBaru: {x: -1.572, y: -0.138, z: -0.693}
+  tongSampahTransform: {fileID: 1985160420}
   durasiAnimasi: 1
   isTaken: 0
 --- !u!114 &1730207767
@@ -15483,6 +15486,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceptedTag: Ewaste
+  kardusTransform: {fileID: 6487958636427000193}
+  posisiBaru: {fileID: 2119042956}
+  durasiAnimasi: 1
+--- !u!4 &1985160420 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 461146, guid: 4656138d9606a80408030bdc231b1233,
+    type: 3}
+  m_PrefabInstance: {fileID: 299870299}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2011836402
 GameObject:
   m_ObjectHideFlags: 0
@@ -16031,6 +16043,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110211812}
   m_CullTransparentMesh: 1
+--- !u!1 &2119042955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2119042956}
+  m_Layer: 0
+  m_Name: Posiskrdusbaru
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2119042956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119042955}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.698, y: 0.37043452, z: -1.468}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &171007701319533266
 Transform:
   m_ObjectHideFlags: 0
@@ -16896,3 +16939,4 @@ SceneRoots:
   - {fileID: 1054321266}
   - {fileID: 1664940600}
   - {fileID: 1038306490}
+  - {fileID: 2119042956}
