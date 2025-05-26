@@ -3,41 +3,72 @@ using System.Collections;
 
 public class HPTakerKeyboardBoxAnim : MonoBehaviour
 {
-    public Transform targetPosition;       // Posisi keluar HP (langsung teleport)
-    public GameObject komponenTambahanPrefab; // Spawn prefab (optional)
-    public Transform spawnPosisi;              // Posisi spawn prefab (optional)
+    public Transform targetPosition;       // Posisi keluar HP (teleport)
+    public GameObject komponenTambahanPrefab; // Spawn prefab tambahan (opsional)
+    public Transform spawnPosisi;              // Posisi spawn prefab (opsional)
 
     public Transform boxTransform;         // Box yang mau dipindah animasi
     public Vector3 boxPosisiBaru;          // Posisi baru Box
-
     public float durasiAnimasi = 1f;       // Lama animasi perpindahan Box
 
-    private bool isTaken = false;
+    [HideInInspector]
+    public bool isTaken = false;            // Status sudah diambil
 
-    void Update()
+    private HPTakerKeyboardBoxAnim[] allHPsInBox;
+
+    void Start()
     {
-        if (!isTaken && Input.GetKeyDown(KeyCode.E))
+        if (boxTransform != null)
         {
-            // Pindah HP langsung
-            if (targetPosition != null)
+            allHPsInBox = boxTransform.GetComponentsInChildren<HPTakerKeyboardBoxAnim>();
+        }
+    }
+
+    // Dipanggil dari HPDragHandler saat drag selesai
+    public void TakeHP()
+    {
+        if (isTaken) return;
+
+        // Pindah HP langsung
+        if (targetPosition != null)
+        {
+            transform.position = targetPosition.position;
+            transform.SetParent(null);
+        }
+
+        // Spawn prefab tambahan kalau ada
+        if (komponenTambahanPrefab != null && spawnPosisi != null)
+        {
+            Instantiate(komponenTambahanPrefab, spawnPosisi.position, spawnPosisi.rotation);
+        }
+
+        isTaken = true;
+
+        // Cek apakah semua HP sudah diambil
+        if (allHPsInBox != null)
+        {
+            bool semuaSudahDiambil = true;
+            foreach (var hp in allHPsInBox)
             {
-                transform.position = targetPosition.position;
-                transform.SetParent(null);
+                if (!hp.isTaken)
+                {
+                    semuaSudahDiambil = false;
+                    break;
+                }
             }
 
-            // Spawn prefab tambahan kalau ada
-            if (komponenTambahanPrefab != null && spawnPosisi != null)
+            if (semuaSudahDiambil)
             {
-                Instantiate(komponenTambahanPrefab, spawnPosisi.position, spawnPosisi.rotation);
+                Debug.Log("Semua HP sudah diambil, mulai animasi pindah box");
+                if (boxTransform != null)
+                {
+                    StartCoroutine(MoveOverSeconds(boxTransform, boxPosisiBaru, durasiAnimasi));
+                }
             }
-
-            // Mulai animasi perpindahan Box
-            if (boxTransform != null)
+            else
             {
-                StartCoroutine(MoveOverSeconds(boxTransform, boxPosisiBaru, durasiAnimasi));
+                Debug.Log("Masih ada HP yang belum diambil, box belum dipindah");
             }
-
-            isTaken = true;
         }
     }
 

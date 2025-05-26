@@ -4,32 +4,64 @@ public class HPDragHandler : MonoBehaviour
 {
     private Vector3 offset;
     private Camera cam;
+    private bool isDragging = false;
+    public LayerMask hpLayerMask;
+    public BoxCollider kardusCollider;
 
     void Start()
     {
         cam = Camera.main;
     }
 
-    void OnMouseDown()
+    void Update()
     {
-        offset = transform.position - GetMouseWorldPos();
-    }
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, hpLayerMask))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    offset = transform.position - hit.point;
+                    isDragging = true;
+                }
+            }
+        }
 
-    void OnMouseDrag()
-    {
-        transform.position = GetMouseWorldPos() + offset;
-    }
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (isDragging)
+            {
+                isDragging = false;
 
-    void OnMouseUp()
-    {
-        // Lepaskan dari parent (Box)
-        transform.SetParent(null);
-    }
+                // Panggil TakeHP di script HPTakerKeyboardBoxAnim
+                HPTakerKeyboardBoxAnim hpTakeScript = GetComponent<HPTakerKeyboardBoxAnim>();
+                if (hpTakeScript != null && !hpTakeScript.isTaken)
+                {
+                    hpTakeScript.TakeHP();
+                }
 
-    Vector3 GetMouseWorldPos()
-    {
-        Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = 5f; // Jarak dari kamera, sesuaikan kalau perlu
-        return cam.ScreenToWorldPoint(mousePoint);
+                transform.SetParent(null);
+                Debug.Log("Selesai drag HP, TakeHP dijalankan");
+            }
+        }
+
+        if (isDragging)
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+            {
+                Vector3 targetPos = hit.point + offset;
+
+                if (kardusCollider != null && kardusCollider.bounds.Contains(targetPos))
+                {
+                    Debug.Log("Posisi HP menabrak kardus, gerakan dibatalkan");
+                }
+                else
+                {
+                    transform.position = targetPos;
+                }
+            }
+        }
     }
 }
