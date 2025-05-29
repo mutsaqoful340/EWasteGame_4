@@ -12,7 +12,7 @@ public class HPUnpack : MonoBehaviour
     public GameObject kertasPrefab;
     public GameObject pensilPrefab;
 
-    public Transform[] spawnSlots; // Misalnya 1 slot = posisi tengah HP
+    public Transform[] spawnSlots;
 
     public void SpawnItem(int slotIndex, string itemType)
     {
@@ -24,7 +24,7 @@ public class HPUnpack : MonoBehaviour
 
         Transform baseTransform = spawnSlots[slotIndex];
         Vector3 basePos = baseTransform.position;
-        Quaternion baseRot = baseTransform.rotation; // Rotasi HP
+        Quaternion baseRot = baseTransform.rotation;
 
         GameObject prefabToSpawn = GetPrefabByType(itemType);
         if (prefabToSpawn == null)
@@ -33,11 +33,19 @@ public class HPUnpack : MonoBehaviour
             return;
         }
 
-        // Offset relatif terhadap orientasi HP
         Vector3 offset = GetOffsetByType(itemType);
         Vector3 spawnPos = basePos + baseTransform.TransformDirection(offset);
 
-        GameObject spawnedItem = Instantiate(prefabToSpawn, spawnPos, baseRot); // Mengikuti orientasi HP
+        // Hitung offset tinggi (agar tidak nembus meja)
+        Renderer rend = prefabToSpawn.GetComponentInChildren<Renderer>();
+        float yOffset = rend ? rend.bounds.extents.y : 0.05f;
+        spawnPos.y += yOffset;
+
+        // Rotasi supaya terbaring
+        Quaternion layFlat = Quaternion.Euler(90f, baseRot.eulerAngles.y, 0f);
+
+        GameObject spawnedItem = Instantiate(prefabToSpawn, spawnPos, layFlat);
+        spawnedItem.name = prefabToSpawn.name + "_Spawned";
 
         var dragComp = spawnedItem.GetComponent<DraggableItem>();
         if (dragComp != null)
