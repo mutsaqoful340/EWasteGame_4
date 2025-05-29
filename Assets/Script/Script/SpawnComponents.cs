@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpawnOnClick : MonoBehaviour
 {
     public GameObject[] prefabsToSpawn;     // Prefab yang akan di-spawn
-    public Transform centerPoint;           // Titik pusat spawn
+    public Transform centerPoint;           // Titik pusat spawn (misalnya HP)
     public float radius = 1.5f;             // Jarak dari pusat ke posisi spawn
     private bool hasSpawned = false;        // Cegah spawn ulang
 
@@ -11,7 +11,7 @@ public class SpawnOnClick : MonoBehaviour
     {
         if (!hasSpawned)
         {
-            if (centerPoint == null) centerPoint = this.transform; // fallback ke object ini
+            if (centerPoint == null) centerPoint = this.transform; // fallback
             SpawnInCircle();
             hasSpawned = true;
         }
@@ -38,12 +38,39 @@ public class SpawnOnClick : MonoBehaviour
                 continue;
             }
 
+            // Hitung posisi offset melingkar lokal
             float angle = angleStep * i * Mathf.Deg2Rad;
-            Vector3 spawnPos = centerPoint.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+            Vector3 localOffset = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+            Vector3 spawnPos = centerPoint.position + centerPoint.TransformDirection(localOffset);
 
+            // Gunakan rotasi HP
+            Quaternion spawnRot = centerPoint.rotation;
 
-            GameObject spawned = Instantiate(prefab, spawnPos, Quaternion.Euler(90f, 0f, 0f));
+            // Instansiasi prefab tapi disable dulu untuk ukur tinggi
+            GameObject spawned = Instantiate(prefab, spawnPos, spawnRot);
             spawned.name = prefab.name + "_Spawned";
+            spawned.SetActive(false); // disable sementara
+
+            // Hitung offset Y berdasarkan ukuran objek
+            float yOffset = GetHeightOffset(spawned);
+            spawnPos += centerPoint.up * yOffset;
+
+            // Pindahkan posisi baru dan aktifkan
+            spawned.transform.position = spawnPos;
+            spawned.SetActive(true);
+        }
+    }
+
+    float GetHeightOffset(GameObject go)
+    {
+        Renderer rend = go.GetComponentInChildren<Renderer>();
+        if (rend != null)
+        {
+            return rend.bounds.extents.y;
+        }
+        else
+        {
+            return 0.1f; // fallback default kalau tidak ada Renderer
         }
     }
 }
