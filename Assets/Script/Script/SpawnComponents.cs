@@ -2,75 +2,43 @@ using UnityEngine;
 
 public class SpawnOnClick : MonoBehaviour
 {
-    public GameObject[] prefabsToSpawn;     // Prefab yang akan di-spawn
-    public Transform centerPoint;           // Titik pusat spawn (misalnya HP)
-    public float radius = 1.5f;             // Jarak dari pusat ke posisi spawn
-    private bool hasSpawned = false;        // Cegah spawn ulang
+    public GameObject[] prefabsToSpawn;
+    public Transform centerPoint;
+    public float radius = 1.0f;
+    private bool hasSpawned = false;
 
     void OnMouseDown()
     {
         if (!hasSpawned)
         {
-            if (centerPoint == null) centerPoint = this.transform; // fallback
-            SpawnInCircle();
+            if (centerPoint == null) centerPoint = this.transform;
+            SpawnFlatCircle();
             hasSpawned = true;
         }
     }
 
-    void SpawnInCircle()
+    void SpawnFlatCircle()
     {
-        if (prefabsToSpawn == null || prefabsToSpawn.Length == 0)
-        {
-            Debug.LogError("Prefab belum diisi!");
-            return;
-        }
-
         int total = prefabsToSpawn.Length;
+        if (total == 0) return;
+
         float angleStep = 360f / total;
 
         for (int i = 0; i < total; i++)
         {
             GameObject prefab = prefabsToSpawn[i];
+            if (prefab == null) continue;
 
-            if (prefab == null)
-            {
-                Debug.LogWarning($"Prefab pada index {i} kosong!");
-                continue;
-            }
+            float angleRad = angleStep * i * Mathf.Deg2Rad;
+            Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
+            Vector3 spawnPos = centerPoint.position + offset;
 
-            // Hitung posisi offset melingkar lokal
-            float angle = angleStep * i * Mathf.Deg2Rad;
-            Vector3 localOffset = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
-            Vector3 spawnPos = centerPoint.position + centerPoint.TransformDirection(localOffset);
+            // Tetapkan rotasi agar menghadap ke pusat dan terbaring
+            Vector3 dirToCenter = (centerPoint.position - spawnPos).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(dirToCenter, Vector3.up);
+            Quaternion flatRotation = Quaternion.Euler(90f, lookRotation.eulerAngles.y, 0f);
 
-            // Gunakan rotasi HP
-            Quaternion spawnRot = centerPoint.rotation;
-
-            // Instansiasi prefab tapi disable dulu untuk ukur tinggi
-            GameObject spawned = Instantiate(prefab, spawnPos, spawnRot);
-            spawned.name = prefab.name + "_Spawned";
-            spawned.SetActive(false); // disable sementara
-
-            // Hitung offset Y berdasarkan ukuran objek
-            float yOffset = GetHeightOffset(spawned);
-            spawnPos += centerPoint.up * yOffset;
-
-            // Pindahkan posisi baru dan aktifkan
-            spawned.transform.position = spawnPos;
-            spawned.SetActive(true);
-        }
-    }
-
-    float GetHeightOffset(GameObject go)
-    {
-        Renderer rend = go.GetComponentInChildren<Renderer>();
-        if (rend != null)
-        {
-            return rend.bounds.extents.y;
-        }
-        else
-        {
-            return 0.1f; // fallback default kalau tidak ada Renderer
+            Instantiate(prefab, spawnPos, flatRotation);
         }
     }
 }
