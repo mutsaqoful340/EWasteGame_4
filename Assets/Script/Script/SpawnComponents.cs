@@ -33,10 +33,12 @@ public class SpawnOnClick : MonoBehaviour
             Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
             Vector3 spawnPos = centerPoint.position + offset;
 
-            // Tetapkan rotasi agar menghadap ke pusat dan terbaring
-            Vector3 dirToCenter = (centerPoint.position - spawnPos).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(dirToCenter, Vector3.up);
-            Quaternion flatRotation = Quaternion.Euler(90f, lookRotation.eulerAngles.y, 0f);
+            // Rotasi dasar = rotasi centerPoint
+            Quaternion baseRotation = centerPoint.rotation;
+
+            // Tambahkan rotasi supaya prefab baring menghadap atas
+            // Contoh rotasi 90 derajat di sumbu X (diputar ke depan)
+            Quaternion flatRotation = baseRotation * Quaternion.Euler(90f, 0f, 0f);
 
             Instantiate(prefab, spawnPos, flatRotation);
         }
