@@ -23,6 +23,7 @@ public class SpawnOnClick : MonoBehaviour
         if (total == 0) return;
 
         float angleStep = 360f / total;
+        float yOffset = -0.3f; // coba sesuaikan nilai ini
 
         for (int i = 0; i < total; i++)
         {
@@ -31,16 +32,13 @@ public class SpawnOnClick : MonoBehaviour
 
             float angleRad = angleStep * i * Mathf.Deg2Rad;
             Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
-            Vector3 spawnPos = centerPoint.position + offset;
 
-            // Rotasi dasar = rotasi centerPoint
-            Quaternion baseRotation = centerPoint.rotation;
+            Vector3 spawnPos = centerPoint.position + offset + Vector3.up * yOffset;
 
-            // Tambahkan rotasi supaya prefab baring menghadap atas
-            // Contoh rotasi 90 derajat di sumbu X (diputar ke depan)
-            Quaternion flatRotation = baseRotation * Quaternion.Euler(90f, 0f, 0f);
+            Quaternion flatRotation = centerPoint.rotation * Quaternion.Euler(-90f, 0f, 0f);
 
             Instantiate(prefab, spawnPos, flatRotation);
         }
     }
+
 }
