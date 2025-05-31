@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class BoxPenyimpanan : MonoBehaviour
 {
@@ -25,13 +24,12 @@ public class BoxPenyimpanan : MonoBehaviour
     public TextMeshProUGUI pemasukanText;
     public TextMeshProUGUI sisaUangText;
     public TextMeshProUGUI tabunganText;
-    
 
     public Toggle toggleMakan;
     public Toggle toggleNabung;
     public Toggle toggleJajan;
 
-    public Button btnLihatRingkasan;
+    public Button btnLanjut;
     public Button btnAkhiriGame;
 
     private bool isGameOver = false;
@@ -48,8 +46,6 @@ public class BoxPenyimpanan : MonoBehaviour
     private int nabungCost = 15000;
     private int jajanCost = 10000;
 
-    private float delayToSummary = 2f;
-
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
 
@@ -57,18 +53,16 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         timer = totalTime;
 
-        // Cek apakah ada buff jajan yang aktif
         if (PlayerPrefs.GetInt("BuffJajanAktif", 0) == 1)
         {
             timer += 300f;
-            PlayerPrefs.SetInt("BuffJajanAktif", 0); // Reset buff
+            PlayerPrefs.SetInt("BuffJajanAktif", 0);
         }
 
         string currentSceneName = SceneManager.GetActiveScene().name;
 
         if (currentSceneName == "3DLV1")
         {
-            // Reset uang dan tabungan saat level pertama
             PlayerPrefs.DeleteKey("SisaUang");
             PlayerPrefs.DeleteKey("TotalTabungan");
             PlayerPrefs.SetInt("TidakMakanKemarin", 0);
@@ -76,25 +70,32 @@ public class BoxPenyimpanan : MonoBehaviour
         }
         else
         {
-            // Dapatkan uang dari level sebelumnya
             int sisaUangDariLevelSebelumnya = PlayerPrefs.GetInt("SisaUang", 0);
-            currentReward = sisaUangDariLevelSebelumnya + initialReward; // Akumulasi dengan uang level sebelumnya
+            currentReward = sisaUangDariLevelSebelumnya + initialReward;
         }
 
-        // Ambil total tabungan dari level sebelumnya
         totalTabungan = PlayerPrefs.GetInt("TotalTabungan", 0);
 
-        // Tampilkan nilai tabungan di layar
         if (tabunganText != null)
             tabunganText.text = "Tabungan: Rp" + totalTabungan.ToString("N0");
 
         btnAkhiriGame.gameObject.SetActive(false);
 
+        if (financeSummaryPanel != null)
+            financeSummaryPanel.SetActive(false);
+
+        if (btnLanjut != null)
+            btnLanjut.gameObject.SetActive(false);
+
         UpdateTimerUI();
         UpdateMoneyUI();
+
+        if (btnLanjut != null)
+            btnLanjut.onClick.AddListener(OnNextButtonClicked);
+
+        // Penting: update sisa uang dari awal, sebelum toggle diubah
+        UpdateSisaUang();
     }
-
-
 
     void Update()
     {
@@ -157,17 +158,12 @@ public class BoxPenyimpanan : MonoBehaviour
         PlayerPrefs.SetInt("SisaUang", currentReward);
         PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
         PlayerPrefs.Save();
-
-        // Setelah delay tertentu, pindah ke level berikutnya
-        // delayToSummary adalah waktu delay yang diinginkan
     }
 
     void ShowFinanceSummary()
     {
-        if (financeSummaryPanel != null && isGameOver)
-        {
+        if (financeSummaryPanel != null)
             financeSummaryPanel.SetActive(true);
-        }
 
         if (pemasukanText != null)
             pemasukanText.text = "Pemasukan: Rp" + currentReward.ToString("N0");
@@ -178,25 +174,33 @@ public class BoxPenyimpanan : MonoBehaviour
         toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
 
+        if (btnLanjut != null)
+            btnLanjut.gameObject.SetActive(true);
+
         if (btnAkhiriGame != null)
-        {
             btnAkhiriGame.gameObject.SetActive(true);
-        }
     }
 
     void UpdateSisaUang()
     {
         int totalPengeluaran = 0;
 
-        if (toggleMakan.isOn) totalPengeluaran += makanCost;
-        if (toggleNabung.isOn) totalPengeluaran += nabungCost;
-        if (toggleJajan.isOn) totalPengeluaran += jajanCost;
+        if (toggleMakan != null && toggleMakan.isOn) totalPengeluaran += makanCost;
+        if (toggleNabung != null && toggleNabung.isOn) totalPengeluaran += nabungCost;
+        if (toggleJajan != null && toggleJajan.isOn) totalPengeluaran += jajanCost;
 
         int sisa = currentReward - totalPengeluaran;
         sisa = Mathf.Max(0, sisa);
 
         if (sisaUangText != null)
+        {
             sisaUangText.text = "Sisa: Rp" + sisa.ToString("N0");
+            Debug.Log("UpdateSisaUang() berhasil: " + sisaUangText.text);
+        }
+        else
+        {
+            Debug.LogError("sisaUangText belum di-assign di Inspector!");
+        }
 
         PlayerPrefs.SetInt("SisaUang", sisa);
         PlayerPrefs.Save();
@@ -208,6 +212,7 @@ public class BoxPenyimpanan : MonoBehaviour
 
         bool playerMakan = toggleMakan.isOn;
         bool playerJajan = toggleJajan.isOn;
+        bool playerNabung = toggleNabung.isOn;
 
         if (playerJajan && !buffJajanSudahDipakai && currentReward >= jajanCost)
         {
@@ -221,40 +226,38 @@ public class BoxPenyimpanan : MonoBehaviour
         {
             currentReward -= makanCost;
             sudahMakanHariIni = true;
-        }
-        else
-        {
-            sudahMakanHariIni = false;
-        }
-
-        if (sudahMakanHariIni)
-        {
             PlayerPrefs.SetInt("TidakMakanKemarin", 0);
         }
         else
         {
+            sudahMakanHariIni = false;
             PlayerPrefs.SetInt("TidakMakanKemarin", 1);
         }
 
-        if (toggleNabung.isOn && currentReward >= nabungCost)
+        if (playerNabung && currentReward >= nabungCost)
         {
             currentReward -= nabungCost;
             totalTabungan += nabungCost;
 
-            PlayerPrefs.SetInt("TotalTabungan", totalTabungan); // Simpan tabungan
+            PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
 
             if (tabunganText != null)
                 tabunganText.text = "Tabungan: Rp" + totalTabungan.ToString("N0");
         }
 
-
-
         PlayerPrefs.SetInt("SisaUang", currentReward);
         PlayerPrefs.Save();
 
+        jajanSudahDiterapkan = true;
 
         UpdateMoneyUI();
         UpdateTimerUI();
+    }
+
+    public void OnNextButtonClicked()
+    {
+        TerapkanPilihan();
+        GoToNextLevel();
     }
 
     void UpdateTimerUI()
@@ -286,7 +289,4 @@ public class BoxPenyimpanan : MonoBehaviour
             Debug.Log("No more levels to load.");
         }
     }
-
-
-
 }

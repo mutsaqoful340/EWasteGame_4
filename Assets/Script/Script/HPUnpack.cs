@@ -12,19 +12,16 @@ public class HPUnpack : MonoBehaviour
     public GameObject kertasPrefab;
     public GameObject pensilPrefab;
 
-    public Transform[] spawnSlots;
+    public Transform centerPoint;    // Ini posisi hp utama, assign di inspector
+    public float radius = 0.1f;      // Jarak melingkar dari centerPoint
 
-    public void SpawnItem(int slotIndex, string itemType)
+    public void SpawnItemAroundCenter(int slotIndex, string itemType, int totalItems)
     {
-        if (slotIndex < 0 || slotIndex >= spawnSlots.Length)
+        if (centerPoint == null)
         {
-            Debug.LogWarning("Index slot spawn tidak valid.");
+            Debug.LogWarning("Center point belum diassign!");
             return;
         }
-
-        Transform baseTransform = spawnSlots[slotIndex];
-        Vector3 basePos = baseTransform.position;
-        Quaternion baseRot = baseTransform.rotation;
 
         GameObject prefabToSpawn = GetPrefabByType(itemType);
         if (prefabToSpawn == null)
@@ -33,20 +30,31 @@ public class HPUnpack : MonoBehaviour
             return;
         }
 
-        Vector3 offset = GetOffsetByType(itemType);
-        Vector3 spawnPos = basePos + baseTransform.TransformDirection(offset);
+        // Hitung sudut berdasarkan indeks dan total item agar membentuk lingkaran
+        float angleStep = 360f / totalItems;
+        float angle = angleStep * slotIndex;
+        float angleRad = angle * Mathf.Deg2Rad;
 
-        // Hitung offset tinggi (agar tidak nembus meja)
+        // Hitung posisi spawn di lingkaran sekitar centerPoint
+        Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
+        Vector3 spawnPos = centerPoint.position + offset;
+
+        // Tambahkan offset kecil berdasarkan tipe item supaya tidak tumpang tindih
+        Vector3 extraOffset = GetOffsetByType(itemType);
+        spawnPos += extraOffset;
+
+        // Tambahkan offset tinggi supaya objek tidak nembus meja
         Renderer rend = prefabToSpawn.GetComponentInChildren<Renderer>();
-        float yOffset = rend ? rend.bounds.extents.y : 0.05f;
+        float yOffset = rend ? rend.bounds.extents.y : 0.02f;
         spawnPos.y += yOffset;
 
-        // Rotasi supaya terbaring
-        Quaternion layFlat = Quaternion.Euler(90f, baseRot.eulerAngles.y, 0f);
+        // Rotasi supaya prefab baring menghadap ke atas
+        Quaternion spawnRot = Quaternion.Euler(-90f, 0f, 0f);
 
-        GameObject spawnedItem = Instantiate(prefabToSpawn, spawnPos, layFlat);
+        GameObject spawnedItem = Instantiate(prefabToSpawn, spawnPos, spawnRot);
         spawnedItem.name = prefabToSpawn.name + "_Spawned";
 
+        // Jika prefab ada komponen DraggableItem, set itemType-nya
         var dragComp = spawnedItem.GetComponent<DraggableItem>();
         if (dragComp != null)
         {
@@ -72,8 +80,7 @@ public class HPUnpack : MonoBehaviour
 
     private Vector3 GetOffsetByType(string itemType)
     {
-        float radius = 0.25f;
-
+        float radius = 0.02f;
         switch (itemType)
         {
             case "Top_Enclosure": return new Vector3(0, 0, radius);
