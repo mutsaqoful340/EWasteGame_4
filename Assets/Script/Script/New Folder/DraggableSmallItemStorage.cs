@@ -6,6 +6,7 @@ public class DraggableStorageItem : MonoBehaviour
     private Vector3 startPos;
     private bool isDragging = false;
     private float zOffset;
+    private float startY; // Menyimpan posisi Y agar tidak tembus meja saat drag
 
     public string itemType; // misal: "SmallEWaste"
 
@@ -14,8 +15,8 @@ public class DraggableStorageItem : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
+        startY = startPos.y; // Simpan posisi Y awal
 
-        // Cari BoxPenyimpanan di scene
         boxManager = FindObjectOfType<BoxPenyimpanan>();
         if (boxManager == null)
         {
@@ -36,6 +37,7 @@ public class DraggableStorageItem : MonoBehaviour
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = zOffset;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            worldPos.y = startY; // Tetap berada di atas meja
             transform.position = worldPos;
         }
     }
@@ -56,7 +58,6 @@ public class DraggableStorageItem : MonoBehaviour
         {
             if (gameObject.CompareTag("SmallEWaste"))
             {
-                // Pastikan jumlah belum penuh sebelum dihancurkan
                 if (!boxManager.IsFull())
                 {
                     boxManager.AddItem(itemType);
@@ -80,12 +81,12 @@ public class DraggableStorageItem : MonoBehaviour
     private IEnumerator BalikKeAwal()
     {
         float t = 0;
-        Vector3 start = transform.position;
+        Vector3 currentPos = transform.position;
 
         while (t < 1)
         {
             t += Time.deltaTime * 3f;
-            transform.position = Vector3.Lerp(start, startPos, t);
+            transform.position = Vector3.Lerp(currentPos, startPos, t);
             yield return null;
         }
     }

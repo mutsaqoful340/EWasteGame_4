@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: de42a89a416d1ff4184b3ce082c77a91,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.183
+      value: 0.259
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de42a89a416d1ff4184b3ce082c77a91,
         type: 3}
@@ -195,14 +195,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabsToSpawn:
-  - {fileID: 98362590394360868, guid: 66444245c638f014e94f3d33651840ed, type: 3}
-  - {fileID: 4091895545417827416, guid: 867e4252f7e33eb45b207240c5473f5a, type: 3}
-  - {fileID: 8970100620784599392, guid: fbd79feb4e2721341b28a622a672f786, type: 3}
-  - {fileID: 1902428088577402292, guid: 456b912d69c0ee647a5e3e47f1bb5f9b, type: 3}
-  - {fileID: 5136094813975238580, guid: 229be65a26f822b4bbb3a0c1b6e55009, type: 3}
+  - {fileID: 149239335472322608, guid: 5a691f01639d8d448a836def50ad2064, type: 3}
+  - {fileID: 44361646185497248, guid: 87f1d50fde081904bb5d72202148e269, type: 3}
+  - {fileID: 1326670599592016274, guid: 73c8413d907745544aaea10440b5971c, type: 3}
   - {fileID: 1939394519154910264, guid: 6dd0add113e212a4ebde65da44ae2cf5, type: 3}
+  - {fileID: 6232245283326090010, guid: fbd79feb4e2721341b28a622a672f786, type: 3}
+  - {fileID: 7047990365226165380, guid: 4ce1c11b6c26383488b34cb6fa988fff, type: 3}
   centerPoint: {fileID: 3910012605614308635}
-  radius: 0.2
+  radius: 0.48
 --- !u!114 &516015875095521747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,18 +250,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d173692461e6ba40ba58b5362eb06e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Top_EnclosurePrefab: {fileID: 98362590394360868, guid: 66444245c638f014e94f3d33651840ed,
+  Top_EnclosurePrefab: {fileID: 149239335472322608, guid: 5a691f01639d8d448a836def50ad2064,
     type: 3}
-  LCDPrefab: {fileID: 4091895545417827416, guid: 867e4252f7e33eb45b207240c5473f5a,
+  LCDPrefab: {fileID: 44361646185497248, guid: 87f1d50fde081904bb5d72202148e269, type: 3}
+  MachinePrefab: {fileID: 1326670599592016274, guid: 73c8413d907745544aaea10440b5971c,
     type: 3}
-  MachinePrefab: {fileID: 8970100620784599392, guid: fbd79feb4e2721341b28a622a672f786,
+  SIMCardPrefab: {fileID: 1939394519154910264, guid: 6dd0add113e212a4ebde65da44ae2cf5,
     type: 3}
-  SIMCardPrefab: {fileID: 1902428088577402292, guid: 456b912d69c0ee647a5e3e47f1bb5f9b,
+  batteryPrefab: {fileID: 6232245283326090010, guid: fbd79feb4e2721341b28a622a672f786,
     type: 3}
-  batteryPrefab: {fileID: 5136094813975238580, guid: 229be65a26f822b4bbb3a0c1b6e55009,
-    type: 3}
-  Bottom_EnclosurePrefab: {fileID: 1939394519154910264, guid: 6dd0add113e212a4ebde65da44ae2cf5,
+  Bottom_EnclosurePrefab: {fileID: 7047990365226165380, guid: 4ce1c11b6c26383488b34cb6fa988fff,
     type: 3}
   kertasPrefab: {fileID: 0}
   pensilPrefab: {fileID: 0}
-  spawnSlots: []
+  centerPoint: {fileID: 3910012605614308635}
+  radius: 1.77
