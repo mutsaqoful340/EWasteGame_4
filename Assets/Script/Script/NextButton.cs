@@ -9,60 +9,58 @@ public class NextButton : MonoBehaviour
     public BoxPenyimpanan boxPenyimpanan;
 
     public Toggle makanToggle;
-    public Toggle nabungToggle;  // Menambahkan toggle untuk nabung
+    public Toggle nabungToggle;
     public GameObject warningOverlay;
+    public GameObject financeSummaryPanel;
     public Button closeButton;
 
     private bool warningSudahMuncul = false;
-    public string endingSceneName = "EndingScene"; // Nama scene ending
-    public string endingSceneName2 = "Ending2";   // Nama scene ending 2 jika tidak nabung
+    public string endingSceneName = "EndingScene";
+    public string endingSceneName2 = "Ending2";
 
     void Start()
     {
-        // Reset pelanggaran hanya pada level pertama (buildIndex == 0)
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        // Reset pelanggaran hanya pada level pertama
+        if (SceneManager.GetActiveScene().buildIndex == 2)
         {
-            // Reset pelanggaran nabung di level pertama
-            PlayerPrefs.SetInt("PelanggaranNabung", 0);
-            PlayerPrefs.Save();  // Jangan lupa untuk menyimpan perubahan
-
-            Debug.Log("Pelanggaran Nabung direset di level pertama.");
+            ResetPelanggaran();
+            Debug.Log("Pelanggaran direset di level pertama.");
         }
 
-        // Cek pelanggaran pada saat level dimulai
         int pelanggaranMakan = PlayerPrefs.GetInt("PelanggaranMakan", 0);
         int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0);
 
-        // Debug log untuk pelanggaran yang ada
-        Debug.Log("Pelanggaran Makan pada Start level: " + pelanggaranMakan);
-        Debug.Log("Pelanggaran Nabung pada Start level: " + pelanggaranNabung);
+        Debug.Log("Pelanggaran Makan pada Start: " + pelanggaranMakan);
+        Debug.Log("Pelanggaran Nabung pada Start: " + pelanggaranNabung);
 
-        // Cek apakah pelanggaran sudah mencapai 4 → langsung ke ending
+        // Langsung ke ending jika pelanggaran terpenuhi
         if (pelanggaranMakan >= 4)
         {
-            Debug.Log("Pelanggaran mencapai 4, langsung pindah ke EndingScene.");
             SceneManager.LoadScene(endingSceneName);
             return;
         }
 
-        // Cek apakah pelanggaran nabung sudah mencapai 10 → langsung ke Ending2
         if (pelanggaranNabung >= 10)
         {
-            Debug.Log("Tidak nabung 10 kali, langsung pindah ke Ending2.");
             SceneManager.LoadScene(endingSceneName2);
             return;
         }
 
-        // Jika close button ada, tambahkan listener untuk menutup overlay
         if (closeButton != null)
         {
             closeButton.onClick.AddListener(CloseWarningOverlay);
         }
     }
 
+    void ResetPelanggaran()
+    {
+        PlayerPrefs.SetInt("PelanggaranMakan", 0);
+        PlayerPrefs.SetInt("PelanggaranNabung", 0);
+        PlayerPrefs.Save();
+    }
+
     public void OnNextLevelButtonPressed()
     {
-        // Jika makan belum dipilih, dan warning belum muncul
         if (!makanToggle.isOn && !warningSudahMuncul)
         {
             warningOverlay.SetActive(true);
@@ -70,63 +68,65 @@ public class NextButton : MonoBehaviour
             return;
         }
 
-        // Terapkan pilihan ke BoxPenyimpanan jika ada
         if (boxPenyimpanan != null)
         {
             boxPenyimpanan.TerapkanPilihan();
         }
 
-        // Simpan sisa uang
         int sisa = int.Parse(sisaUangText.text.Split(' ')[1].Replace("Rp", "").Replace(",", ""));
         PlayerPrefs.SetInt("SisaUang", sisa);
-        PlayerPrefs.Save(); // Simpan perubahan uang ke PlayerPrefs
 
-        // Tambah pelanggaran jika tidak makan
         if (!makanToggle.isOn)
         {
-            int pelanggaran = PlayerPrefs.GetInt("PelanggaranMakan", 0);
-            pelanggaran++;
-            PlayerPrefs.SetInt("PelanggaranMakan", pelanggaran);
-            PlayerPrefs.Save();  // Jangan lupa simpan perubahan
-
-            Debug.Log("Pelanggaran Makan setelah update: " + pelanggaran);
-
-            // Jika pelanggaran sudah mencapai 4, langsung ke EndingScene
-            if (pelanggaran >= 4)
-            {
-                Debug.Log("Pelanggaran mencapai 4, pindah ke EndingScene.");
-                SceneManager.LoadScene(endingSceneName);
-                return;
-            }
+            int pelanggaranMakan = PlayerPrefs.GetInt("PelanggaranMakan", 0) + 1;
+            PlayerPrefs.SetInt("PelanggaranMakan", pelanggaranMakan);
+            Debug.Log("Pelanggaran Makan: " + pelanggaranMakan);
         }
 
-        
+        if (!nabungToggle.isOn)
         {
-            int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0);
-            pelanggaranNabung++;
+            int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0) + 1;
             PlayerPrefs.SetInt("PelanggaranNabung", pelanggaranNabung);
-            PlayerPrefs.Save(); 
-
-            Debug.Log("Pelanggaran Nabung setelah update: " + pelanggaranNabung);
-
-            
-            if (pelanggaranNabung >= 4)
-            {
-                Debug.Log("Tidak nabung 10 kali, pindah ke Ending2.");
-                SceneManager.LoadScene(endingSceneName2);
-                return;
-            }
+            Debug.Log("Pelanggaran Nabung: " + pelanggaranNabung);
         }
 
-        
+        PlayerPrefs.Save();
+
+        if (financeSummaryPanel != null)
+        {
+            financeSummaryPanel.SetActive(true);
+        }
+    }
+
+    public void LanjutKeSceneBerikutnya()
+    {
+        int pelanggaranMakan = PlayerPrefs.GetInt("PelanggaranMakan", 0);
+        int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0);
+
+        if (pelanggaranMakan >= 4)
+        {
+            SceneManager.LoadScene(endingSceneName);
+            return;
+        }
+
+        if (pelanggaranNabung >= 10)
+        {
+            SceneManager.LoadScene(endingSceneName2);
+            return;
+        }
+
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
+            // Reset pelanggaran jika mau reset setiap pindah level:
+            // ResetPelanggaran();
+
             SceneManager.LoadScene(nextSceneIndex);
         }
         else
         {
-            Debug.Log("Semua level sudah selesai!");
+            Debug.Log("Semua level selesai.");
         }
     }
 

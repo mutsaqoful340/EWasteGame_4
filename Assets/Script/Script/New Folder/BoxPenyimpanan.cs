@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class BoxPenyimpanan : MonoBehaviour
 {
@@ -25,13 +24,12 @@ public class BoxPenyimpanan : MonoBehaviour
     public TextMeshProUGUI pemasukanText;
     public TextMeshProUGUI sisaUangText;
     public TextMeshProUGUI tabunganText;
-    
 
     public Toggle toggleMakan;
     public Toggle toggleNabung;
     public Toggle toggleJajan;
 
-    public Button btnLihatRingkasan;
+    public Button btnLanjut;      // Tombol "Next" untuk lanjut level
     public Button btnAkhiriGame;
 
     private bool isGameOver = false;
@@ -48,8 +46,6 @@ public class BoxPenyimpanan : MonoBehaviour
     private int nabungCost = 15000;
     private int jajanCost = 10000;
 
-    private float delayToSummary = 2f;
-
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
 
@@ -57,18 +53,16 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         timer = totalTime;
 
-        // Cek apakah ada buff jajan yang aktif
         if (PlayerPrefs.GetInt("BuffJajanAktif", 0) == 1)
         {
             timer += 300f;
-            PlayerPrefs.SetInt("BuffJajanAktif", 0); // Reset buff
+            PlayerPrefs.SetInt("BuffJajanAktif", 0);
         }
 
         string currentSceneName = SceneManager.GetActiveScene().name;
 
         if (currentSceneName == "3DLV1")
         {
-            // Reset uang dan tabungan saat level pertama
             PlayerPrefs.DeleteKey("SisaUang");
             PlayerPrefs.DeleteKey("TotalTabungan");
             PlayerPrefs.SetInt("TidakMakanKemarin", 0);
@@ -76,25 +70,29 @@ public class BoxPenyimpanan : MonoBehaviour
         }
         else
         {
-            // Dapatkan uang dari level sebelumnya
             int sisaUangDariLevelSebelumnya = PlayerPrefs.GetInt("SisaUang", 0);
-            currentReward = sisaUangDariLevelSebelumnya + initialReward; // Akumulasi dengan uang level sebelumnya
+            currentReward = sisaUangDariLevelSebelumnya + initialReward;
         }
 
-        // Ambil total tabungan dari level sebelumnya
         totalTabungan = PlayerPrefs.GetInt("TotalTabungan", 0);
 
-        // Tampilkan nilai tabungan di layar
         if (tabunganText != null)
             tabunganText.text = "Tabungan: Rp" + totalTabungan.ToString("N0");
 
         btnAkhiriGame.gameObject.SetActive(false);
 
+        if (financeSummaryPanel != null)
+            financeSummaryPanel.SetActive(false);  // pastikan panel ringkasan mati awalnya
+
+        if (btnLanjut != null)
+            btnLanjut.gameObject.SetActive(false);  // tombol lanjut juga mati awalnya
+
         UpdateTimerUI();
         UpdateMoneyUI();
+
+        if (btnLanjut != null)
+            btnLanjut.onClick.AddListener(OnNextButtonClicked);  // pasang event tombol lanjut
     }
-
-
 
     void Update()
     {
@@ -158,30 +156,29 @@ public class BoxPenyimpanan : MonoBehaviour
         PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
         PlayerPrefs.Save();
 
-        // Setelah delay tertentu, pindah ke level berikutnya
-        // delayToSummary adalah waktu delay yang diinginkan
+        // Jangan langsung pindah scene, tunggu klik tombol lanjut
     }
 
     void ShowFinanceSummary()
     {
-        if (financeSummaryPanel != null && isGameOver)
-        {
+        if (financeSummaryPanel != null)
             financeSummaryPanel.SetActive(true);
-        }
 
         if (pemasukanText != null)
             pemasukanText.text = "Pemasukan: Rp" + currentReward.ToString("N0");
 
         UpdateSisaUang();
 
+        // Pasang listener toggle supaya update sisa uang saat toggle berubah
         toggleMakan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
 
+        if (btnLanjut != null)
+            btnLanjut.gameObject.SetActive(true); // aktifkan tombol lanjut
+
         if (btnAkhiriGame != null)
-        {
             btnAkhiriGame.gameObject.SetActive(true);
-        }
     }
 
     void UpdateSisaUang()
@@ -208,7 +205,9 @@ public class BoxPenyimpanan : MonoBehaviour
 
         bool playerMakan = toggleMakan.isOn;
         bool playerJajan = toggleJajan.isOn;
+        bool playerNabung = toggleNabung.isOn;
 
+        // Efek jajan
         if (playerJajan && !buffJajanSudahDipakai && currentReward >= jajanCost)
         {
             currentReward -= jajanCost;
@@ -217,44 +216,45 @@ public class BoxPenyimpanan : MonoBehaviour
             PlayerPrefs.SetInt("BuffJajanAktif", 1);
         }
 
+        // Efek makan
         if (playerMakan && currentReward >= makanCost)
         {
             currentReward -= makanCost;
             sudahMakanHariIni = true;
-        }
-        else
-        {
-            sudahMakanHariIni = false;
-        }
-
-        if (sudahMakanHariIni)
-        {
             PlayerPrefs.SetInt("TidakMakanKemarin", 0);
         }
         else
         {
+            sudahMakanHariIni = false;
             PlayerPrefs.SetInt("TidakMakanKemarin", 1);
         }
 
-        if (toggleNabung.isOn && currentReward >= nabungCost)
+        // Efek nabung
+        if (playerNabung && currentReward >= nabungCost)
         {
             currentReward -= nabungCost;
             totalTabungan += nabungCost;
 
-            PlayerPrefs.SetInt("TotalTabungan", totalTabungan); // Simpan tabungan
+            PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
 
             if (tabunganText != null)
                 tabunganText.text = "Tabungan: Rp" + totalTabungan.ToString("N0");
         }
 
-
-
         PlayerPrefs.SetInt("SisaUang", currentReward);
         PlayerPrefs.Save();
 
+        jajanSudahDiterapkan = true;
 
         UpdateMoneyUI();
         UpdateTimerUI();
+    }
+
+    // Fungsi ini dipanggil dari tombol lanjut (Next)
+    public void OnNextButtonClicked()
+    {
+        TerapkanPilihan();
+        GoToNextLevel();
     }
 
     void UpdateTimerUI()
@@ -286,7 +286,4 @@ public class BoxPenyimpanan : MonoBehaviour
             Debug.Log("No more levels to load.");
         }
     }
-
-
-
 }
