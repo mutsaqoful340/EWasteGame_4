@@ -29,7 +29,7 @@ public class BoxPenyimpanan : MonoBehaviour
     public Toggle toggleNabung;
     public Toggle toggleJajan;
 
-    public Button btnLanjut;      // Tombol "Next" untuk lanjut level
+    public Button btnLanjut;
     public Button btnAkhiriGame;
 
     private bool isGameOver = false;
@@ -82,16 +82,19 @@ public class BoxPenyimpanan : MonoBehaviour
         btnAkhiriGame.gameObject.SetActive(false);
 
         if (financeSummaryPanel != null)
-            financeSummaryPanel.SetActive(false);  // pastikan panel ringkasan mati awalnya
+            financeSummaryPanel.SetActive(false);
 
         if (btnLanjut != null)
-            btnLanjut.gameObject.SetActive(false);  // tombol lanjut juga mati awalnya
+            btnLanjut.gameObject.SetActive(false);
 
         UpdateTimerUI();
         UpdateMoneyUI();
 
         if (btnLanjut != null)
-            btnLanjut.onClick.AddListener(OnNextButtonClicked);  // pasang event tombol lanjut
+            btnLanjut.onClick.AddListener(OnNextButtonClicked);
+
+        // Penting: update sisa uang dari awal, sebelum toggle diubah
+        UpdateSisaUang();
     }
 
     void Update()
@@ -155,8 +158,6 @@ public class BoxPenyimpanan : MonoBehaviour
         PlayerPrefs.SetInt("SisaUang", currentReward);
         PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
         PlayerPrefs.Save();
-
-        // Jangan langsung pindah scene, tunggu klik tombol lanjut
     }
 
     void ShowFinanceSummary()
@@ -169,13 +170,12 @@ public class BoxPenyimpanan : MonoBehaviour
 
         UpdateSisaUang();
 
-        // Pasang listener toggle supaya update sisa uang saat toggle berubah
         toggleMakan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
         toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
 
         if (btnLanjut != null)
-            btnLanjut.gameObject.SetActive(true); // aktifkan tombol lanjut
+            btnLanjut.gameObject.SetActive(true);
 
         if (btnAkhiriGame != null)
             btnAkhiriGame.gameObject.SetActive(true);
@@ -185,15 +185,22 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         int totalPengeluaran = 0;
 
-        if (toggleMakan.isOn) totalPengeluaran += makanCost;
-        if (toggleNabung.isOn) totalPengeluaran += nabungCost;
-        if (toggleJajan.isOn) totalPengeluaran += jajanCost;
+        if (toggleMakan != null && toggleMakan.isOn) totalPengeluaran += makanCost;
+        if (toggleNabung != null && toggleNabung.isOn) totalPengeluaran += nabungCost;
+        if (toggleJajan != null && toggleJajan.isOn) totalPengeluaran += jajanCost;
 
         int sisa = currentReward - totalPengeluaran;
         sisa = Mathf.Max(0, sisa);
 
         if (sisaUangText != null)
+        {
             sisaUangText.text = "Sisa: Rp" + sisa.ToString("N0");
+            Debug.Log("UpdateSisaUang() berhasil: " + sisaUangText.text);
+        }
+        else
+        {
+            Debug.LogError("sisaUangText belum di-assign di Inspector!");
+        }
 
         PlayerPrefs.SetInt("SisaUang", sisa);
         PlayerPrefs.Save();
@@ -207,7 +214,6 @@ public class BoxPenyimpanan : MonoBehaviour
         bool playerJajan = toggleJajan.isOn;
         bool playerNabung = toggleNabung.isOn;
 
-        // Efek jajan
         if (playerJajan && !buffJajanSudahDipakai && currentReward >= jajanCost)
         {
             currentReward -= jajanCost;
@@ -216,7 +222,6 @@ public class BoxPenyimpanan : MonoBehaviour
             PlayerPrefs.SetInt("BuffJajanAktif", 1);
         }
 
-        // Efek makan
         if (playerMakan && currentReward >= makanCost)
         {
             currentReward -= makanCost;
@@ -229,7 +234,6 @@ public class BoxPenyimpanan : MonoBehaviour
             PlayerPrefs.SetInt("TidakMakanKemarin", 1);
         }
 
-        // Efek nabung
         if (playerNabung && currentReward >= nabungCost)
         {
             currentReward -= nabungCost;
@@ -250,7 +254,6 @@ public class BoxPenyimpanan : MonoBehaviour
         UpdateTimerUI();
     }
 
-    // Fungsi ini dipanggil dari tombol lanjut (Next)
     public void OnNextButtonClicked()
     {
         TerapkanPilihan();

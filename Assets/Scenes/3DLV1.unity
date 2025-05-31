@@ -1113,7 +1113,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2338,10 +2338,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sisaUangText: {fileID: 106612367}
-  boxPenyimpanan: {fileID: 1754014261}
-  makanToggle: {fileID: 2011836404}
-  nabungToggle: {fileID: 1731966252}
-  warningOverlay: {fileID: 1795878653}
+  boxPenyimpanan: {fileID: 0}
+  makanToggle: {fileID: 0}
+  nabungToggle: {fileID: 0}
+  warningOverlay: {fileID: 0}
   financeSummaryPanel: {fileID: 0}
   closeButton: {fileID: 0}
   endingSceneName: EndingScene
@@ -7063,10 +7063,10 @@ RectTransform:
   m_Children:
   - {fileID: 1728035659}
   - {fileID: 1795878656}
-  - {fileID: 1209859758}
   - {fileID: 515289319}
   - {fileID: 331383544}
   - {fileID: 167907066}
+  - {fileID: 1209859758}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -11384,10 +11384,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sisaUangText: {fileID: 106612367}
-  boxPenyimpanan: {fileID: 1754014261}
-  makanToggle: {fileID: 2011836404}
-  nabungToggle: {fileID: 1731966252}
-  warningOverlay: {fileID: 1795878653}
+  boxPenyimpanan: {fileID: 0}
+  makanToggle: {fileID: 0}
+  nabungToggle: {fileID: 0}
+  warningOverlay: {fileID: 0}
   financeSummaryPanel: {fileID: 0}
   closeButton: {fileID: 0}
   endingSceneName: EndingScene
@@ -11887,7 +11887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endingPanel: {fileID: 515289318}
   totalTime: 300
-  maxItems: 2
+  maxItems: 3
   financeSummaryPanel: {fileID: 1209859757}
   timerText: {fileID: 359947316}
   moneyText: {fileID: 617260692}
@@ -11899,7 +11899,7 @@ MonoBehaviour:
   toggleJajan: {fileID: 862648196}
   btnLanjut: {fileID: 0}
   btnAkhiriGame: {fileID: 0}
-  initialReward: 40000
+  initialReward: 50000
 --- !u!1 &1763143747
 GameObject:
   m_ObjectHideFlags: 0
@@ -13488,9 +13488,9 @@ MonoBehaviour:
   makanToggle: {fileID: 2011836404}
   nabungToggle: {fileID: 1731966252}
   warningOverlay: {fileID: 1795878653}
-  financeSummaryPanel: {fileID: 0}
-  closeButton: {fileID: 1435016504}
-  endingSceneName: Ending3
+  financeSummaryPanel: {fileID: 1209859757}
+  closeButton: {fileID: 0}
+  endingSceneName: EndingScene
   endingSceneName2: Ending2
 --- !u!114 &1947309545
 MonoBehaviour:

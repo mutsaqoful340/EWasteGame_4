@@ -21,7 +21,7 @@ public class NextButton : MonoBehaviour
     void Start()
     {
         // Reset pelanggaran hanya pada level pertama
-        if (SceneManager.GetActiveScene().buildIndex == 2)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             ResetPelanggaran();
             Debug.Log("Pelanggaran direset di level pertama.");
