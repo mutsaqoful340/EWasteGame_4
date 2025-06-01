@@ -23,7 +23,7 @@ public class SpawnOnClick : MonoBehaviour
         if (total == 0) return;
 
         float angleStep = 360f / total;
-        float yOffset = -0.3f; // coba sesuaikan nilai ini
+        float yOffset = 0.0f; // Bisa sesuaikan nanti jika terlalu tinggi
 
         for (int i = 0; i < total; i++)
         {
@@ -35,10 +35,12 @@ public class SpawnOnClick : MonoBehaviour
 
             Vector3 spawnPos = centerPoint.position + offset + Vector3.up * yOffset;
 
-            Quaternion flatRotation = centerPoint.rotation * Quaternion.Euler(-90f, 0f, 0f);
+            // Rotasi agar objek rata di atas lantai
+            Quaternion flatRotation = Quaternion.Euler(90f, 0f, 0f);
 
             Instantiate(prefab, spawnPos, flatRotation);
         }
     }
+
 
 }
