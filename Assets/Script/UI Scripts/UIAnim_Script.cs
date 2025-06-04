@@ -4,8 +4,6 @@ public class UIAnim_Script : MonoBehaviour
 {
     Audio_Manager audioManager;
     public Animator animator;
-    public string triggerIn = "IN";   // Set this to your IN trigger name
-    public string triggerOut = "OUT"; // Set this to your OUT trigger name
 
     private bool isShowing = false;
 
@@ -15,11 +13,11 @@ public class UIAnim_Script : MonoBehaviour
         {
             if (isShowing)
             {
-                animator.SetTrigger(triggerOut);
+                animator.Play("GP_LaptopIN");
             }
             else
             {
-                animator.SetTrigger(triggerIn);
+                animator.Play("GP_LaptopOUT");
             }
 
             isShowing = !isShowing;
