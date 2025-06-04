@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class UIAnim_Script : MonoBehaviour
 {
+    Audio_Manager audioManager;
     public Animator animator;
     public string triggerIn = "IN";   // Set this to your IN trigger name
     public string triggerOut = "OUT"; // Set this to your OUT trigger name
@@ -24,4 +25,6 @@ public class UIAnim_Script : MonoBehaviour
             isShowing = !isShowing;
         }
     }
+
 }
+
