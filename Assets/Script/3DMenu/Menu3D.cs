@@ -34,6 +34,19 @@ public class Menu3D : MonoBehaviour
         }
     }
 
+    public void PlayAnimName(string animationName)
+    {
+        if (animator != null)
+        {
+            audioManager.PlaySFX(audioManager.buttonClick);
+            animator.Play(animationName);
+        }
+        else
+        {
+            Debug.LogWarning("No Animator found on the Camera!");
+        }
+    }
+
     // Call this to show the canvas
     public void ActivateCanvas(GameObject canvasToShow)
     {
@@ -65,4 +78,8 @@ public class Menu3D : MonoBehaviour
         }
     }
 
+    public void TS_Laptop()
+    {
+
+    }
 }
