@@ -5,10 +5,22 @@ using TMPro;
 
 public class PCBMiniGameController : MonoBehaviour
 {
-    public TextMeshProUGUI statusText; // drag komponen Text Status di Inspector
+    public TextMeshProUGUI statusText; // Drag komponen Text Status di Inspector
+    public GameObject miniGamePanel;   // Drag panel mini game dari Hierarchy
 
     private List<string> correctSequence = new List<string> { "Blower", "Cairan", "Sikat", "Lap" };
     private List<string> playerSequence = new List<string>();
+
+    void Start()
+    {
+        if (statusText == null)
+            Debug.LogWarning("⚠️ statusText belum di-assign di Inspector.");
+
+        if (miniGamePanel == null)
+            Debug.LogWarning("⚠️ miniGamePanel belum di-assign di Inspector.");
+        else
+            miniGamePanel.SetActive(true); // Pastikan panel aktif saat mini game mulai
+    }
 
     public void OnToolClicked(string toolName)
     {
@@ -23,15 +35,13 @@ public class PCBMiniGameController : MonoBehaviour
         if (correctSequence[i] != playerSequence[i])
         {
             statusText.text = "❌ Salah urutan! PCB rusak.";
-            Invoke("ResetPuzzle", 1.5f);
+            Invoke(nameof(ResetPuzzle), 1.5f);
             return;
         }
 
         if (playerSequence.Count == correctSequence.Count)
         {
             statusText.text = "✅ PCB bersih sempurna!";
-
-            // Delay sebentar baru keluar mini game supaya pemain bisa lihat status
             Invoke(nameof(EndMiniGame), 1.5f);
         }
         else
@@ -40,16 +50,21 @@ public class PCBMiniGameController : MonoBehaviour
         }
     }
 
-    void EndMiniGame()
-    {
-        // Panggil MiniGameManager untuk selesaiin mini game dan balik ke gameplay utama
-        FindObjectOfType<MiniGameManager>().EndMiniGame();
-    }
-
-
     void ResetPuzzle()
     {
         playerSequence.Clear();
         statusText.text = "Coba lagi dari awal.";
+    }
+
+    void EndMiniGame()
+    {
+        if (miniGamePanel != null)
+            miniGamePanel.SetActive(false); // Nonaktifkan panel saat selesai
+
+        var manager = FindObjectOfType<MiniGameManager>();
+        if (manager != null)
+            manager.EndMiniGame();
+        else
+            Debug.LogWarning("MiniGameManager tidak ditemukan!");
     }
 }
