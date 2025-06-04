@@ -25,7 +25,7 @@ public class NextButton : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            ResetPelanggaran();  // Reset ke 0 saat masuk scene index 0
+            ResetPelanggaran();
         }
 
         if (PlayerPrefs.GetInt("PelanggaranMakan", 0) >= 4)
