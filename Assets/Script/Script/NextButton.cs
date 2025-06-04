@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; // untuk Toggle, Button, GameObject (GameObject sebenarnya di UnityEngine)
 using UnityEngine.SceneManagement;
-using TMPro;
+using TMPro; // untuk TextMeshProUGUI
 
 public class NextButton : MonoBehaviour
 {
@@ -13,34 +13,28 @@ public class NextButton : MonoBehaviour
     public GameObject warningOverlay;
     public GameObject financeSummaryPanel;
     public Button closeButton;
+    public Button btnLanjut;
 
-    private bool warningSudahMuncul = false;
     public string endingSceneName = "EndingScene";
     public string endingSceneName2 = "Ending2";
 
+    private bool pelanggaranSudahDihitung = false;
+    private bool overlaySudahDibuka = false;
+
     void Start()
     {
-        // Reset pelanggaran hanya pada level pertama
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            ResetPelanggaran();
-            Debug.Log("Pelanggaran direset di level pertama.");
+            ResetPelanggaran();  // Reset ke 0 saat masuk scene index 0
         }
 
-        int pelanggaranMakan = PlayerPrefs.GetInt("PelanggaranMakan", 0);
-        int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0);
-
-        Debug.Log("Pelanggaran Makan pada Start: " + pelanggaranMakan);
-        Debug.Log("Pelanggaran Nabung pada Start: " + pelanggaranNabung);
-
-        // Langsung ke ending jika pelanggaran terpenuhi
-        if (pelanggaranMakan >= 4)
+        if (PlayerPrefs.GetInt("PelanggaranMakan", 0) >= 4)
         {
             SceneManager.LoadScene(endingSceneName);
             return;
         }
 
-        if (pelanggaranNabung >= 10)
+        if (PlayerPrefs.GetInt("PelanggaranNabung", 0) >= 10)
         {
             SceneManager.LoadScene(endingSceneName2);
             return;
@@ -61,13 +55,45 @@ public class NextButton : MonoBehaviour
 
     public void OnNextLevelButtonPressed()
     {
-        if (!makanToggle.isOn && !warningSudahMuncul)
+        if (!pelanggaranSudahDihitung)
         {
-            warningOverlay.SetActive(true);
-            warningSudahMuncul = true;
-            return;
-        }
+            // Cek makan toggle, kalau belum dicentang tampilkan overlay warning
+            if (!makanToggle.isOn)
+            {
+                int pelanggaranMakan = PlayerPrefs.GetInt("PelanggaranMakan", 0) + 1;
+                PlayerPrefs.SetInt("PelanggaranMakan", pelanggaranMakan);
+                PlayerPrefs.Save();
 
+                warningOverlay.SetActive(true);
+                financeSummaryPanel.SetActive(false); // sembunyikan ringkasan
+                overlaySudahDibuka = true;
+                pelanggaranSudahDihitung = true;
+
+                return; // stop di sini, tunggu user tutup overlay
+            }
+
+            // Kalau makan sudah dicentang, hitung pelanggaran nabung saja
+            if (!nabungToggle.isOn)
+            {
+                int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0) + 1;
+                PlayerPrefs.SetInt("PelanggaranNabung", pelanggaranNabung);
+                PlayerPrefs.Save();
+            }
+
+            // Terapkan pilihan dan simpan uang
+            TampilkanRingkasan();
+            pelanggaranSudahDihitung = true;
+        }
+        else
+        {
+            // Kalau pelanggaran sudah dihitung dan overlay sudah dibuka (atau tidak perlu overlay),
+            // langsung lanjut ke scene berikutnya
+            LanjutKeSceneBerikutnya();
+        }
+    }
+
+    void TampilkanRingkasan()
+    {
         if (boxPenyimpanan != null)
         {
             boxPenyimpanan.TerapkanPilihan();
@@ -75,21 +101,6 @@ public class NextButton : MonoBehaviour
 
         int sisa = int.Parse(sisaUangText.text.Split(' ')[1].Replace("Rp", "").Replace(",", ""));
         PlayerPrefs.SetInt("SisaUang", sisa);
-
-        if (!makanToggle.isOn)
-        {
-            int pelanggaranMakan = PlayerPrefs.GetInt("PelanggaranMakan", 0) + 1;
-            PlayerPrefs.SetInt("PelanggaranMakan", pelanggaranMakan);
-            Debug.Log("Pelanggaran Makan: " + pelanggaranMakan);
-        }
-
-        if (!nabungToggle.isOn)
-        {
-            int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0) + 1;
-            PlayerPrefs.SetInt("PelanggaranNabung", pelanggaranNabung);
-            Debug.Log("Pelanggaran Nabung: " + pelanggaranNabung);
-        }
-
         PlayerPrefs.Save();
 
         if (financeSummaryPanel != null)
@@ -98,18 +109,22 @@ public class NextButton : MonoBehaviour
         }
     }
 
+    public void CloseWarningOverlay()
+    {
+        warningOverlay.SetActive(false);
+        financeSummaryPanel.SetActive(true);
+        overlaySudahDibuka = false;
+    }
+
     public void LanjutKeSceneBerikutnya()
     {
-        int pelanggaranMakan = PlayerPrefs.GetInt("PelanggaranMakan", 0);
-        int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0);
-
-        if (pelanggaranMakan >= 4)
+        if (PlayerPrefs.GetInt("PelanggaranMakan", 0) >= 4)
         {
             SceneManager.LoadScene(endingSceneName);
             return;
         }
 
-        if (pelanggaranNabung >= 10)
+        if (PlayerPrefs.GetInt("PelanggaranNabung", 0) >= 10)
         {
             SceneManager.LoadScene(endingSceneName2);
             return;
@@ -119,19 +134,11 @@ public class NextButton : MonoBehaviour
 
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
-            // Reset pelanggaran jika mau reset setiap pindah level:
-            // ResetPelanggaran();
-
             SceneManager.LoadScene(nextSceneIndex);
         }
         else
         {
             Debug.Log("Semua level selesai.");
         }
-    }
-
-    public void CloseWarningOverlay()
-    {
-        warningOverlay.SetActive(false);
     }
 }

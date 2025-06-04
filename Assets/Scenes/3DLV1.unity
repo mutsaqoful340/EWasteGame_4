@@ -2627,6 +2627,7 @@ MonoBehaviour:
   warningOverlay: {fileID: 0}
   financeSummaryPanel: {fileID: 0}
   closeButton: {fileID: 0}
+  btnLanjut: {fileID: 0}
   endingSceneName: EndingScene
   endingSceneName2: Ending2
 --- !u!1 &258095068
@@ -3143,6 +3144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusText: {fileID: 1764249372}
+  miniGamePanel: {fileID: 0}
 --- !u!1 &359947314
 GameObject:
   m_ObjectHideFlags: 0
@@ -7459,7 +7461,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1084317733
 Canvas:
   m_ObjectHideFlags: 0
@@ -7469,7 +7471,7 @@ Canvas:
   m_GameObject: {fileID: 1084317730}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 0
   m_Camera: {fileID: 973448813}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -7490,25 +7492,25 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1084317730}
-  m_LocalRotation: {x: 0.41089138, y: -0.5754722, z: 0.41089138, w: 0.57547224}
-  m_LocalPosition: {x: 0, y: 0, z: -2.401}
-  m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1229513377}
   - {fileID: 1728035659}
-  - {fileID: 1795878656}
   - {fileID: 515289319}
   - {fileID: 331383544}
   - {fileID: 167907066}
   - {fileID: 1209859758}
+  - {fileID: 1795878656}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.000036497382, y: 1638.0032}
-  m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1084317735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10187,7 +10189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.18862152, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -11868,12 +11870,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sisaUangText: {fileID: 106612367}
-  boxPenyimpanan: {fileID: 0}
-  makanToggle: {fileID: 0}
-  nabungToggle: {fileID: 0}
-  warningOverlay: {fileID: 0}
-  financeSummaryPanel: {fileID: 0}
+  boxPenyimpanan: {fileID: 1754014261}
+  makanToggle: {fileID: 2011836404}
+  nabungToggle: {fileID: 1731966252}
+  warningOverlay: {fileID: 1795878653}
+  financeSummaryPanel: {fileID: 1209859757}
   closeButton: {fileID: 0}
+  btnLanjut: {fileID: 0}
   endingSceneName: EndingScene
   endingSceneName2: Ending2
 --- !u!4 &1727043890
@@ -12843,7 +12846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.5882353}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.6}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -13973,7 +13976,8 @@ MonoBehaviour:
   nabungToggle: {fileID: 1731966252}
   warningOverlay: {fileID: 1795878653}
   financeSummaryPanel: {fileID: 1209859757}
-  closeButton: {fileID: 0}
+  closeButton: {fileID: 1435016504}
+  btnLanjut: {fileID: 1947309545}
   endingSceneName: EndingScene
   endingSceneName2: Ending2
 --- !u!114 &1947309545
@@ -14022,7 +14026,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1727043889}
         m_TargetAssemblyTypeName: NextButton, Assembly-CSharp
-        m_MethodName: LanjutKeSceneBerikutnya
+        m_MethodName: OnNextLevelButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
