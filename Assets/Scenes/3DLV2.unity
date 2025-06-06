@@ -364,8 +364,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 973448819}
-  triggerIn: GPIdleToLaptop
-  triggerOut: GPLaptopToIdle
 --- !u!4 &54278911
 Transform:
   m_ObjectHideFlags: 0
@@ -5734,7 +5732,8 @@ MonoBehaviour:
   Bottom_EnclosurePrefab: {fileID: 0}
   kertasPrefab: {fileID: 0}
   pensilPrefab: {fileID: 0}
-  spawnSlots: []
+  centerPoint: {fileID: 0}
+  radius: 0.1
 --- !u!114 &1126513901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8415,7 +8414,7 @@ MonoBehaviour:
   toggleMakan: {fileID: 2011836404}
   toggleNabung: {fileID: 1731966252}
   toggleJajan: {fileID: 862648196}
-  btnLihatRingkasan: {fileID: 0}
+  btnLanjut: {fileID: 0}
   btnAkhiriGame: {fileID: 0}
   initialReward: 50000
 --- !u!1 &1763143747
@@ -9035,9 +9034,13 @@ MonoBehaviour:
   makanToggle: {fileID: 2011836404}
   nabungToggle: {fileID: 1731966252}
   warningOverlay: {fileID: 276473389}
+  financeSummaryPanel: {fileID: 0}
   closeButton: {fileID: 766685239}
+  btnLanjut: {fileID: 0}
+  debugResetButton: {fileID: 0}
   endingSceneName: Ending3
   endingSceneName2: Ending2
+  endingSceneName3: Ending3
 --- !u!114 &1847767124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9888,7 +9891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2129743157
 RectTransform:
   m_ObjectHideFlags: 0
