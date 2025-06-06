@@ -2628,8 +2628,10 @@ MonoBehaviour:
   financeSummaryPanel: {fileID: 0}
   closeButton: {fileID: 0}
   btnLanjut: {fileID: 0}
+  debugResetButton: {fileID: 0}
   endingSceneName: EndingScene
   endingSceneName2: Ending2
+  endingSceneName3: Ending3
 --- !u!1 &258095068
 GameObject:
   m_ObjectHideFlags: 0
@@ -3033,8 +3035,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 973448819}
-  triggerIn: GPIdleToLaptop
-  triggerOut: GPLaptopToIdle
 --- !u!4 &314181846
 Transform:
   m_ObjectHideFlags: 0
@@ -11869,16 +11869,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4490288a9cd8b1b4695c2ea96f4cf51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sisaUangText: {fileID: 0}
-  boxPenyimpanan: {fileID: 0}
+  sisaUangText: {fileID: 106612367}
+  boxPenyimpanan: {fileID: 1754014261}
   makanToggle: {fileID: 2011836404}
   nabungToggle: {fileID: 1731966252}
   warningOverlay: {fileID: 1795878653}
   financeSummaryPanel: {fileID: 1209859757}
-  closeButton: {fileID: 0}
-  btnLanjut: {fileID: 0}
+  closeButton: {fileID: 1435016504}
+  btnLanjut: {fileID: 1947309545}
+  debugResetButton: {fileID: 0}
   endingSceneName: EndingScene
   endingSceneName2: Ending2
+  endingSceneName3: Ending3
 --- !u!4 &1727043890
 Transform:
   m_ObjectHideFlags: 0
@@ -13970,16 +13972,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4490288a9cd8b1b4695c2ea96f4cf51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sisaUangText: {fileID: 0}
-  boxPenyimpanan: {fileID: 0}
+  sisaUangText: {fileID: 106612367}
+  boxPenyimpanan: {fileID: 1754014261}
   makanToggle: {fileID: 2011836404}
   nabungToggle: {fileID: 1731966252}
   warningOverlay: {fileID: 1795878653}
   financeSummaryPanel: {fileID: 1209859757}
-  closeButton: {fileID: 0}
-  btnLanjut: {fileID: 0}
+  closeButton: {fileID: 1435016504}
+  btnLanjut: {fileID: 1947309545}
+  debugResetButton: {fileID: 0}
   endingSceneName: Ending2
   endingSceneName2: 
+  endingSceneName3: Ending3
 --- !u!114 &1947309545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14026,7 +14030,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1727043889}
         m_TargetAssemblyTypeName: NextButton, Assembly-CSharp
-        m_MethodName: LanjutKeSceneBerikutnya
+        m_MethodName: OnNextLevelButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
