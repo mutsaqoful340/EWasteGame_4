@@ -2,18 +2,24 @@
 
 public class HPUnpack : MonoBehaviour
 {
+    public enum DeviceType { HP, Laptop }
+    public DeviceType deviceType = DeviceType.HP;
+
     public GameObject Top_EnclosurePrefab;
     public GameObject LCDPrefab;
     public GameObject MachinePrefab;
     public GameObject SIMCardPrefab;
     public GameObject batteryPrefab;
     public GameObject Bottom_EnclosurePrefab;
-
     public GameObject kertasPrefab;
     public GameObject pensilPrefab;
 
-    public Transform centerPoint;    // Ini posisi hp utama, assign di inspector
-    public float radius = 0.1f;      // Jarak melingkar dari centerPoint
+    public Transform centerPoint;
+    public float radius = 0.1f;
+
+    // Grid config for laptop
+    public int laptopColumns = 3;
+    public float spacing = 0.05f;
 
     public void SpawnItemAroundCenter(int slotIndex, string itemType, int totalItems)
     {
@@ -30,31 +36,39 @@ public class HPUnpack : MonoBehaviour
             return;
         }
 
-        // Hitung sudut berdasarkan indeks dan total item agar membentuk lingkaran
-        float angleStep = 360f / totalItems;
-        float angle = angleStep * slotIndex;
-        float angleRad = angle * Mathf.Deg2Rad;
+        Vector3 spawnPos = Vector3.zero;
 
-        // Hitung posisi spawn di lingkaran sekitar centerPoint
-        Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
-        Vector3 spawnPos = centerPoint.position + offset;
+        if (deviceType == DeviceType.HP)
+        {
+            // POSISI MELINGKAR
+            float angleStep = 360f / totalItems;
+            float angle = angleStep * slotIndex;
+            float angleRad = angle * Mathf.Deg2Rad;
+            Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
+            spawnPos = centerPoint.position + offset + GetOffsetByType(itemType);
+        }
+        else if (deviceType == DeviceType.Laptop)
+        {
+            // POSISI GRID
+            int row = slotIndex / laptopColumns;
+            int col = slotIndex % laptopColumns;
+            Vector3 offset = new Vector3(col * spacing, 0, -row * spacing);
+            spawnPos = centerPoint.position + offset;
+        }
 
-        // Tambahkan offset kecil berdasarkan tipe item supaya tidak tumpang tindih
-        Vector3 extraOffset = GetOffsetByType(itemType);
-        spawnPos += extraOffset;
-
-        // Tambahkan offset tinggi supaya objek tidak nembus meja
+        // Tinggi agar tidak nembus
         Renderer rend = prefabToSpawn.GetComponentInChildren<Renderer>();
         float yOffset = rend ? rend.bounds.extents.y : 0.02f;
         spawnPos.y += yOffset;
 
-        // Rotasi supaya prefab baring menghadap ke atas
-        Quaternion spawnRot = Quaternion.Euler(-90f, 0f, 0f);
+        // Rotasi: HP horizontal, Laptop bisa tetap
+        Quaternion spawnRot = (deviceType == DeviceType.HP)
+            ? Quaternion.Euler(-90f, 0f, 0f)
+            : Quaternion.identity;
 
         GameObject spawnedItem = Instantiate(prefabToSpawn, spawnPos, spawnRot);
         spawnedItem.name = prefabToSpawn.name + "_Spawned";
 
-        // Jika prefab ada komponen DraggableItem, set itemType-nya
         var dragComp = spawnedItem.GetComponent<DraggableItem>();
         if (dragComp != null)
         {
