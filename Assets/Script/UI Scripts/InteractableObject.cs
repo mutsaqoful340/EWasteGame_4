@@ -6,7 +6,7 @@ public class InteractableButton : MonoBehaviour
     public Audio_Manager audioManager;
 
     [Header("Animation Settings")]
-    public string triggerName; // 👈 You can set this in Inspector now!
+    public string animationName; // 👈 You can set this in Inspector now!
 
     void Update()
     {
@@ -31,7 +31,7 @@ public class InteractableButton : MonoBehaviour
         if (animator != null)
         {
             audioManager.PlaySFX(audioManager.buttonClick);
-            animator.SetTrigger(triggerName);
+            animator.Play(animationName);
         }
         else
         {
