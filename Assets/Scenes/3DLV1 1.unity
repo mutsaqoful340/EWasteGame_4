@@ -13023,7 +13023,7 @@ PrefabInstance:
     - target: {fileID: 2736949992787961848, guid: 1b1ac360bd9eada4faa44bcecb460919,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2736949992787961848, guid: 1b1ac360bd9eada4faa44bcecb460919,
         type: 3}
@@ -13053,12 +13053,12 @@ PrefabInstance:
     - target: {fileID: 3364269361594514754, guid: 1b1ac360bd9eada4faa44bcecb460919,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0363
+      value: -0.066
       objectReference: {fileID: 0}
     - target: {fileID: 3364269361594514754, guid: 1b1ac360bd9eada4faa44bcecb460919,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0006
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 3364269361594514754, guid: 1b1ac360bd9eada4faa44bcecb460919,
         type: 3}
@@ -13158,12 +13158,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6712544a2a497914381e7e49cac5465f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {fileID: 0}
+  targetPosition: {fileID: 1654582632}
   komponenTambahanPrefab: {fileID: 0}
   spawnPosisi: {fileID: 0}
-  boxTransform: {fileID: 0}
-  boxPosisiBaru: {x: 0, y: 0, z: 0}
-  durasiAnimasi: 1
+  boxTransform: {fileID: 6487958636427000193}
+  boxPosisiBaru: {x: -1.572, y: -0.138, z: -1.171}
+  durasiAnimasi: 0.28
   isTaken: 0
 --- !u!114 &1609273584
 MonoBehaviour:
@@ -13178,16 +13178,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deviceType: 1
-  Top_EnclosurePrefab: {fileID: 0}
-  LCDPrefab: {fileID: 0}
-  MachinePrefab: {fileID: 0}
-  SIMCardPrefab: {fileID: 0}
+  Top_EnclosurePrefab: {fileID: 7822995287050648074, guid: 94b59382c5487ce49ac7b2b5249c6786,
+    type: 3}
+  LCDPrefab: {fileID: 7906515670031817088, guid: 4461e695c25a4a740b389e6a657f6971,
+    type: 3}
+  MachinePrefab: {fileID: 3501469777281402575, guid: ea2a82b2331c4b54e861401a0908cb8c,
+    type: 3}
+  SIMCardPrefab: {fileID: 5279660054043665449, guid: bd6fedafa0c799546b8ef5b328b85ba3,
+    type: 3}
   batteryPrefab: {fileID: 0}
   Bottom_EnclosurePrefab: {fileID: 0}
   kertasPrefab: {fileID: 0}
   pensilPrefab: {fileID: 0}
-  centerPoint: {fileID: 0}
-  radius: 0.1
+  centerPoint: {fileID: 1654582632}
+  radius: 0.48
   laptopColumns: 3
   spacing: 0.05
 --- !u!114 &1609273585
@@ -13203,9 +13207,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnType: 1
-  prefabsToSpawn: []
-  centerPoint: {fileID: 0}
-  radius: 1
+  prefabsToSpawn:
+  - {fileID: 7822995287050648074, guid: 94b59382c5487ce49ac7b2b5249c6786, type: 3}
+  - {fileID: 7906515670031817088, guid: 4461e695c25a4a740b389e6a657f6971, type: 3}
+  - {fileID: 3501469777281402575, guid: ea2a82b2331c4b54e861401a0908cb8c, type: 3}
+  - {fileID: 5279660054043665449, guid: bd6fedafa0c799546b8ef5b328b85ba3, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  centerPoint: {fileID: 1654582632}
+  radius: 0.48
   laptopColumns: 3
   spacing: 0.5
 --- !u!65 &1609273586
@@ -13614,6 +13624,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1648101814}
   m_Mesh: {fileID: -8230057695036487312, guid: 7bf8d036a2da389439793061867a287b, type: 3}
+--- !u!1 &1654582631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1654582632}
+  m_Layer: 0
+  m_Name: TargetLAPTOP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1654582632
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654582631}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.324, y: -0.37, z: -1.815}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1655943175
 GameObject:
   m_ObjectHideFlags: 0
@@ -19029,5 +19070,6 @@ SceneRoots:
   - {fileID: 1664940600}
   - {fileID: 2100162338}
   - {fileID: 1038306490}
+  - {fileID: 1654582632}
   - {fileID: 2119042956}
   - {fileID: 1958760427}
