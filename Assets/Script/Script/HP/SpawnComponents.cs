@@ -73,7 +73,8 @@ public class SpawnOnClick : MonoBehaviour
             Vector3 offset = new Vector3(col * spacing, 0, -row * spacing);
             Vector3 spawnPos = centerPoint.position + offset + Vector3.up * yOffset;
 
-            Quaternion flatRotation = Quaternion.identity;
+            // Diperbarui: arahkan ke atas seperti pada HP
+            Quaternion flatRotation = Quaternion.Euler(90f, 0f, 0f);
             Instantiate(prefab, spawnPos, flatRotation);
         }
     }
