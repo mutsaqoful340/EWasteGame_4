@@ -15,6 +15,7 @@ public class TooltipTrigger : MonoBehaviour
         if (tooltipPanel != null && tooltipText != null)
         {
             isTooltipVisible = !isTooltipVisible;
+
             tooltipPanel.SetActive(isTooltipVisible);
             if (isTooltipVisible)
             {
