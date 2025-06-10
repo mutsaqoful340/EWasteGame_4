@@ -1,18 +1,32 @@
 using UnityEngine;
+using TMPro;
 
 public class SpawnOnClick : MonoBehaviour
 {
     public enum SpawnType { HP, Laptop }
     public SpawnType spawnType = SpawnType.HP;
 
+    [Header("Spawn Settings")]
     public GameObject[] prefabsToSpawn;
     public Transform centerPoint;
     public float radius = 1.0f;
     private bool hasSpawned = false;
 
-    // Grid settings for laptop
+    [Header("Laptop Grid Settings")]
     public int laptopColumns = 3;
     public float spacing = 0.5f;
+
+    [Header("Tooltip Settings")]
+    public GameObject tooltipPanel;
+    public TextMeshProUGUI tooltipText;
+
+    void Start()
+    {
+        if (tooltipPanel != null)
+        {
+            tooltipPanel.SetActive(false);
+        }
+    }
 
     void OnMouseDown()
     {
@@ -39,7 +53,6 @@ public class SpawnOnClick : MonoBehaviour
         if (total == 0) return;
 
         float angleStep = 360f / total;
-        float yOffset = 0.0f;
 
         for (int i = 0; i < total; i++)
         {
@@ -48,10 +61,11 @@ public class SpawnOnClick : MonoBehaviour
 
             float angleRad = angleStep * i * Mathf.Deg2Rad;
             Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
-            Vector3 spawnPos = centerPoint.position + offset + Vector3.up * yOffset;
+            Vector3 spawnPos = centerPoint.position + offset;
 
             Quaternion flatRotation = Quaternion.Euler(90f, 0f, 0f);
-            Instantiate(prefab, spawnPos, flatRotation);
+            GameObject obj = Instantiate(prefab, spawnPos, flatRotation);
+            SetupTooltip(obj);
         }
     }
 
@@ -59,8 +73,6 @@ public class SpawnOnClick : MonoBehaviour
     {
         int total = prefabsToSpawn.Length;
         if (total == 0) return;
-
-        float yOffset = 0.0f;
 
         for (int i = 0; i < total; i++)
         {
@@ -71,11 +83,22 @@ public class SpawnOnClick : MonoBehaviour
             int col = i % laptopColumns;
 
             Vector3 offset = new Vector3(col * spacing, 0, -row * spacing);
-            Vector3 spawnPos = centerPoint.position + offset + Vector3.up * yOffset;
+            Vector3 spawnPos = centerPoint.position + offset;
 
-            // Diperbarui: arahkan ke atas seperti pada HP
             Quaternion flatRotation = Quaternion.Euler(90f, 0f, 0f);
-            Instantiate(prefab, spawnPos, flatRotation);
+            GameObject obj = Instantiate(prefab, spawnPos, flatRotation);
+            SetupTooltip(obj);
+        }
+    }
+
+    void SetupTooltip(GameObject obj)
+    {
+        TooltipTrigger trigger = obj.GetComponent<TooltipTrigger>();
+        if (trigger != null)
+        {
+            trigger.tooltipPanel = tooltipPanel;
+            trigger.tooltipText = tooltipText;
+            // infoText diisi manual di prefab, tidak perlu lewat script
         }
     }
 }
