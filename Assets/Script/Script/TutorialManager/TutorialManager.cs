@@ -31,11 +31,12 @@ public class TutorialManager : MonoBehaviour
     void ShowStep(int step)
     {
         GameObject stepPanel = tutorialSteps[step];
-        stepPanel.SetActive(true); // Harus aktif dulu!
-        Animator anim = stepPanel.GetComponent<Animator>();
-        if (anim != null)
+        stepPanel.SetActive(true);
+        CanvasGroup cg = stepPanel.GetComponent<CanvasGroup>();
+        if (cg != null)
         {
-            anim.Play("Step0_Show"); // pastikan nama animasi benar
+            cg.alpha = 0;
+            StartCoroutine(FadeIn(cg));
         }
     }
 
