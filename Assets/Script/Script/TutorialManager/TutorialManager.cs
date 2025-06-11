@@ -1,11 +1,10 @@
 using UnityEngine;
-
-
+using System.Collections;
 
 public class TutorialManager : MonoBehaviour
 {
     public GameObject[] tutorialSteps;
-    public int currentStep = 0;
+    private int currentStep = 0;
 
     void Start()
     {
@@ -24,13 +23,32 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 1f; // Resume game
-            this.gameObject.SetActive(false); // Sembunyikan UI tutorial
+            Time.timeScale = 1f;
+            gameObject.SetActive(false);
         }
     }
 
     void ShowStep(int step)
     {
-        tutorialSteps[step].SetActive(true);
+        GameObject stepPanel = tutorialSteps[step];
+        stepPanel.SetActive(true); // Harus aktif dulu!
+        Animator anim = stepPanel.GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.Play("Step0_Show"); // pastikan nama animasi benar
+        }
+    }
+
+    IEnumerator FadeIn(CanvasGroup canvasGroup)
+    {
+        float duration = 0.5f;
+        float time = 0;
+        while (time < duration)
+        {
+            canvasGroup.alpha = Mathf.Lerp(0, 1, time / duration);
+            time += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        canvasGroup.alpha = 1;
     }
 }
