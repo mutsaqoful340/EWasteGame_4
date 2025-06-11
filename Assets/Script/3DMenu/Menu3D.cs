@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 public class Menu3D : MonoBehaviour
 {
     Audio_Manager audioManager;
-
     private Animator animator; // Reference to Animator
+
+    private bool isShowing = false;
 
     void Start()
     {
@@ -18,7 +19,19 @@ public class Menu3D : MonoBehaviour
 
     void Update()
     {
-
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    if (isShowing)
+        //    {
+        //        animator.Play("GP_LaptopIN");
+        //    }
+        //    else
+        //    {
+        //        animator.Play("GP_LaptopOUT");
+        //    }
+        //
+        //    isShowing = !isShowing;
+        //}
     }
 
     public void PlayCameraAnimation(string triggerName)

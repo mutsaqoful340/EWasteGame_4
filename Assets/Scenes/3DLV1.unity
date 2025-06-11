@@ -1620,7 +1620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &167907064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3070,7 +3070,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba174fbe4795dc9428fc8c4b882dfec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 973448819}
 --- !u!4 &314181846
 Transform:
   m_ObjectHideFlags: 0
@@ -5450,7 +5449,8 @@ GameObject:
   - component: {fileID: 660519376}
   - component: {fileID: 660519375}
   - component: {fileID: 660519374}
-  - component: {fileID: 660519373}
+  - component: {fileID: 660519378}
+  - component: {fileID: 660519377}
   m_Layer: 0
   m_Name: Radio_BackButton
   m_TagString: Untagged
@@ -5473,21 +5473,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1194232452}
   m_LocalEulerAnglesHint: {x: 0, y: 48, z: 0}
---- !u!114 &660519373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 660519371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e9a63723d88c274b80ade64781526e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  audioManager: {fileID: 0}
-  animationName: Radio_Laptop
 --- !u!65 &660519374
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5559,6 +5544,45 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660519371}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &660519377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660519371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e18e60d702954984bb87ca18d97059cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 973448816}
+        m_TargetAssemblyTypeName: Menu3D, Assembly-CSharp
+        m_MethodName: PlayAnimName
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Radio_Laptop
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &660519378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660519371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f05de8b1e629a94491d9dc195488abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &661100700
 GameObject:
   m_ObjectHideFlags: 0
@@ -11049,7 +11073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1209859758
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18268,14 +18292,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 973448816}
         m_TargetAssemblyTypeName: Menu3D, Assembly-CSharp
-        m_MethodName: PlayCameraAnimation
+        m_MethodName: PlayAnimName
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: LaptopToRadio
+          m_StringArgument: Laptop_Radio
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1873209091
@@ -20022,7 +20046,7 @@ GameObject:
   - component: {fileID: 2110211815}
   - component: {fileID: 2110211814}
   m_Layer: 5
-  m_Name: '[B] To_Resumee'
+  m_Name: '[B] To_Resume'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20101,7 +20125,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: GPLaptopToIdle
+          m_StringArgument: GP_LaptopOUT
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2110211815
