@@ -2,40 +2,30 @@
 
 public class InteractableButton : MonoBehaviour
 {
-    public Animator animator;
-    public Audio_Manager audioManager;
-
     [Header("Animation Settings")]
-    public string animationName; // 👈 You can set this in Inspector now!
+    public string animationName; // Set in Inspector
 
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform == transform)
         {
-            if (hit.transform == transform)
+            if (Input.GetMouseButtonDown(0))
             {
-                // Click
-                if (Input.GetMouseButtonDown(0))
-                {
-                    PlayCameraAnimation();  // ✅ Call the function
-                }
+                PlayCameraAnimation();
             }
         }
     }
 
-    // ✅ This is the function definition, outside of Update
     private void PlayCameraAnimation()
     {
-        if (animator != null)
+        Audio_Manager.Instance?.PlaySFX(Audio_Manager.Instance.buttonClick);
+
+        if(Camera_Manager.Instance?.CurrentCameraAnimator == null)
         {
-            audioManager.PlaySFX(audioManager.buttonClick);
-            animator.Play(animationName);
+            Debug.LogWarning("Animator issing");
+            return;
         }
-        else
-        {
-            Debug.LogWarning("No Animator found on the Camera!");
-        }
+        Camera_Manager.Instance?.CurrentCameraAnimator?.Play(animationName);
     }
 }
