@@ -5,32 +5,48 @@ public class GP_PauseMenu : MonoBehaviour
     [Header("Animation Settings")]
     public string inAnimationName = "LaptopOpen";
     public string outAnimationName = "LaptopClose";
-    private bool _isPaused; // Made private to prevent external interference
+    private bool _isPaused;
 
     [Header("Object Control")]
-    public GameObject targetObject;
+    public GameObject targetObject; // Assign your object in Inspector (starts enabled)
 
     [Header("Audio Settings")]
     public AudioClip pauseSound;
     public AudioClip unpauseSound;
 
+    private void Start()
+    {
+        // Initialize: Object starts ENABLED, game UNPAUSED
+        _isPaused = false;
+
+        if (targetObject != null)
+        {
+            targetObject.SetActive(true); // Force enable on start
+            Debug.Log($"Initialized: Object starts enabled");
+        }
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // Toggle state FIRST
-            _isPaused = !_isPaused;
-
-            // 1. Immediately handle object toggle
-            if (targetObject != null)
-            {
-                targetObject.SetActive(_isPaused);
-                Debug.Log($"Toggled object: {targetObject.name} to {_isPaused}");
-            }
-
-            // 2. Then handle visual/audio feedback
-            HandlePauseEffects();
+            TogglePause();
         }
+    }
+
+    private void TogglePause()
+    {
+        _isPaused = !_isPaused;
+
+        // 1. Toggle object immediately
+        if (targetObject != null)
+        {
+            targetObject.SetActive(_isPaused); // Will disable on first ESC, enable on second
+            Debug.Log($"Toggled object to: {_isPaused}");
+        }
+
+        // 2. Handle other effects
+        HandlePauseEffects();
     }
 
     private void HandlePauseEffects()
