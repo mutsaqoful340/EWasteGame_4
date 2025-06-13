@@ -77,7 +77,7 @@ public class BoxPenyimpanan : MonoBehaviour
         totalTabungan = PlayerPrefs.GetInt("TotalTabungan", 0);
 
         if (tabunganText != null)
-            tabunganText.text = "Tabungan: Rp" + totalTabungan.ToString("N0");
+            tabunganText.text = "Tabungan Rp" + totalTabungan.ToString("N0");
 
         btnAkhiriGame.gameObject.SetActive(false);
 
@@ -166,7 +166,7 @@ public class BoxPenyimpanan : MonoBehaviour
             financeSummaryPanel.SetActive(true);
 
         if (pemasukanText != null)
-            pemasukanText.text = "Pemasukan: Rp" + currentReward.ToString("N0");
+            pemasukanText.text = " Rp" + currentReward.ToString("N0");
 
         UpdateSisaUang();
 
@@ -242,7 +242,7 @@ public class BoxPenyimpanan : MonoBehaviour
             PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
 
             if (tabunganText != null)
-                tabunganText.text = "Tabungan: Rp" + totalTabungan.ToString("N0");
+                tabunganText.text = "Tabungan Rp" + totalTabungan.ToString("N0");
         }
 
         PlayerPrefs.SetInt("SisaUang", currentReward);
@@ -272,7 +272,7 @@ public class BoxPenyimpanan : MonoBehaviour
     void UpdateMoneyUI()
     {
         if (moneyText != null)
-            moneyText.text = "Uang: Rp" + currentReward.ToString("N0");
+            moneyText.text = "Uang Rp" + currentReward.ToString("N0");
     }
 
     void GoToNextLevel()
