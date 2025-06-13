@@ -7,26 +7,11 @@ public class GP_PauseMenu : MonoBehaviour
     public string outAnimationName = "LaptopClose";
     private bool _isPaused;
 
-    [Header("Object Control")]
-    public GameObject targetObject; // Assign your object in Inspector (starts enabled)
-
     [Header("Audio Settings")]
     public AudioClip pauseSound;
     public AudioClip unpauseSound;
 
-    private void Start()
-    {
-        // Initialize: Object starts ENABLED, game UNPAUSED
-        _isPaused = false;
-
-        if (targetObject != null)
-        {
-            targetObject.SetActive(true); // Force enable on start
-            Debug.Log($"Initialized: Object starts enabled");
-        }
-    }
-
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -37,26 +22,32 @@ public class GP_PauseMenu : MonoBehaviour
     private void TogglePause()
     {
         _isPaused = !_isPaused;
-
-        // 1. Toggle object immediately
-        if (targetObject != null)
-        {
-            targetObject.SetActive(_isPaused); // Will disable on first ESC, enable on second
-            Debug.Log($"Toggled object to: {_isPaused}");
-        }
-
-        // 2. Handle other effects
-        HandlePauseEffects();
+        HandlePauseEffects(); // Only handle animations/sounds
     }
 
     private void HandlePauseEffects()
     {
         // Animation
         string animationToPlay = _isPaused ? inAnimationName : outAnimationName;
-        Camera_Manager.Instance?.CurrentCameraAnimator?.Play(animationToPlay);
+        if (Camera_Manager.Instance != null && Camera_Manager.Instance.CurrentCameraAnimator != null)
+        {
+            Camera_Manager.Instance.CurrentCameraAnimator.Play(animationToPlay);
+        }
+        else
+        {
+            Debug.LogError("Camera_Manager or Animator missing!");
+        }
 
         // Sound
-        AudioClip soundToPlay = _isPaused ? pauseSound : unpauseSound;
-        Audio_Manager.Instance?.PlaySFX(soundToPlay != null ? soundToPlay : Audio_Manager.Instance.buttonClick);
+        if (Audio_Manager.Instance != null)
+        {
+            AudioClip soundToPlay = _isPaused ? pauseSound : unpauseSound;
+            AudioClip clipToUse = soundToPlay != null ? soundToPlay : Audio_Manager.Instance.buttonClick;
+            Audio_Manager.Instance.PlaySFX(clipToUse);
+        }
+        else
+        {
+            Debug.LogError("Audio_Manager missing!");
+        }
     }
 }
