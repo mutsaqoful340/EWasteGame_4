@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 13280760}
   - component: {fileID: 13280759}
   - component: {fileID: 13280758}
+  - component: {fileID: 13280762}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -225,6 +226,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &13280762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13280757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2bd2f9d69c1d44b9457d501149b33a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScene: {fileID: 11400000, guid: 8a60c45f266dbd04794e302b02721cdb, type: 2}
+  bottomBar: {fileID: 1742751135}
 --- !u!1 &151776004
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,6 +844,7 @@ GameObject:
   - component: {fileID: 1742751132}
   - component: {fileID: 1742751134}
   - component: {fileID: 1742751133}
+  - component: {fileID: 1742751135}
   m_Layer: 5
   m_Name: '[Img] Dial_BG'
   m_TagString: Untagged
@@ -895,6 +911,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742751131}
   m_CullTransparentMesh: 1
+--- !u!114 &1742751135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742751131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f4d4cfb0f3ec142ae99b24065ba07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barText: {fileID: 2027175691}
+  personNameText: {fileID: 378894323}
 --- !u!1 &2027175689
 GameObject:
   m_ObjectHideFlags: 0
