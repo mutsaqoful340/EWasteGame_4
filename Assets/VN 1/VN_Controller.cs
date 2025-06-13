@@ -6,10 +6,12 @@ public class VN_Controller : MonoBehaviour
 {
     public VN_StoryScene currentScene;
     public VN_BottomBarController bottomBar;
+    public VN_BGCtrl BGController;
 
     void Start()
     {
         bottomBar.PlayScene(currentScene);
+        BGController.SetImage(currentScene.background);
     }
 
     
@@ -19,6 +21,12 @@ public class VN_Controller : MonoBehaviour
         {
             if (bottomBar.IsCompleted())
             {
+                if (bottomBar.IsLastSentence())
+                {
+                    currentScene = currentScene.nextScene;
+                    bottomBar.PlayScene(currentScene);
+                    BGController.SwitchImage(currentScene.background);
+                }
                 bottomBar.PlayNextSentence();
             }
         }

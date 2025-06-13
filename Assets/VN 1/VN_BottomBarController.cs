@@ -36,6 +36,11 @@ public class VN_BottomBarController : MonoBehaviour
         return state == State.COMPLETED;
     }
 
+    public bool IsLastSentence()
+    {
+        return sentenceIndex + 1 == currentScene.sentences.Count;
+    }
+
     private IEnumerator TypeText(string text)
     {
         barText.text = "";
