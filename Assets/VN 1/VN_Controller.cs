@@ -10,11 +10,13 @@ public class VN_Controller : MonoBehaviour
 
     void Start()
     {
-        bottomBar.PlayScene(currentScene);
+        // Set background pertama
         BGController.SetImage(currentScene.background);
+
+        // Mainkan scene pertama
+        bottomBar.PlayScene(currentScene);
     }
 
-    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0))
@@ -23,12 +25,30 @@ public class VN_Controller : MonoBehaviour
             {
                 if (bottomBar.IsLastSentence())
                 {
-                    currentScene = currentScene.nextScene;
-                    bottomBar.PlayScene(currentScene);
-                    BGController.SwitchImage(currentScene.background);
+                    // Cek jika ada scene berikutnya
+                    if (currentScene.nextScene != null)
+                    {
+                        // Ganti ke scene berikutnya
+                        currentScene = currentScene.nextScene;
+
+                        // Ganti background
+                        BGController.SwitchImage(currentScene.background);
+
+                        // Mainkan scene baru dari kalimat pertama
+                        bottomBar.PlayScene(currentScene);
+                    }
+                    else
+                    {
+                        // Sudah tidak ada scene, bisa kasih log atau end game
+                        Debug.Log("End of visual novel");
+                    }
                 }
-                bottomBar.PlayNextSentence();
+                else
+                {
+                    // Lanjut ke kalimat berikutnya
+                    bottomBar.PlayNextSentence();
+                }
             }
         }
-    } 
+    }
 }
