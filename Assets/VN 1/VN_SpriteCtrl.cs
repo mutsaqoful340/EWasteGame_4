@@ -1,57 +1,118 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VN_SpriteCtrl : MonoBehaviour
 {
-    private VN_BGCtrl switcher;
+    [System.Serializable]
+    public class CharacterData
+    {
+        public VN_Speaker speaker;
+        public Sprite sprite;
+        public Vector2 defaultPosition = Vector2.zero;
+    }
+
+    [Header("Character Settings")]
+    [SerializeField] private List<CharacterData> characterDatabase = new List<CharacterData>();
+    [SerializeField] private Image characterImage;
+    [SerializeField] private float switchSpeed = 1f;
+    [SerializeField] private float hideAnimationDelay = 0.5f;
+
+    private VN_Speaker currentSpeaker;
     private Animator animator;
     private RectTransform rect;
+    private Coroutine movementCoroutine;
+    private bool isAnimating = false;
 
     private void Awake()
     {
-        switcher = GetComponent<VN_BGCtrl>();
         animator = GetComponent<Animator>();
         rect = GetComponent<RectTransform>();
+
+        if (characterImage == null)
+        {
+            characterImage = GetComponentInChildren<Image>();
+        }
+
+        // Hide character at start
+        characterImage.color = new Color(1, 1, 1, 0);
     }
 
-    public void Setup(Sprite sprite)
+    public void HandleCharacter(VN_Speaker speaker)
     {
-        switcher.SetImage(sprite);
-    }
+        if (isAnimating) return;
 
-    public void Show(Vector2 coords)
-    {
-        animator.SetTrigger("CharShow");
-        rect.localPosition = coords;
-    }
-
-    public void Hide(Vector2 coords)
-    {
-        animator.SetTrigger("CharHide");
-        rect.localPosition = coords;
+        if (speaker == null)
+        {
+            StartCoroutine(HideCharacterRoutine());
+        }
+        else if (currentSpeaker != speaker)
+        {
+            StartCoroutine(SwitchCharacterRoutine(speaker));
+        }
     }
 
     public void Move(Vector2 coords, float speed)
     {
-        StartCoroutine(MoveCoroutine(coords, speed));
+        if (movementCoroutine != null)
+        {
+            StopCoroutine(movementCoroutine);
+        }
+        movementCoroutine = StartCoroutine(MoveCoroutine(coords, speed));
+    }
+
+    private IEnumerator HideCharacterRoutine()
+    {
+        isAnimating = true;
+        animator.SetTrigger("CharHide");
+        yield return new WaitForSeconds(hideAnimationDelay);
+        currentSpeaker = null;
+        isAnimating = false;
+    }
+
+    private IEnumerator SwitchCharacterRoutine(VN_Speaker newSpeaker)
+    {
+        isAnimating = true;
+
+        // Hide current character if exists
+        if (currentSpeaker != null)
+        {
+            animator.SetTrigger("CharHide");
+            yield return new WaitForSeconds(hideAnimationDelay);
+        }
+
+        // Show new character
+        CharacterData charData = GetCharacterData(newSpeaker);
+        if (charData != null)
+        {
+            characterImage.sprite = charData.sprite;
+            rect.anchoredPosition = charData.defaultPosition;
+            currentSpeaker = newSpeaker;
+            animator.SetTrigger("CharShow");
+        }
+
+        isAnimating = false;
     }
 
     private IEnumerator MoveCoroutine(Vector2 coords, float speed)
     {
-        while(rect.localPosition.x != coords.x || rect.localPosition.y != coords.y)
+        while (rect.localPosition.x != coords.x || rect.localPosition.y != coords.y)
         {
             rect.localPosition = Vector2.MoveTowards(rect.localPosition, coords, Time.deltaTime * 1000f * speed);
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
         }
     }
 
-    //public void SwitchSprite(Sprite sprite)
-    //{
-    //    if(switcher.GetImage() != sprite)
-    //    {
-    //        switcher.SwitchImage(sprite);
-    //    }
-    //}
+    private CharacterData GetCharacterData(VN_Speaker speaker)
+    {
+        foreach (CharacterData data in characterDatabase)
+        {
+            if (data.speaker == speaker)
+            {
+                return data;
+            }
+        }
+        return null;
+    }
 }

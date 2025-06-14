@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: BG_Hide
+    m_ConditionEvent: BBar_Hide
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1832597359963982363}
@@ -90,13 +90,13 @@ AnimatorController:
   m_Name: DialBG_Ctrl
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: BG_Hide
+  - m_Name: BBar_Hide
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: BG_Show
+  - m_Name: BBar_Show
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -124,7 +124,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: BG_Show
+    m_ConditionEvent: BBar_Show
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8695135548063805271}

@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class BottomBarController : MonoBehaviour
+public class VN_BottomBarController : MonoBehaviour
 {
+    [Header("Character Settings")]
+    public VN_SpriteCtrl characterController;
+    public VN_Speaker lastSpeaker;
+
     public TextMeshProUGUI barText;
     public TextMeshProUGUI personNameText;
 
@@ -53,9 +57,17 @@ public class BottomBarController : MonoBehaviour
 
     public void PlayNextSentence()
     {
-        StartCoroutine(TypeText(currentScene.sentences[++sentenceIndex].text));
-        personNameText.text = currentScene.sentences[sentenceIndex].speaker.SpeakerName;
-        personNameText.color = currentScene.sentences[sentenceIndex].speaker.textColor;
+        var sentence = currentScene.sentences[++sentenceIndex];
+
+        // Handle character changes
+        if (characterController != null)
+        {
+            characterController.HandleCharacter(sentence.speaker);
+        }
+
+        lastSpeaker = sentence.speaker;
+        StartCoroutine(TypeText(sentence.text));
+        UpdateSpeakerUI(sentence.speaker);
     }
 
     public bool IsCompleted()
@@ -84,5 +96,11 @@ public class BottomBarController : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private void UpdateSpeakerUI(VN_Speaker speaker)
+    {
+        personNameText.text = speaker.SpeakerName;
+        personNameText.color = speaker.textColor;
     }
 }
