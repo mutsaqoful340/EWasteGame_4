@@ -3,12 +3,10 @@ using UnityEngine;
 
 public class VN_Controller : MonoBehaviour
 {
-    // Existing fields
     public VN_StoryScene currentScene;
     public VN_BottomBarController bottomBar;
     public VN_SpriteSw BGController;
 
-    // New field
     public GameObject endSceneObject; // Assign in Inspector
 
     private State state = State.IDLE;
@@ -37,11 +35,18 @@ public class VN_Controller : MonoBehaviour
                 {
                     if (currentScene.nextScene != null)
                     {
-                        PlayScene(currentScene.nextScene);
+                        VN_StoryScene next = currentScene.nextScene as VN_StoryScene;
+                        if (next != null)
+                        {
+                            PlayScene(next);
+                        }
+                        else
+                        {
+                            Debug.LogError("Next scene is not a VN_StoryScene");
+                        }
                     }
                     else
                     {
-                        // No more scenes - activate the object
                         StartCoroutine(HandleEndScene());
                     }
                 }
@@ -55,7 +60,6 @@ public class VN_Controller : MonoBehaviour
 
     private IEnumerator HandleEndScene()
     {
-        // Optional: Add delay or fade-out animation first
         yield return new WaitForSeconds(0f);
 
         if (endSceneObject != null)
@@ -65,7 +69,7 @@ public class VN_Controller : MonoBehaviour
         }
 
         // Optional: Disable the VN system
-        //this.enabled = false;
+        // this.enabled = false;
     }
 
     private void PlayScene(VN_StoryScene scene)
