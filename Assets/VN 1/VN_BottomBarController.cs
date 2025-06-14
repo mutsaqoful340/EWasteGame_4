@@ -16,6 +16,8 @@ public class VN_BottomBarController : MonoBehaviour
     private Animator animator;
     private bool isHidden = false;
 
+
+
     private enum State
     {
         PLAYING, COMPLETED

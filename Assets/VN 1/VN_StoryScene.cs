@@ -5,11 +5,11 @@ using UnityEngine.Rendering;
 [CreateAssetMenu(fileName = "NewStoryScene", menuName = "Data/New Story Scene")]
 [System.Serializable]
 
-public class VN_StoryScene : GameScene
+public class VN_StoryScene : ScriptableObject
 {
     public List<Sentence> sentences;
     public Sprite background;
-    public GameScene nextScene;
+    public VN_StoryScene nextScene;
 
     [System.Serializable]
     public struct Sentence
@@ -37,4 +37,3 @@ public class VN_StoryScene : GameScene
     }
 }
 
-public class GameScene : ScriptableObject { }
