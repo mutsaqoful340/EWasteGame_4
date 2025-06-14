@@ -6,7 +6,7 @@ public class VN_Controller : MonoBehaviour
 {
     public GameScene currentScene;
     public BottomBarController bottomBar;
-    public VN_SpriteSw backgroundController;
+    public VN_BGCtrl backgroundController;
     private State state = State.IDLE;
 
     private enum State

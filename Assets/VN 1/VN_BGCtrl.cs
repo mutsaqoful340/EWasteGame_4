@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VN_SpriteSw : MonoBehaviour
+public class VN_BGCtrl : MonoBehaviour
 {
     public bool isSwitched = false;
     public Image img1;
