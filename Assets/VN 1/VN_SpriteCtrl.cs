@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class VN_SpriteCtrl : MonoBehaviour
 {
-    private VN_SpriteSw switcher;
+    private VN_BGCtrl switcher;
     private Animator animator;
     private RectTransform rect;
 
     private void Awake()
     {
-        switcher = GetComponent<VN_SpriteSw>();
+        switcher = GetComponent<VN_BGCtrl>();
         animator = GetComponent<Animator>();
         rect = GetComponent<RectTransform>();
     }
@@ -47,11 +47,11 @@ public class VN_SpriteCtrl : MonoBehaviour
         }
     }
 
-    public void SwitchSprite(Sprite sprite)
-    {
-        if(switcher.GetImage() != sprite)
-        {
-            switcher.SwitchImage(sprite);
-        }
-    }
+    //public void SwitchSprite(Sprite sprite)
+    //{
+    //    if(switcher.GetImage() != sprite)
+    //    {
+    //        switcher.SwitchImage(sprite);
+    //    }
+    //}
 }

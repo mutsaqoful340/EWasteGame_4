@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "NewSpeaker", menuName = "Data/New Speaker")]
 [System.Serializable]
 

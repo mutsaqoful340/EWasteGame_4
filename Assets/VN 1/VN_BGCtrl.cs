@@ -4,12 +4,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VN_SpriteSw : MonoBehaviour
+public class VN_BGCtrl : MonoBehaviour
 {
     public bool isSwitched = false;
     public Image img1;
     public Image img2;
-    private Animator animator;
+    public Animator animator;
 
     private void Awake()
     {
@@ -41,19 +41,6 @@ public class VN_SpriteSw : MonoBehaviour
         {
             img2.sprite = sprite;
         }
-    }
-
-    public Sprite GetImage()
-    {
-        if (!isSwitched)
-        {
-            return img1.sprite;
-        }
-        else
-        {
-            return img2.sprite;
-        }
-
     }
 
 }
