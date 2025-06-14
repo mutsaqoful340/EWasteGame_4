@@ -4,37 +4,56 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VN_BGCtrl : MonoBehaviour
+public class VN_SpriteSw : MonoBehaviour
 {
     public bool isSwitched = false;
-    public Image background1;
-    public Image background2;
-    public Animator animator; 
+    public Image img1;
+    public Image img2;
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     public void SwitchImage(Sprite sprite)
     {
         if (!isSwitched)
         {
-            background2.sprite = sprite;
+            img2.sprite = sprite;
             animator.SetTrigger("SwBG1");
         }
         else
         {
-            background1.sprite = sprite;
+            img1.sprite = sprite;
             animator.SetTrigger("SwBG2");
         }
         isSwitched = !isSwitched;
     }
-    
+
     public void SetImage(Sprite sprite)
     {
         if (!isSwitched)
         {
-            background1.sprite = sprite;
+            img1.sprite = sprite;
         }
         else
         {
-            background2.sprite = sprite;
+            img2.sprite = sprite;
         }
     }
+
+    public Sprite GetImage()
+    {
+        if (!isSwitched)
+        {
+            return img1.sprite;
+        }
+        else
+        {
+            return img2.sprite;
+        }
+
+    }
+
 }

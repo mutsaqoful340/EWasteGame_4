@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor.AnimatedValues;
+using UnityEngine.Playables;
 
 public class VN_BottomBarController : MonoBehaviour
 {
@@ -11,12 +13,39 @@ public class VN_BottomBarController : MonoBehaviour
     private int sentenceIndex = -1;
     private VN_StoryScene currentScene;
     private State state = State.COMPLETED;
+    private Animator animator;
+    private bool isHidden = false;
 
     private enum State
     {
         PLAYING, COMPLETED
     }
-    
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    public void Hide()
+    {
+        if (!isHidden)
+        {
+            animator.SetTrigger("BG_Hide");
+            isHidden = true;
+        }
+    }
+
+    public void Show()
+    {
+        animator.SetTrigger("BG_Show");
+        isHidden = false;
+    }
+
+    public void ClearText()
+    {
+        barText.text = "";
+    }
+
     public void PlayScene(VN_StoryScene scene)
     {
         currentScene = scene;
