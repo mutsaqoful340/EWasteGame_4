@@ -47,11 +47,11 @@ public class VN_SpriteCtrl : MonoBehaviour
         }
     }
 
-    public void SwitchSprite(Sprite sprite)
-    {
-        if(switcher.GetImage() != sprite)
-        {
-            switcher.SwitchImage(sprite);
-        }
-    }
+    //public void SwitchSprite(Sprite sprite)
+    //{
+    //    if(switcher.GetImage() != sprite)
+    //    {
+    //        switcher.SwitchImage(sprite);
+    //    }
+    //}
 }

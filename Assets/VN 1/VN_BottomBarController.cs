@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor.AnimatedValues;
-using UnityEngine.Playables;
 
-public class VN_BottomBarController : MonoBehaviour
+public class BottomBarController : MonoBehaviour
 {
     public TextMeshProUGUI barText;
     public TextMeshProUGUI personNameText;
@@ -15,8 +13,6 @@ public class VN_BottomBarController : MonoBehaviour
     private State state = State.COMPLETED;
     private Animator animator;
     private bool isHidden = false;
-
-
 
     private enum State
     {
@@ -32,14 +28,14 @@ public class VN_BottomBarController : MonoBehaviour
     {
         if (!isHidden)
         {
-            animator.SetTrigger("BG_Hide");
+            animator.SetTrigger("BBar_Hide");
             isHidden = true;
         }
     }
 
     public void Show()
     {
-        animator.SetTrigger("BG_Show");
+        animator.SetTrigger("BBar_Show");
         isHidden = false;
     }
 
@@ -82,7 +78,7 @@ public class VN_BottomBarController : MonoBehaviour
         {
             barText.text += text[wordIndex];
             yield return new WaitForSeconds(0.05f);
-            if(++wordIndex == text.Length)
+            if (++wordIndex == text.Length)
             {
                 state = State.COMPLETED;
                 break;

@@ -1,49 +1,38 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class VN_Controller : MonoBehaviour
 {
-    // Existing fields
-    public VN_StoryScene currentScene;
-    public VN_BottomBarController bottomBar;
-    public VN_SpriteSw BGController;
-
-    // New field
-    public GameObject endSceneObject; // Assign in Inspector
-
+    public GameScene currentScene;
+    public BottomBarController bottomBar;
+    public VN_SpriteSw backgroundController;
     private State state = State.IDLE;
 
     private enum State
     {
-        IDLE, ANIMATE
+        IDLE, ANIMATE, CHOOSE
     }
 
     void Start()
     {
-        if (endSceneObject != null)
-            endSceneObject.SetActive(false); // Ensure hidden at start
-
-        bottomBar.PlayScene(currentScene);
-        BGController.SetImage(currentScene.background);
+        if (currentScene is VN_StoryScene)
+        {
+            VN_StoryScene storyScene = currentScene as VN_StoryScene;
+            bottomBar.PlayScene(storyScene);
+            backgroundController.SetImage(storyScene.background);
+        }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             if (state == State.IDLE && bottomBar.IsCompleted())
             {
                 if (bottomBar.IsLastSentence())
                 {
-                    if (currentScene.nextScene != null)
-                    {
-                        PlayScene(currentScene.nextScene);
-                    }
-                    else
-                    {
-                        // No more scenes - activate the object
-                        StartCoroutine(HandleEndScene());
-                    }
+                    PlayScene((currentScene as VN_StoryScene).nextScene);
                 }
                 else
                 {
@@ -53,38 +42,29 @@ public class VN_Controller : MonoBehaviour
         }
     }
 
-    private IEnumerator HandleEndScene()
-    {
-        // Optional: Add delay or fade-out animation first
-        yield return new WaitForSeconds(0f);
-
-        if (endSceneObject != null)
-        {
-            endSceneObject.SetActive(true);
-            Debug.Log("Visual novel completed - end object activated");
-        }
-
-        // Optional: Disable the VN system
-        //this.enabled = false;
-    }
-
-    private void PlayScene(VN_StoryScene scene)
+    public void PlayScene(GameScene scene)
     {
         StartCoroutine(SwitchScene(scene));
     }
 
-    private IEnumerator SwitchScene(VN_StoryScene scene)
+    private IEnumerator SwitchScene(GameScene scene)
     {
         state = State.ANIMATE;
         currentScene = scene;
         bottomBar.Hide();
         yield return new WaitForSeconds(1f);
-        BGController.SwitchImage(scene.background);
-        yield return new WaitForSeconds(1f);
-        bottomBar.ClearText();
-        bottomBar.Show();
-        yield return new WaitForSeconds(1f);
-        bottomBar.PlayScene(scene);
-        state = State.IDLE;
+        if (scene is VN_StoryScene)
+        {
+            VN_StoryScene storyScene = scene as VN_StoryScene;
+            backgroundController.SwitchImage(storyScene.background);
+            yield return new WaitForSeconds(1f);
+            bottomBar.ClearText();
+            bottomBar.Show();
+            yield return new WaitForSeconds(1f);
+            bottomBar.PlayScene(storyScene);
+            state = State.IDLE;
+        }
+
+
     }
 }
