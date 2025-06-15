@@ -77,7 +77,7 @@ public class BoxPenyimpanan : MonoBehaviour
         totalTabungan = PlayerPrefs.GetInt("TotalTabungan", 0);
 
         if (tabunganText != null)
-            tabunganText.text = "Tabungan Rp" + totalTabungan.ToString("N0");
+            tabunganText.text = "Rp" + totalTabungan.ToString("N0");
 
         btnAkhiriGame.gameObject.SetActive(false);
 
@@ -272,7 +272,7 @@ public class BoxPenyimpanan : MonoBehaviour
     void UpdateMoneyUI()
     {
         if (moneyText != null)
-            moneyText.text = "Uang Rp" + currentReward.ToString("N0");
+            moneyText.text = "Rp" + currentReward.ToString("N0");
     }
 
     void GoToNextLevel()
