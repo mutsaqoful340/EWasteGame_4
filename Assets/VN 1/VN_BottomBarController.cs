@@ -82,20 +82,25 @@ public class VN_BottomBarController : MonoBehaviour
 
     private IEnumerator TypeText(string text)
     {
+        if (string.IsNullOrEmpty(text))
+        {
+            state = State.COMPLETED;
+            yield break;
+        }
+
         barText.text = "";
         state = State.PLAYING;
+
         int wordIndex = 0;
 
-        while (state != State.COMPLETED)
+        while (wordIndex < text.Length)
         {
             barText.text += text[wordIndex];
             yield return new WaitForSeconds(0.05f);
-            if (++wordIndex == text.Length)
-            {
-                state = State.COMPLETED;
-                break;
-            }
+            wordIndex++;
         }
+
+        state = State.COMPLETED;
     }
 
     private void UpdateSpeakerUI(VN_Speaker speaker)
