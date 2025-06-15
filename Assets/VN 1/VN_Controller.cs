@@ -8,6 +8,7 @@ public class VN_Controller : MonoBehaviour
     public VN_BottomBarController bottomBar;
     public VN_BGCtrl backgroundController;
     private State state = State.IDLE;
+    public GameObject sceneEndPanel;
 
     private enum State
     {
@@ -32,7 +33,17 @@ public class VN_Controller : MonoBehaviour
             {
                 if (bottomBar.IsLastSentence())
                 {
-                    PlayScene((currentScene as VN_StoryScene).nextScene);
+                    var next = (currentScene as VN_StoryScene).nextScene;
+                    if (next == null)
+                    {
+                        Debug.Log("Reached the end of story. Activating end panel.");
+                        if (sceneEndPanel != null)
+                            sceneEndPanel.SetActive(true);
+                    }
+                    else
+                    {
+                        PlayScene(next);
+                    }
                 }
                 else
                 {
