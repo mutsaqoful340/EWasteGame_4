@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class SpawnOnClick : MonoBehaviour
 {
-    public enum SpawnType { HP, Laptop }
+    public enum SpawnType { HP, Laptop, PC }
     public SpawnType spawnType = SpawnType.HP;
 
     [Header("Spawn Settings")]
@@ -42,10 +42,15 @@ public class SpawnOnClick : MonoBehaviour
             {
                 SpawnLaptopComponents();
             }
+            else if (spawnType == SpawnType.PC)  // ⬅ Tambahan untuk PC
+            {
+                SpawnPCComponents();
+            }
 
             hasSpawned = true;
         }
     }
+
 
     void SpawnFlatCircle()
     {
@@ -90,6 +95,31 @@ public class SpawnOnClick : MonoBehaviour
             SetupTooltip(obj);
         }
     }
+
+    void SpawnPCComponents()
+    {
+        int total = prefabsToSpawn.Length;
+        if (total == 0) return;
+
+        float angleStep = 360f / total;
+
+        for (int i = 0; i < total; i++)
+        {
+            GameObject prefab = prefabsToSpawn[i];
+            if (prefab == null) continue;
+
+            float angleRad = angleStep * i * Mathf.Deg2Rad;
+            Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
+
+            // Tambahkan offset Y agar tidak tembus permukaan
+            Vector3 spawnPos = centerPoint.position + offset + Vector3.up * 0.01f;
+
+            Quaternion flatRotation = Quaternion.Euler(90f, 0f, 0f);
+            GameObject obj = Instantiate(prefab, spawnPos, flatRotation);
+            SetupTooltip(obj);
+        }
+    }
+
 
     void SetupTooltip(GameObject obj)
     {
