@@ -27,10 +27,7 @@ public class NextButton : MonoBehaviour
     void Start()
     {
         // Reset pelanggaran kalau dari scene awal
-        if (SceneManager.GetActiveScene().buildIndex == 2)
-        {
-            ResetPelanggaran();
-        }
+
 
         // Debug log untuk testing
         Debug.Log("📌 Pelanggaran Makan: " + PlayerPrefs.GetInt("PelanggaranMakan"));
@@ -42,23 +39,12 @@ public class NextButton : MonoBehaviour
             closeButton.onClick.AddListener(CloseWarningOverlay);
         if (btnLanjut != null)
             btnLanjut.onClick.AddListener(OnNextLevelButtonPressed);
-        if (debugResetButton != null)
-            debugResetButton.onClick.AddListener(ResetPelanggaranManual);
+
     }
 
-    void ResetPelanggaran()
-    {
-        PlayerPrefs.SetInt("PelanggaranMakan", 0);
-        PlayerPrefs.SetInt("PelanggaranNabung", 0);
-        PlayerPrefs.SetInt("SisaUang", 5000); // default awal
-        PlayerPrefs.Save();
-    }
+   
 
-    public void ResetPelanggaranManual()
-    {
-        ResetPelanggaran();
-        Debug.Log("✅ Data pelanggaran & uang telah direset!");
-    }
+   
 
     public void OnNextLevelButtonPressed()
     {
@@ -155,20 +141,25 @@ public class NextButton : MonoBehaviour
 
     public void LanjutKeSceneBerikutnya()
     {
+        if (boxPenyimpanan != null)
+        {
+            boxPenyimpanan.TerapkanPilihan();
+        }
+
         int pelanggaranMakan = PlayerPrefs.GetInt("PelanggaranMakan", 0);
         int pelanggaranNabung = PlayerPrefs.GetInt("PelanggaranNabung", 0);
         int sisaUang = PlayerPrefs.GetInt("SisaUang", 0);
 
         Debug.Log($"▶️ Lanjut dengan: PelanggaranMakan={pelanggaranMakan}, PelanggaranNabung={pelanggaranNabung}, SisaUang={sisaUang}");
 
-        if (pelanggaranMakan >= 4)
+        if (pelanggaranMakan >= 400)
         {
             Debug.Log("🚫 Masuk Ending 1 (pelanggaran makan)");
             SceneManager.LoadScene(endingSceneName);
             return;
         }
 
-        if (pelanggaranNabung >= 10)
+        if (pelanggaranNabung >= 1000)
         {
             Debug.Log("🚫 Masuk Ending 2 (pelanggaran nabung)");
             SceneManager.LoadScene(endingSceneName2);
@@ -194,4 +185,5 @@ public class NextButton : MonoBehaviour
             Debug.Log("🎉 Semua level selesai.");
         }
     }
+
 }
