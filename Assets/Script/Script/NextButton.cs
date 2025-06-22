@@ -26,8 +26,29 @@ public class NextButton : MonoBehaviour
 
     void Start()
     {
-        // Reset pelanggaran kalau dari scene awal
+        // Cek nama scene atau buildIndex untuk scene awal
+        string sceneName = SceneManager.GetActiveScene().name;
+        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
 
+        if (sceneName == "3DLV1 1" || sceneIndex == 2) // ganti sesuai nama/index scene pertamamu
+        {
+            Debug.Log("🔁 Reset semua data karena ini scene awal");
+
+            PlayerPrefs.DeleteKey("SisaUang");
+            PlayerPrefs.DeleteKey("TotalTabungan");
+            PlayerPrefs.DeleteKey("PelanggaranMakan");
+            PlayerPrefs.DeleteKey("PelanggaranNabung");
+            PlayerPrefs.DeleteKey("BuffJajanAktif");
+            PlayerPrefs.DeleteKey("TidakMakanKemarin");
+
+            PlayerPrefs.SetInt("SisaUang", 0); // uang awal
+            PlayerPrefs.SetInt("TotalTabungan", 0);
+            PlayerPrefs.SetInt("PelanggaranMakan", 0);
+            PlayerPrefs.SetInt("PelanggaranNabung", 0);
+            PlayerPrefs.SetInt("BuffJajanAktif", 0);
+            PlayerPrefs.SetInt("TidakMakanKemarin", 0);
+            PlayerPrefs.Save();
+        }
 
         // Debug log untuk testing
         Debug.Log("📌 Pelanggaran Makan: " + PlayerPrefs.GetInt("PelanggaranMakan"));
@@ -39,12 +60,11 @@ public class NextButton : MonoBehaviour
             closeButton.onClick.AddListener(CloseWarningOverlay);
         if (btnLanjut != null)
             btnLanjut.onClick.AddListener(OnNextLevelButtonPressed);
-
     }
 
-   
 
-   
+
+
 
     public void OnNextLevelButtonPressed()
     {
