@@ -172,14 +172,14 @@ public class NextButton : MonoBehaviour
 
         Debug.Log($"▶️ Lanjut dengan: PelanggaranMakan={pelanggaranMakan}, PelanggaranNabung={pelanggaranNabung}, SisaUang={sisaUang}");
 
-        if (pelanggaranMakan >= 400)
+        if (pelanggaranMakan >= 4)
         {
             Debug.Log("🚫 Masuk Ending 1 (pelanggaran makan)");
             SceneManager.LoadScene(endingSceneName);
             return;
         }
 
-        if (pelanggaranNabung >= 1000)
+        if (pelanggaranNabung >= 10)
         {
             Debug.Log("🚫 Masuk Ending 2 (pelanggaran nabung)");
             SceneManager.LoadScene(endingSceneName2);
