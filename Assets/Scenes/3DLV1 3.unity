@@ -2812,6 +2812,7 @@ GameObject:
   - component: {fileID: 259773708}
   - component: {fileID: 259773707}
   - component: {fileID: 259773706}
+  - component: {fileID: 259773709}
   m_Layer: 5
   m_Name: CloseBtn
   m_TagString: Untagged
@@ -2932,6 +2933,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259773704}
   m_CullTransparentMesh: 1
+--- !u!114 &259773709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259773704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ac7f31c88360b41a91b17a839ee148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkSpeed: 1
 --- !u!1 &269851675
 GameObject:
   m_ObjectHideFlags: 0
@@ -18088,6 +18102,7 @@ GameObject:
   - component: {fileID: 1795878656}
   - component: {fileID: 1795878655}
   - component: {fileID: 1795878654}
+  - component: {fileID: 1795878657}
   m_Layer: 5
   m_Name: OverlayWarning
   m_TagString: Untagged
@@ -18153,6 +18168,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1795878657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795878653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ac7f31c88360b41a91b17a839ee148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkSpeed: 1
 --- !u!1 &1799846460
 GameObject:
   m_ObjectHideFlags: 0
