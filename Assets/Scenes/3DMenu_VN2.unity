@@ -474,6 +474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 85526022}
+  - component: {fileID: 85526023}
   m_Layer: 0
   m_Name: 11
   m_TagString: Untagged
@@ -496,6 +497,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &85526023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85526021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506b69c45285e5c44822212b4d636702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chapterJustCompleted: 2
 --- !u!1 &97461645
 GameObject:
   m_ObjectHideFlags: 0
@@ -16115,9 +16129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   director: {fileID: 1558707228}
   sceneName: 3DLV1 2
-  endingSceneName: EndingScene
-  endingSceneName2: Ending2
-  endingSceneName3: Ending3
 --- !u!1 &1614236678
 GameObject:
   m_ObjectHideFlags: 0
