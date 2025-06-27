@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VN_Controller : MonoBehaviour
 {
     public GameScene currentScene;
     public VN_BottomBarController bottomBar;
+    public Button nextButton;
     public VN_BGCtrl backgroundController;
     private State state = State.IDLE;
     public GameObject sceneEndPanel;
@@ -22,37 +24,26 @@ public class VN_Controller : MonoBehaviour
             VN_StoryScene storyScene = currentScene as VN_StoryScene;
             bottomBar.PlayScene(storyScene);
             backgroundController.SetImage(storyScene.background);
+            nextButton.onClick.AddListener(OnNextButtonClicked);
+
         }
     }
 
-    void Update()
+    private void OnNextButtonClicked()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        if (bottomBar.IsCompleted())
         {
-            if (state == State.IDLE && bottomBar.IsCompleted())
+            if (!bottomBar.IsLastSentence())
             {
-                if (bottomBar.IsLastSentence())
-                {
-                    var next = (currentScene as VN_StoryScene).nextScene;
-                    if (next == null)
-                    {
-                        Debug.Log("Reached the end of story. Activating end panel.");
-                        if (sceneEndPanel != null)
-                            sceneEndPanel.SetActive(true);
-                    }
-                    else
-                    {
-                        PlayScene(next);
-                    }
-                }
-                else
-                {
-                    bottomBar.PlayNextSentence();
-                }
+                bottomBar.PlayNextSentence();
+            }
+            else
+            {
+                // Optionally do something when the scene ends
+                Debug.Log("Scene ended");
             }
         }
     }
-
     public void PlayScene(GameScene scene)
     {
         StartCoroutine(SwitchScene(scene));

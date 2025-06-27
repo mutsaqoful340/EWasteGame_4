@@ -96,7 +96,7 @@ public class VN_BottomBarController : MonoBehaviour
         while (wordIndex < text.Length)
         {
             barText.text += text[wordIndex];
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.025f);
             wordIndex++;
         }
 
