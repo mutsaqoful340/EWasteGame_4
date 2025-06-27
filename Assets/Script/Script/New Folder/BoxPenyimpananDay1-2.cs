@@ -53,8 +53,9 @@ public class BoxPenyimpananSimple : MonoBehaviour
         if (minutesPassed > lastMinuteChecked)
         {
             lastMinuteChecked = minutesPassed;
-            currentReward = Mathf.Max(0, currentReward - (minutesPassed * 10000));
+            currentReward = Mathf.Max(0, currentReward - 10000); // hanya -10rb per menit
         }
+
 
         if (timer <= 0f)
         {
@@ -86,33 +87,46 @@ public class BoxPenyimpananSimple : MonoBehaviour
         return currentItems >= maxItems;
     }
 
+
     void GameOver()
     {
         isGameOver = true;
 
-        if (timer <= 0f)
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene == "3DLV1 (Milih Sampah)" && currentReward <= 0)
         {
-            currentReward = 0;
+            currentReward = 10000; // kasih minimum reward
         }
 
-        // Simpan data untuk level berikutnya
         PlayerPrefs.SetInt("SisaUang", currentReward);
         PlayerPrefs.Save();
 
         ShowSummary();
     }
 
+
+
+
     void ShowSummary()
     {
+        Debug.Log("ShowSummary called!");
+
         if (summaryPanel != null)
+        {
             summaryPanel.SetActive(true);
+            Debug.Log("Summary panel shown.");
+        }
 
         if (upahText != null)
         {
             upahText.gameObject.SetActive(true);
             upahText.text = "Upah: Rp" + currentReward.ToString("N0");
+            Debug.Log("Upah shown: " + currentReward);
         }
     }
+
+
+
 
     void UpdateTimerUI()
     {

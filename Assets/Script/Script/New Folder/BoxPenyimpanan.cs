@@ -2,11 +2,15 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class BoxPenyimpanan : MonoBehaviour
 {
     [Header("Ending")]
     public GameObject endingPanel;
+
+    [Header("Panel Notifikasi Bertahap")]
+    public GameObject[] notifikasiPanels;
 
     private bool sudahMakanHariIni = false;
     private int hariTidakMakan = 0;
@@ -39,7 +43,6 @@ public class BoxPenyimpanan : MonoBehaviour
     private int currentReward;
 
     private int totalTabungan = 0;
-
     private int lastMinuteChecked = -1;
 
     private int makanCost = 15000;
@@ -49,11 +52,12 @@ public class BoxPenyimpanan : MonoBehaviour
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
 
+    private bool isLevel1 = false;
+
     void Start()
     {
         timer = totalTime;
 
-        // Cek buff jajan
         if (PlayerPrefs.GetInt("BuffJajanAktif", 0) == 1)
         {
             timer += 300f;
@@ -61,39 +65,28 @@ public class BoxPenyimpanan : MonoBehaviour
         }
 
         string currentSceneName = SceneManager.GetActiveScene().name;
+        isLevel1 = currentSceneName == "3DLV1 (Milih Sampah)";
 
-        if (currentSceneName == "3DLV1")
+        if (isLevel1)
         {
-            // Reset di level pertama
             PlayerPrefs.DeleteKey("SisaUang");
-            
             PlayerPrefs.SetInt("TidakMakanKemarin", 0);
-
             currentReward = initialReward;
             totalTabungan = 0;
-
             PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
             PlayerPrefs.Save();
         }
         else
         {
-            // Ambil data dari level sebelumnya
             currentReward = PlayerPrefs.GetInt("SisaUang", 0) + initialReward;
             totalTabungan = PlayerPrefs.GetInt("TotalTabungan", 0);
         }
 
-        // Update UI awal
         UpdateMoneyUI();
         UpdateTimerUI();
 
         if (tabunganText != null)
-        {
             tabunganText.text = "Tabungan Rp" + totalTabungan.ToString("N0");
-        }
-        else
-        {
-            Debug.LogWarning("[Start] tabunganText belum di-assign di Inspector!");
-        }
 
         if (btnAkhiriGame != null)
             btnAkhiriGame.gameObject.SetActive(false);
@@ -112,7 +105,6 @@ public class BoxPenyimpanan : MonoBehaviour
         Debug.Log($"[Start] currentReward = {currentReward}, totalTabungan = {totalTabungan}");
     }
 
-
     void Update()
     {
         if (isGameOver) return;
@@ -122,12 +114,15 @@ public class BoxPenyimpanan : MonoBehaviour
 
         UpdateTimerUI();
 
-        int minutesPassed = Mathf.FloorToInt((totalTime - timer) / 60f);
-        if (minutesPassed > lastMinuteChecked)
+        if (!isLevel1)
         {
-            lastMinuteChecked = minutesPassed;
-            currentReward = Mathf.Max(0, currentReward - (minutesPassed * 10000));
-            UpdateMoneyUI();
+            int minutesPassed = Mathf.FloorToInt((totalTime - timer) / 60f);
+            if (minutesPassed > lastMinuteChecked)
+            {
+                lastMinuteChecked = minutesPassed;
+                currentReward = Mathf.Max(0, currentReward - (minutesPassed * 10000));
+                UpdateMoneyUI();
+            }
         }
 
         if (timer <= 0f)
@@ -163,19 +158,22 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         isGameOver = true;
 
-        if (timer <= 0f)
+        if (timer <= 0f && isLevel1)
+        {
+            currentReward = Mathf.Max(currentReward, 10000);
+        }
+        else if (timer <= 0f)
         {
             currentReward = 0;
         }
-
-        ShowFinanceSummary();
 
         PlayerPrefs.SetInt("SisaUang", currentReward);
         PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
         PlayerPrefs.Save();
 
-        Debug.Log($"[GameOver] SisaUang: {currentReward}, Tabungan: {totalTabungan}");
+        StartCoroutine(TampilkanNotifikasiPanelsBergantian());
     }
+
 
     void ShowFinanceSummary()
     {
@@ -187,9 +185,14 @@ public class BoxPenyimpanan : MonoBehaviour
 
         UpdateSisaUang();
 
-        toggleMakan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
-        toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
-        toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+        if (toggleMakan != null)
+            toggleMakan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+
+        if (toggleNabung != null)
+            toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+
+        if (toggleJajan != null)
+            toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
 
         if (btnLanjut != null)
             btnLanjut.gameObject.SetActive(true);
@@ -219,7 +222,20 @@ public class BoxPenyimpanan : MonoBehaviour
 
     public void TerapkanPilihan()
     {
+        if (isLevel1)
+        {
+            Debug.Log("[TerapkanPilihan] Diabaikan karena masih di Level 1");
+            return;
+        }
+
         if (jajanSudahDiterapkan) return;
+
+        // Tambahkan perlindungan null
+        if (toggleMakan == null || toggleNabung == null || toggleJajan == null)
+        {
+            Debug.LogWarning("[TerapkanPilihan] Salah satu toggle null. Pastikan toggle lengkap di scene.");
+            return;
+        }
 
         bool playerMakan = toggleMakan.isOn;
         bool playerJajan = toggleJajan.isOn;
@@ -281,6 +297,19 @@ public class BoxPenyimpanan : MonoBehaviour
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
     }
+
+    private IEnumerator TampilkanNotifikasiPanelsBergantian()
+    {
+        foreach (GameObject panel in notifikasiPanels)
+        {
+            if (panel != null) panel.SetActive(true);
+            yield return new WaitForSeconds(1.5f); // Tahan tiap panel selama 1.5 detik
+            if (panel != null) panel.SetActive(false);
+        }
+
+        ShowFinanceSummary(); // Tampilkan panel keuangan setelah semua notifikasi
+    }
+
 
     void UpdateMoneyUI()
     {
