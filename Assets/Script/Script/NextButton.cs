@@ -30,7 +30,7 @@ public class NextButton : MonoBehaviour
         string sceneName = SceneManager.GetActiveScene().name;
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
 
-        if (sceneName == "3DLV1 1" || sceneIndex == 2) // ganti sesuai nama/index scene pertamamu
+        if (sceneName == "3DLV1 (Milih Sampah)" || sceneIndex == 2) // ganti sesuai nama/index scene pertamamu
         {
             Debug.Log("🔁 Reset semua data karena ini scene awal");
 
