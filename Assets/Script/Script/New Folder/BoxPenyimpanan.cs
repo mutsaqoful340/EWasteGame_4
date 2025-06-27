@@ -3,14 +3,13 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BoxPenyimpanan : MonoBehaviour
 {
-    [Header("Ending")]
-    public GameObject endingPanel;
-
-    [Header("Panel Notifikasi Bertahap")]
-    public GameObject[] notifikasiPanels;
+    [Header("Ending VN")]
+    public VNDialogManager vnDialogManager;
+    public List<VNDialog> vnDialogAkhir;
 
     private bool sudahMakanHariIni = false;
     private int hariTidakMakan = 0;
@@ -74,7 +73,6 @@ public class BoxPenyimpanan : MonoBehaviour
             currentReward = initialReward;
             totalTabungan = 0;
             PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
-            PlayerPrefs.Save();
         }
         else
         {
@@ -101,8 +99,6 @@ public class BoxPenyimpanan : MonoBehaviour
         }
 
         UpdateSisaUang();
-
-        Debug.Log($"[Start] currentReward = {currentReward}, totalTabungan = {totalTabungan}");
     }
 
     void Update()
@@ -135,7 +131,6 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         if (isGameOver) return;
         currentItems++;
-        Debug.Log($"Item ditambahkan: {currentItems}/{maxItems}");
 
         if (currentItems >= maxItems)
         {
@@ -146,7 +141,6 @@ public class BoxPenyimpanan : MonoBehaviour
     public void RemoveItem()
     {
         currentItems--;
-        Debug.Log($"Item dihancurkan. Item sekarang: {currentItems}/{maxItems}");
     }
 
     public bool IsFull()
@@ -171,75 +165,65 @@ public class BoxPenyimpanan : MonoBehaviour
         PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
         PlayerPrefs.Save();
 
-        StartCoroutine(TampilkanNotifikasiPanelsBergantian());
+        // VN Ending: tampilkan VN lalu lanjutkan ke ringkasan
+        if (vnDialogManager != null && vnDialogAkhir != null && vnDialogAkhir.Count > 0)
+        {
+            vnDialogManager.isVNEnding = true;
+            vnDialogManager.StartVN(vnDialogAkhir);
+            StartCoroutine(TungguVNSelesai());
+        }
+        else
+        {
+            // Jika VN tidak tersedia
+            ShowFinanceSummary();
+        }
     }
 
+    IEnumerator TungguVNSelesai()
+    {
+        yield return new WaitUntil(() => !vnDialogManager.gameObject.activeInHierarchy);
+        ShowFinanceSummary();
+    }
 
     void ShowFinanceSummary()
     {
-        if (financeSummaryPanel != null)
-            financeSummaryPanel.SetActive(true);
+        financeSummaryPanel?.SetActive(true);
 
         if (pemasukanText != null)
             pemasukanText.text = " Rp" + currentReward.ToString("N0");
 
         UpdateSisaUang();
 
-        if (toggleMakan != null)
-            toggleMakan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+        toggleMakan?.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+        toggleNabung?.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+        toggleJajan?.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
 
-        if (toggleNabung != null)
-            toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
-
-        if (toggleJajan != null)
-            toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
-
-        if (btnLanjut != null)
-            btnLanjut.gameObject.SetActive(true);
-        if (btnAkhiriGame != null)
-            btnAkhiriGame.gameObject.SetActive(true);
+        btnLanjut?.gameObject.SetActive(true);
+        btnAkhiriGame?.gameObject.SetActive(true);
     }
 
     void UpdateSisaUang()
     {
         int totalPengeluaran = 0;
 
-        if (toggleMakan != null && toggleMakan.isOn) totalPengeluaran += makanCost;
-        if (toggleNabung != null && toggleNabung.isOn) totalPengeluaran += nabungCost;
-        if (toggleJajan != null && toggleJajan.isOn) totalPengeluaran += jajanCost;
+        if (toggleMakan?.isOn == true) totalPengeluaran += makanCost;
+        if (toggleNabung?.isOn == true) totalPengeluaran += nabungCost;
+        if (toggleJajan?.isOn == true) totalPengeluaran += jajanCost;
 
-        int sisa = currentReward - totalPengeluaran;
-        sisa = Mathf.Max(0, sisa);
-
-        if (sisaUangText != null)
-            sisaUangText.text = "Sisa: Rp" + sisa.ToString("N0");
+        int sisa = Mathf.Max(0, currentReward - totalPengeluaran);
+        sisaUangText.text = "Sisa: Rp" + sisa.ToString("N0");
 
         PlayerPrefs.SetInt("SisaUang", sisa);
         PlayerPrefs.Save();
-
-        Debug.Log($"[UpdateSisaUang] SisaUang: {sisa}, Tabungan: {totalTabungan}");
     }
 
     public void TerapkanPilihan()
     {
-        if (isLevel1)
-        {
-            Debug.Log("[TerapkanPilihan] Diabaikan karena masih di Level 1");
-            return;
-        }
+        if (isLevel1 || jajanSudahDiterapkan) return;
 
-        if (jajanSudahDiterapkan) return;
-
-        // Tambahkan perlindungan null
-        if (toggleMakan == null || toggleNabung == null || toggleJajan == null)
-        {
-            Debug.LogWarning("[TerapkanPilihan] Salah satu toggle null. Pastikan toggle lengkap di scene.");
-            return;
-        }
-
-        bool playerMakan = toggleMakan.isOn;
-        bool playerJajan = toggleJajan.isOn;
-        bool playerNabung = toggleNabung.isOn;
+        bool playerMakan = toggleMakan?.isOn == true;
+        bool playerJajan = toggleJajan?.isOn == true;
+        bool playerNabung = toggleNabung?.isOn == true;
 
         if (playerJajan && !buffJajanSudahDipakai && currentReward >= jajanCost)
         {
@@ -269,8 +253,6 @@ public class BoxPenyimpanan : MonoBehaviour
 
             if (tabunganText != null)
                 tabunganText.text = "Tabungan Rp" + totalTabungan.ToString("N0");
-
-            Debug.Log($"[TerapkanPilihan] Nabung +{nabungCost}, TotalTabungan: {totalTabungan}");
         }
 
         PlayerPrefs.SetInt("SisaUang", currentReward);
@@ -290,31 +272,14 @@ public class BoxPenyimpanan : MonoBehaviour
 
     void UpdateTimerUI()
     {
-        if (timerText != null)
-        {
-            int minutes = Mathf.FloorToInt(timer / 60f);
-            int seconds = Mathf.FloorToInt(timer % 60f);
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        }
+        int minutes = Mathf.FloorToInt(timer / 60f);
+        int seconds = Mathf.FloorToInt(timer % 60f);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
-    private IEnumerator TampilkanNotifikasiPanelsBergantian()
-    {
-        foreach (GameObject panel in notifikasiPanels)
-        {
-            if (panel != null) panel.SetActive(true);
-            yield return new WaitForSeconds(1.5f); // Tahan tiap panel selama 1.5 detik
-            if (panel != null) panel.SetActive(false);
-        }
-
-        ShowFinanceSummary(); // Tampilkan panel keuangan setelah semua notifikasi
-    }
-
 
     void UpdateMoneyUI()
     {
-        if (moneyText != null)
-            moneyText.text = "Rp" + currentReward.ToString("N0");
+        moneyText.text = "Rp" + currentReward.ToString("N0");
     }
 
     void GoToNextLevel()
@@ -330,4 +295,11 @@ public class BoxPenyimpanan : MonoBehaviour
             Debug.Log("Semua level selesai.");
         }
     }
+
+    public void TampilkanRingkasanLangsungDariVN()
+    {
+        isGameOver = true;
+        ShowFinanceSummary();
+    }
+
 }
