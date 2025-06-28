@@ -3887,7 +3887,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentScene: {fileID: 11400000, guid: 131967f560c897d478da991192f0d7b7, type: 2}
   bottomBar: {fileID: 1718845590}
-  nextButton: {fileID: 1512026867}
   backgroundController: {fileID: 1404829263}
   sceneEndPanel: {fileID: 1558707227}
 --- !u!114 &1034015380
@@ -6558,7 +6557,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1512026868}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1034015379}
+        m_TargetAssemblyTypeName: VN_Controller, Assembly-CSharp
+        m_MethodName: OnNextButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1512026868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7834,6 +7845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f4d4cfb0f3ec142ae99b24065ba07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextButton: {fileID: 1512026867}
   characterController: {fileID: 392983869}
   lastSpeaker: {fileID: 11400000, guid: 7ac3d55cf39c704458e1bfb061f38222, type: 2}
   barText: {fileID: 670878684}

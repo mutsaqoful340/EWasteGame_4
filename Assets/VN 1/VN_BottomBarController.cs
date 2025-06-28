@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+//using UnityEngine.UIElements;
+using UnityEngine.UI;
+
 
 public class VN_BottomBarController : MonoBehaviour
 {
+    [SerializeField] private Button nextButton;
+
     [Header("Character Settings")]
     public VN_SpriteCtrl characterController;
     public VN_Speaker lastSpeaker;
@@ -88,6 +93,9 @@ public class VN_BottomBarController : MonoBehaviour
             yield break;
         }
 
+        if (nextButton != null)
+            nextButton.interactable = false;
+
         barText.text = "";
         state = State.PLAYING;
 
@@ -101,7 +109,12 @@ public class VN_BottomBarController : MonoBehaviour
         }
 
         state = State.COMPLETED;
+
+        if (nextButton != null)
+            nextButton.interactable = true;
     }
+
+
 
     private void UpdateSpeakerUI(VN_Speaker speaker)
     {
