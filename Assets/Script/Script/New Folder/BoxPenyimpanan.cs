@@ -20,6 +20,9 @@ public class BoxPenyimpanan : MonoBehaviour
     public int maxItems = 3;
     private int currentItems = 0;
 
+    [Header("Pelanggaran")]
+    private List<string> daftarPelanggaran = new List<string>();
+
     public GameObject financeSummaryPanel;
 
     public TextMeshProUGUI timerText;
@@ -50,7 +53,6 @@ public class BoxPenyimpanan : MonoBehaviour
 
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
-
     private bool isLevel1 = false;
 
     void Start()
@@ -86,11 +88,8 @@ public class BoxPenyimpanan : MonoBehaviour
         if (tabunganText != null)
             tabunganText.text = "Tabungan Rp" + totalTabungan.ToString("N0");
 
-        if (btnAkhiriGame != null)
-            btnAkhiriGame.gameObject.SetActive(false);
-
-        if (financeSummaryPanel != null)
-            financeSummaryPanel.SetActive(false);
+        financeSummaryPanel?.SetActive(false);
+        btnAkhiriGame?.gameObject.SetActive(false);
 
         if (btnLanjut != null)
         {
@@ -106,7 +105,7 @@ public class BoxPenyimpanan : MonoBehaviour
         if (isGameOver) return;
 
         timer -= Time.deltaTime;
-        if (timer < 0f) timer = 0f;
+        timer = Mathf.Max(timer, 0f);
 
         UpdateTimerUI();
 
@@ -116,7 +115,7 @@ public class BoxPenyimpanan : MonoBehaviour
             if (minutesPassed > lastMinuteChecked)
             {
                 lastMinuteChecked = minutesPassed;
-                currentReward = Mathf.Max(0, currentReward - (minutesPassed * 10000));
+                currentReward = Mathf.Max(0, currentReward - 10000);
                 UpdateMoneyUI();
             }
         }
@@ -148,6 +147,12 @@ public class BoxPenyimpanan : MonoBehaviour
         return currentItems >= maxItems;
     }
 
+    public void CatatPelanggaran(string pesan)
+    {
+        daftarPelanggaran.Add(pesan);
+        Debug.Log("Pelanggaran dicatat: " + pesan);
+    }
+
     void GameOver()
     {
         isGameOver = true;
@@ -165,7 +170,6 @@ public class BoxPenyimpanan : MonoBehaviour
         PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
         PlayerPrefs.Save();
 
-        // VN Ending: tampilkan VN lalu lanjutkan ke ringkasan
         if (vnDialogManager != null && vnDialogAkhir != null && vnDialogAkhir.Count > 0)
         {
             vnDialogManager.isVNEnding = true;
@@ -174,7 +178,6 @@ public class BoxPenyimpanan : MonoBehaviour
         }
         else
         {
-            // Jika VN tidak tersedia
             ShowFinanceSummary();
         }
     }
@@ -190,7 +193,7 @@ public class BoxPenyimpanan : MonoBehaviour
         financeSummaryPanel?.SetActive(true);
 
         if (pemasukanText != null)
-            pemasukanText.text = " Rp" + currentReward.ToString("N0");
+            pemasukanText.text = "Rp" + currentReward.ToString("N0");
 
         UpdateSisaUang();
 
@@ -292,7 +295,7 @@ public class BoxPenyimpanan : MonoBehaviour
         }
         else
         {
-            Debug.Log("Semua level selesai.");
+            Debug.Log("🎉 Semua level selesai.");
         }
     }
 
@@ -302,4 +305,8 @@ public class BoxPenyimpanan : MonoBehaviour
         ShowFinanceSummary();
     }
 
+    public List<string> GetPelanggaranList()
+    {
+        return daftarPelanggaran;
+    }
 }

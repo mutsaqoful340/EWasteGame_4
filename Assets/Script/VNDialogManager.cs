@@ -160,21 +160,33 @@ public class VNDialogManager : MonoBehaviour
 
         Debug.Log("📢 VN Selesai");
 
-        // 🔥 Tampilkan ringkasan hanya jika ini adalah VN akhir
+        // 🔥 Tampilkan ringkasan jika ini adalah VN akhir
         if (isVNEnding)
         {
             Debug.Log("📢 VN akhir terdeteksi, menampilkan ringkasan...");
-            BoxPenyimpanan box = FindObjectOfType<BoxPenyimpanan>();
-            if (box != null)
+
+            // Coba cari WasteZone dulu
+            WasteZone ewasteZone = FindObjectOfType<WasteZone>();
+            if (ewasteZone != null)
             {
-                box.TampilkanRingkasanLangsungDariVN();
+                ewasteZone.TampilkanRingkasanLangsungDariVN();
+                return;
             }
-            else
+
+            // Jika tidak ditemukan, coba cari BoxPenyimpanan
+            BoxPenyimpanan penyimpanan = FindObjectOfType<BoxPenyimpanan>();
+            if (penyimpanan != null)
             {
-                Debug.LogWarning("❗ BoxPenyimpanan tidak ditemukan.");
+                penyimpanan.TampilkanRingkasanLangsungDariVN();
+                return;
             }
+
+            // Kalau dua-duanya nggak ada
+            Debug.LogWarning("❗ WasteZone dan BoxPenyimpanan tidak ditemukan.");
         }
     }
+
+
 
     IEnumerator PulseKarakterObject()
     {

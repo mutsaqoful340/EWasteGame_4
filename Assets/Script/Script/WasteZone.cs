@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class WasteZone : MonoBehaviour
 {
@@ -7,45 +10,236 @@ public class WasteZone : MonoBehaviour
     public string acceptedType = "ewaste";
 
     [Header("Referensi VN")]
-    public VNDialogManager vnDialogManager; // VN Manager yang aktif di scene
-    public List<VNDialog> dialogSetelahBuang; // Dialog yang akan muncul setelah sampah cocok
+    public VNDialogManager vnDialogManager;
+    public List<VNDialog> dialogSetelahBuang;
+
+    [Header("Panel Ringkasan")]
+    public GameObject financeSummaryPanel;
+    public TextMeshProUGUI rewardText;
+    public TextMeshProUGUI totalUangText;
+
+    [Header("Reward Settings")]
+    public int rewardPerTipe = 10000;
+
+    [Header("Posisi Target Kardus")]
+    public List<Transform> targetPositions;
+
+    [Header("Referensi BoxPenyimpanan (untuk pelanggaran)")]
+    public BoxPenyimpanan boxPenyimpanan;
+
+    [Header("Jumlah Kardus Diharapkan")]
+    public int jumlahKardusYangDiharapkan = 3;
+
+    private int currentTargetIndex = 0;
+    private int jumlahKardusYangSudahMasuk = 0;
 
     private bool alreadyTriggered = false;
+    private bool isGameOver = false;
+
+    private int currentReward = 0;
+    private int uangSebelumnya = 0;
+
+    private bool isMovingToTarget = false;
+    private GameObject kardusYangMasuk;
+    private Transform currentTarget;
+
+    void Start()
+    {
+        uangSebelumnya = PlayerPrefs.GetInt("SisaUang", 0);
+        currentReward = uangSebelumnya;
+        Debug.Log($"💰 Uang awal dari level sebelumnya: Rp{uangSebelumnya:N0}");
+
+        if (financeSummaryPanel != null)
+            financeSummaryPanel.SetActive(false);
+
+        Debug.Log($"🔍 Jumlah targetPositions: {targetPositions.Count}");
+        foreach (var t in targetPositions)
+        {
+            if (t != null)
+                Debug.Log($"📍 Target Posisi: {t.name} di {t.position}");
+            else
+                Debug.LogError("❌ Salah satu target position NULL!");
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (alreadyTriggered) return;
+        Debug.Log($"🟢 OnTriggerEnter dengan: {other.name}");
+
+        if (alreadyTriggered || isGameOver) return;
 
         var box = other.GetComponent<BoxLidAnimatorController>();
         if (box != null)
         {
+            Debug.Log($"🔍 Terdeteksi box dengan tipe: {box.boxType}");
+
             if (box.boxType == acceptedType)
             {
                 alreadyTriggered = true;
                 Debug.Log($"✅ Sampah cocok: {box.boxType}");
 
-                // Mulai Visual Novel Dialog
-                if (vnDialogManager != null)
-                {
-                    if (dialogSetelahBuang != null && dialogSetelahBuang.Count > 0)
-                    {
-                        vnDialogManager.StartVN(dialogSetelahBuang);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("❗ List VN dialog kosong!");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("❗ VNDialogManager belum di-assign di Inspector!");
-                }
+                StartCoroutine(ProsesKardusMasuk(other.gameObject));
             }
             else
             {
                 Debug.Log($"❌ Sampah salah. Diberikan: {box.boxType}, diterima: {acceptedType}");
-                // Tambah feedback gagal (optional)
+
+                if (boxPenyimpanan != null)
+                {
+                    string pesan = $"Sampah salah: {box.boxType} dimasukkan ke {acceptedType}";
+                    boxPenyimpanan.CatatPelanggaran(pesan);
+                }
             }
         }
+        else
+        {
+            Debug.LogWarning("⚠️ Objek masuk TIDAK punya BoxLidAnimatorController!");
+        }
+    }
+
+    IEnumerator ProsesKardusMasuk(GameObject boxObj)
+    {
+        yield return new WaitForSeconds(1.5f);
+        kardusYangMasuk = boxObj;
+
+        if (currentTargetIndex < targetPositions.Count)
+        {
+            currentTarget = targetPositions[currentTargetIndex];
+            currentTargetIndex++;
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ Tidak cukup targetPositions, gunakan yang terakhir.");
+            currentTarget = targetPositions[targetPositions.Count - 1];
+        }
+
+        Debug.Log($"📦 Kardus diarahkan ke target {currentTargetIndex}: {currentTarget.name}");
+        isMovingToTarget = true;
+
+        // Optional: nonaktifkan Rigidbody jika ada
+        var rb = kardusYangMasuk.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            Debug.Log("🔧 Rigidbody diset kinematic supaya bisa dipindah manual.");
+        }
+    }
+
+    void Update()
+    {
+        if (isMovingToTarget && kardusYangMasuk != null && currentTarget != null)
+        {
+            float speed = 3f;
+            kardusYangMasuk.transform.position = Vector3.MoveTowards(
+                kardusYangMasuk.transform.position,
+                currentTarget.position,
+                speed * Time.deltaTime
+            );
+
+            float distance = Vector3.Distance(kardusYangMasuk.transform.position, currentTarget.position);
+            Debug.Log($"📍 Bergerak ke target, jarak tersisa: {distance}");
+
+            if (distance < 0.05f)
+            {
+                Debug.Log("✅ Kardus sampai ke target.");
+                isMovingToTarget = false;
+                LanjutkanSetelahPindah();
+            }
+        }
+    }
+
+    void LanjutkanSetelahPindah()
+    {
+        currentReward += rewardPerTipe;
+        PlayerPrefs.SetInt("SisaUang", currentReward);
+        PlayerPrefs.Save();
+
+        jumlahKardusYangSudahMasuk++;
+        Debug.Log($"✅ Kardus ke-{jumlahKardusYangSudahMasuk} berhasil masuk.");
+
+        alreadyTriggered = false;
+
+        if (jumlahKardusYangSudahMasuk >= jumlahKardusYangDiharapkan)
+        {
+            isGameOver = true;
+
+            Debug.Log("🎉 Semua kardus sudah masuk. Lanjut ke VN atau ringkasan.");
+
+            if (vnDialogManager != null && dialogSetelahBuang != null && dialogSetelahBuang.Count > 0)
+            {
+                vnDialogManager.isVNEnding = true;
+                vnDialogManager.StartVN(dialogSetelahBuang);
+            }
+            else
+            {
+                ShowFinanceSummary();
+            }
+        }
+    }
+
+    private void ShowFinanceSummary()
+    {
+        currentReward = PlayerPrefs.GetInt("SisaUang", 0);
+        Debug.Log($"📥 ShowFinanceSummary - currentReward: Rp{currentReward:N0}");
+
+        if (financeSummaryPanel != null)
+            financeSummaryPanel.SetActive(true);
+
+        int tabunganSebelumnya = PlayerPrefs.GetInt("Tabungan", 0);
+
+        if (rewardText != null)
+            rewardText.text = "Tabungan: Rp" + tabunganSebelumnya.ToString("N0");
+
+        if (totalUangText != null)
+            totalUangText.text = "Total Uang: Rp" + currentReward.ToString("N0");
+
+        if (boxPenyimpanan != null)
+        {
+            var pelanggaranList = boxPenyimpanan.GetPelanggaranList();
+            if (pelanggaranList.Count > 0)
+            {
+                Debug.Log("📛 Ringkasan Pelanggaran:");
+                foreach (var p in pelanggaranList)
+                {
+                    Debug.Log($"- {p}");
+                }
+            }
+        }
+
+        Toggle toggleMakan = GameObject.Find("ToggleMakan")?.GetComponent<Toggle>();
+        Toggle toggleNabung = GameObject.Find("ToggleNabung")?.GetComponent<Toggle>();
+        Toggle toggleJajan = GameObject.Find("ToggleJajan")?.GetComponent<Toggle>();
+        TextMeshProUGUI sisaText = GameObject.Find("SisaText")?.GetComponent<TextMeshProUGUI>();
+
+        if (toggleMakan != null && toggleNabung != null && toggleJajan != null && sisaText != null)
+        {
+            System.Action updateSisa = () =>
+            {
+                int sisa = currentReward;
+                if (toggleMakan.isOn) sisa -= 10000;
+                if (toggleNabung.isOn) sisa -= 15000;
+                if (toggleJajan.isOn) sisa -= 5000;
+                sisa = Mathf.Max(0, sisa);
+                sisaText.text = "Sisa: Rp" + sisa.ToString("N0");
+                Debug.Log($"🔁 Update Sisa: Rp{sisa:N0}");
+            };
+
+            toggleMakan.onValueChanged.RemoveAllListeners();
+            toggleMakan.onValueChanged.AddListener((_) => updateSisa());
+
+            toggleNabung.onValueChanged.RemoveAllListeners();
+            toggleNabung.onValueChanged.AddListener((_) => updateSisa());
+
+            toggleJajan.onValueChanged.RemoveAllListeners();
+            toggleJajan.onValueChanged.AddListener((_) => updateSisa());
+
+            updateSisa();
+        }
+    }
+
+    public void TampilkanRingkasanLangsungDariVN()
+    {
+        Debug.Log("📋 Ringkasan dipanggil setelah VN selesai.");
+        ShowFinanceSummary();
     }
 }
