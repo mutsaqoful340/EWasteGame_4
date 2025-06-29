@@ -693,16 +693,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1431932568}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1431932570}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: DialRecap_IN
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &239097370
@@ -1313,12 +1313,12 @@ GameObject:
   - component: {fileID: 577440837}
   - component: {fileID: 577440836}
   m_Layer: 5
-  m_Name: DialRecal_Panel
+  m_Name: DialRecap_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &577440835
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1333,10 +1333,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1431932569}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1523.8, y: 275.7}
+  m_SizeDelta: {x: 0, y: 275.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &577440836
 MonoBehaviour:
@@ -1351,7 +1351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2322,14 +2322,13 @@ GameObject:
   - component: {fileID: 734416622}
   - component: {fileID: 734416621}
   - component: {fileID: 734416620}
-  - component: {fileID: 734416619}
   m_Layer: 5
   m_Name: Btn_SkipConfirm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &734416618
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2347,30 +2346,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 228, y: -136}
-  m_SizeDelta: {x: 220, y: 80}
+  m_AnchoredPosition: {x: 975, y: -136}
+  m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &734416619
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734416617}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: feceb15b37cc7de4884613127d5df690, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &734416620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3358,7 +3336,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &990551413
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3408,7 +3386,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3887,7 +3865,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentScene: {fileID: 11400000, guid: 131967f560c897d478da991192f0d7b7, type: 2}
   bottomBar: {fileID: 1718845590}
-  nextButton: {fileID: 1512026867}
   backgroundController: {fileID: 1404829263}
   sceneEndPanel: {fileID: 1558707227}
 --- !u!114 &1034015380
@@ -4084,14 +4061,13 @@ GameObject:
   - component: {fileID: 1066497447}
   - component: {fileID: 1066497446}
   - component: {fileID: 1066497445}
-  - component: {fileID: 1066497444}
   m_Layer: 5
   m_Name: Btn_SkipCancel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1066497443
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4109,30 +4085,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -228, y: -136}
-  m_SizeDelta: {x: 220, y: 80}
+  m_AnchoredPosition: {x: -975, y: -136}
+  m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &1066497444
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1066497442}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: feceb15b37cc7de4884613127d5df690, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1066497445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4177,16 +4132,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1431932568}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1431932570}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: DialRecap_OUT
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1066497446
@@ -4367,7 +4322,7 @@ GameObject:
   - component: {fileID: 1145589825}
   - component: {fileID: 1145589824}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SkipConf_Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4390,7 +4345,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 39.39, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1145589824
 MonoBehaviour:
@@ -4449,7 +4404,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 19.73
+  m_characterSpacing: -45
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5728,7 +5683,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1431932569
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6024,7 +5979,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1447392588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6057,7 +6012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.70980394}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6353,7 +6308,7 @@ GameObject:
   - component: {fileID: 1499403577}
   - component: {fileID: 1499403576}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SkipCnl_Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6435,7 +6390,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 19.73
+  m_characterSpacing: -45
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -6558,7 +6513,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1512026868}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1034015379}
+        m_TargetAssemblyTypeName: VN_Controller, Assembly-CSharp
+        m_MethodName: OnNextButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1512026868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7834,6 +7801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f4d4cfb0f3ec142ae99b24065ba07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextButton: {fileID: 1512026867}
   characterController: {fileID: 392983869}
   lastSpeaker: {fileID: 11400000, guid: 7ac3d55cf39c704458e1bfb061f38222, type: 2}
   barText: {fileID: 670878684}
