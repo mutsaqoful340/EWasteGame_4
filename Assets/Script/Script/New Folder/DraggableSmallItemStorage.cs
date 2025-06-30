@@ -6,21 +6,26 @@ public class DraggableStorageItem : MonoBehaviour
     private Vector3 startPos;
     private bool isDragging = false;
     private float zOffset;
-    private float startY; // Menyimpan posisi Y agar tidak tembus meja saat drag
+    private float startY;
 
     public string itemType; // misal: "SmallEWaste"
 
+    // Support kedua jenis Box
     private BoxPenyimpanan boxManager;
+    private BoxPenyimpananSimple simpleBoxManager;
 
     void Start()
     {
         startPos = transform.position;
-        startY = startPos.y; // Simpan posisi Y awal
+        startY = startPos.y;
 
+        // Cari salah satu box manager yang aktif di scene
         boxManager = FindObjectOfType<BoxPenyimpanan>();
-        if (boxManager == null)
+        simpleBoxManager = FindObjectOfType<BoxPenyimpananSimple>();
+
+        if (boxManager == null && simpleBoxManager == null)
         {
-            Debug.LogError("BoxPenyimpanan tidak ditemukan di scene.");
+            Debug.LogError("Tidak ditemukan BoxPenyimpanan atau BoxPenyimpananSimple di scene.");
         }
     }
 
@@ -37,7 +42,7 @@ public class DraggableStorageItem : MonoBehaviour
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = zOffset;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-            worldPos.y = startY; // Tetap berada di atas meja
+            worldPos.y = startY;
             transform.position = worldPos;
         }
     }
@@ -56,18 +61,38 @@ public class DraggableStorageItem : MonoBehaviour
         }
         else if (other.CompareTag("StorageZone"))
         {
+            // Pastikan hanya item dengan tag sesuai yang bisa dimasukkan
             if (gameObject.CompareTag("SmallEWaste"))
             {
-                if (!boxManager.IsFull())
+                // Jika pakai BoxPenyimpanan (versi utama)
+                if (boxManager != null)
                 {
-                    boxManager.AddItem(itemType);
-                    Debug.Log(itemType + " diterima di StorageZone dan dihancurkan.");
-                    Destroy(gameObject);
+                    if (!boxManager.IsFull())
+                    {
+                        boxManager.AddItem(itemType);
+                        Debug.Log(itemType + " diterima di StorageZone (BoxPenyimpanan) dan dihancurkan.");
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        Debug.Log("BoxPenyimpanan penuh, tidak bisa menambahkan item.");
+                        StartCoroutine(BalikKeAwal());
+                    }
                 }
-                else
+                // Jika pakai BoxPenyimpananSimple (versi ringkas)
+                else if (simpleBoxManager != null)
                 {
-                    Debug.Log("StorageZone sudah penuh, " + itemType + " tidak diterima.");
-                    StartCoroutine(BalikKeAwal());
+                    if (!simpleBoxManager.IsFull())
+                    {
+                        simpleBoxManager.AddItem();
+                        Debug.Log(itemType + " diterima di StorageZone (Simple) dan dihancurkan.");
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        Debug.Log("BoxPenyimpananSimple penuh, tidak bisa menambahkan item.");
+                        StartCoroutine(BalikKeAwal());
+                    }
                 }
             }
             else

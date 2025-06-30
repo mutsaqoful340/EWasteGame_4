@@ -762,11 +762,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d1569a154bd434f98518451cc48f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameplayTimer: {fileID: 1899073800}
+  endingPanel: {fileID: 0}
+  totalTime: 300
   maxItems: 6
-  winPanel: {fileID: 396618493}
-  winText: {fileID: 239115135}
-  buttonsPanel: {fileID: 363454642}
+  financeSummaryPanel: {fileID: 0}
+  timerText: {fileID: 0}
+  moneyText: {fileID: 0}
+  pemasukanText: {fileID: 0}
+  sisaUangText: {fileID: 0}
+  tabunganText: {fileID: 0}
+  toggleMakan: {fileID: 0}
+  toggleNabung: {fileID: 0}
+  toggleJajan: {fileID: 0}
+  btnLanjut: {fileID: 0}
+  btnAkhiriGame: {fileID: 0}
+  initialReward: 50000
 --- !u!1 &684092785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,17 +1190,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956010ba6ca365444b4e318176ffc026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  componentPrefabs:
-  - {fileID: 7610524483428049374, guid: 26405736a5245ac4194b4f3ab6e519b8, type: 3}
-  - {fileID: 1854959132794980556, guid: c5d845a53ef154443ae23d8cee6b2529, type: 3}
-  - {fileID: 3750833444468250735, guid: 5ef2dc4447745ba49aff13f49e3a2400, type: 3}
-  - {fileID: 7998799635037196503, guid: 9f0743f69be806d44bedf71ee2475baa, type: 3}
-  - {fileID: 5434716938504541228, guid: ffffd1ba4ddf1dd41a056a3645ded332, type: 3}
-  - {fileID: 4968314495665867526, guid: 0c003f8dbe0455243b6c245660fe7ab3, type: 3}
-  - {fileID: 1941349880606944109, guid: 6e482c28417b4be408f1aee3e1c9eebd, type: 3}
-  - {fileID: 9083758962842653030, guid: 7bc7918ff6b3fc040a9f5141a42ecab5, type: 3}
+  spawnType: 0
+  prefabsToSpawn: []
+  centerPoint: {fileID: 0}
   radius: 1.31
-  moveDuration: 0.5
+  laptopColumns: 3
+  spacing: 0.5
+  tooltipPanel: {fileID: 0}
+  tooltipText: {fileID: 0}
 --- !u!114 &798866389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,23 +1210,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d173692461e6ba40ba58b5362eb06e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Top_EnclosurePrefab: {fileID: 7610524483428049374, guid: 26405736a5245ac4194b4f3ab6e519b8,
-    type: 3}
-  LCDPrefab: {fileID: 1854959132794980556, guid: c5d845a53ef154443ae23d8cee6b2529,
-    type: 3}
-  MachinePrefab: {fileID: 3750833444468250735, guid: 5ef2dc4447745ba49aff13f49e3a2400,
-    type: 3}
-  SIMCardPrefab: {fileID: 7998799635037196503, guid: 9f0743f69be806d44bedf71ee2475baa,
-    type: 3}
-  batteryPrefab: {fileID: 5434716938504541228, guid: ffffd1ba4ddf1dd41a056a3645ded332,
-    type: 3}
-  Bottom_EnclosurePrefab: {fileID: 4968314495665867526, guid: 0c003f8dbe0455243b6c245660fe7ab3,
-    type: 3}
-  kertasPrefab: {fileID: 1941349880606944109, guid: 6e482c28417b4be408f1aee3e1c9eebd,
-    type: 3}
-  pensilPrefab: {fileID: 9083758962842653030, guid: 7bc7918ff6b3fc040a9f5141a42ecab5,
-    type: 3}
-  spawnSlots: []
+  deviceType: 0
+  itemPrefabs: []
+  centerPoint: {fileID: 0}
+  radius: 0.1
+  laptopColumns: 3
+  spacing: 0.05
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,22 +1388,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d173692461e6ba40ba58b5362eb06e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Top_EnclosurePrefab: {fileID: 7610524483428049374, guid: 26405736a5245ac4194b4f3ab6e519b8,
-    type: 3}
-  LCDPrefab: {fileID: 1854959132794980556, guid: c5d845a53ef154443ae23d8cee6b2529,
-    type: 3}
-  MachinePrefab: {fileID: 3750833444468250735, guid: 5ef2dc4447745ba49aff13f49e3a2400,
-    type: 3}
-  SIMCardPrefab: {fileID: 7998799635037196503, guid: 9f0743f69be806d44bedf71ee2475baa,
-    type: 3}
-  batteryPrefab: {fileID: 5434716938504541228, guid: ffffd1ba4ddf1dd41a056a3645ded332,
-    type: 3}
-  Bottom_EnclosurePrefab: {fileID: 4968314495665867526, guid: 0c003f8dbe0455243b6c245660fe7ab3,
-    type: 3}
-  kertasPrefab: {fileID: 0}
-  pensilPrefab: {fileID: 0}
-  spawnSlots:
-  - {fileID: 0}
+  deviceType: 0
+  itemPrefabs: []
+  centerPoint: {fileID: 0}
+  radius: 0.1
+  laptopColumns: 3
+  spacing: 0.05
 --- !u!114 &1100181033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,15 +1447,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956010ba6ca365444b4e318176ffc026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  componentPrefabs:
-  - {fileID: 7610524483428049374, guid: 26405736a5245ac4194b4f3ab6e519b8, type: 3}
-  - {fileID: 1854959132794980556, guid: c5d845a53ef154443ae23d8cee6b2529, type: 3}
-  - {fileID: 3750833444468250735, guid: 5ef2dc4447745ba49aff13f49e3a2400, type: 3}
-  - {fileID: 7998799635037196503, guid: 9f0743f69be806d44bedf71ee2475baa, type: 3}
-  - {fileID: 5434716938504541228, guid: ffffd1ba4ddf1dd41a056a3645ded332, type: 3}
-  - {fileID: 4968314495665867526, guid: 0c003f8dbe0455243b6c245660fe7ab3, type: 3}
+  spawnType: 0
+  prefabsToSpawn: []
+  centerPoint: {fileID: 0}
   radius: 1.31
-  moveDuration: 0.5
+  laptopColumns: 3
+  spacing: 0.5
+  tooltipPanel: {fileID: 0}
+  tooltipText: {fileID: 0}
 --- !u!65 &1100181036
 BoxCollider:
   m_ObjectHideFlags: 0

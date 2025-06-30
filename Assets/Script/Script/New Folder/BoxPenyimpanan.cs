@@ -2,11 +2,14 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 public class BoxPenyimpanan : MonoBehaviour
 {
-    [Header("Ending")]
-    public GameObject endingPanel;
+    [Header("Ending VN")]
+    public VNDialogManager vnDialogManager;
+    public List<VNDialog> vnDialogAkhir;
 
     private bool sudahMakanHariIni = false;
     private int hariTidakMakan = 0;
@@ -16,6 +19,9 @@ public class BoxPenyimpanan : MonoBehaviour
 
     public int maxItems = 3;
     private int currentItems = 0;
+
+    [Header("Pelanggaran")]
+    private List<string> daftarPelanggaran = new List<string>();
 
     public GameObject financeSummaryPanel;
 
@@ -39,7 +45,6 @@ public class BoxPenyimpanan : MonoBehaviour
     private int currentReward;
 
     private int totalTabungan = 0;
-
     private int lastMinuteChecked = -1;
 
     private int makanCost = 15000;
@@ -48,6 +53,7 @@ public class BoxPenyimpanan : MonoBehaviour
 
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
+    private bool isLevel1 = false;
 
     void Start()
     {
@@ -60,40 +66,37 @@ public class BoxPenyimpanan : MonoBehaviour
         }
 
         string currentSceneName = SceneManager.GetActiveScene().name;
+        isLevel1 = currentSceneName == "3DLV1 (Milih Sampah)";
 
-        if (currentSceneName == "3DLV1")
+        if (isLevel1)
         {
             PlayerPrefs.DeleteKey("SisaUang");
-            PlayerPrefs.DeleteKey("TotalTabungan");
             PlayerPrefs.SetInt("TidakMakanKemarin", 0);
             currentReward = initialReward;
+            totalTabungan = 0;
+            PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
         }
         else
         {
-            int sisaUangDariLevelSebelumnya = PlayerPrefs.GetInt("SisaUang", 0);
-            currentReward = sisaUangDariLevelSebelumnya + initialReward;
+            currentReward = PlayerPrefs.GetInt("SisaUang", 0) + initialReward;
+            totalTabungan = PlayerPrefs.GetInt("TotalTabungan", 0);
         }
 
-        totalTabungan = PlayerPrefs.GetInt("TotalTabungan", 0);
+        UpdateMoneyUI();
+        UpdateTimerUI();
 
         if (tabunganText != null)
             tabunganText.text = "Tabungan Rp" + totalTabungan.ToString("N0");
 
-        btnAkhiriGame.gameObject.SetActive(false);
-
-        if (financeSummaryPanel != null)
-            financeSummaryPanel.SetActive(false);
+        financeSummaryPanel?.SetActive(false);
+        btnAkhiriGame?.gameObject.SetActive(false);
 
         if (btnLanjut != null)
+        {
             btnLanjut.gameObject.SetActive(false);
-
-        UpdateTimerUI();
-        UpdateMoneyUI();
-
-        if (btnLanjut != null)
             btnLanjut.onClick.AddListener(OnNextButtonClicked);
+        }
 
-        // Penting: update sisa uang dari awal, sebelum toggle diubah
         UpdateSisaUang();
     }
 
@@ -102,16 +105,19 @@ public class BoxPenyimpanan : MonoBehaviour
         if (isGameOver) return;
 
         timer -= Time.deltaTime;
-        if (timer < 0f) timer = 0f;
+        timer = Mathf.Max(timer, 0f);
 
         UpdateTimerUI();
 
-        int minutesPassed = Mathf.FloorToInt((totalTime - timer) / 60f);
-        if (minutesPassed > lastMinuteChecked)
+        if (!isLevel1)
         {
-            lastMinuteChecked = minutesPassed;
-            currentReward = Mathf.Max(0, currentReward - (minutesPassed * 10000));
-            UpdateMoneyUI();
+            int minutesPassed = Mathf.FloorToInt((totalTime - timer) / 60f);
+            if (minutesPassed > lastMinuteChecked)
+            {
+                lastMinuteChecked = minutesPassed;
+                currentReward = Mathf.Max(0, currentReward - 10000);
+                UpdateMoneyUI();
+            }
         }
 
         if (timer <= 0f)
@@ -123,9 +129,7 @@ public class BoxPenyimpanan : MonoBehaviour
     public void AddItem(string itemType)
     {
         if (isGameOver) return;
-
         currentItems++;
-        Debug.Log($"Item ditambahkan: {currentItems}/{maxItems}");
 
         if (currentItems >= maxItems)
         {
@@ -136,7 +140,6 @@ public class BoxPenyimpanan : MonoBehaviour
     public void RemoveItem()
     {
         currentItems--;
-        Debug.Log($"Item dihancurkan. Item sekarang: {currentItems}/{maxItems}");
     }
 
     public bool IsFull()
@@ -144,63 +147,74 @@ public class BoxPenyimpanan : MonoBehaviour
         return currentItems >= maxItems;
     }
 
+    public void CatatPelanggaran(string pesan)
+    {
+        daftarPelanggaran.Add(pesan);
+        Debug.Log("Pelanggaran dicatat: " + pesan);
+    }
+
     void GameOver()
     {
         isGameOver = true;
 
-        if (timer <= 0f)
+        if (timer <= 0f && isLevel1)
+        {
+            currentReward = Mathf.Max(currentReward, 10000);
+        }
+        else if (timer <= 0f)
         {
             currentReward = 0;
         }
 
-        ShowFinanceSummary();
-
         PlayerPrefs.SetInt("SisaUang", currentReward);
         PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
         PlayerPrefs.Save();
+
+        if (vnDialogManager != null && vnDialogAkhir != null && vnDialogAkhir.Count > 0)
+        {
+            vnDialogManager.isVNEnding = true;
+            vnDialogManager.StartVN(vnDialogAkhir);
+            StartCoroutine(TungguVNSelesai());
+        }
+        else
+        {
+            ShowFinanceSummary();
+        }
+    }
+
+    IEnumerator TungguVNSelesai()
+    {
+        yield return new WaitUntil(() => !vnDialogManager.gameObject.activeInHierarchy);
+        ShowFinanceSummary();
     }
 
     void ShowFinanceSummary()
     {
-        if (financeSummaryPanel != null)
-            financeSummaryPanel.SetActive(true);
+        financeSummaryPanel?.SetActive(true);
 
         if (pemasukanText != null)
-            pemasukanText.text = " Rp" + currentReward.ToString("N0");
+            pemasukanText.text = "Rp" + currentReward.ToString("N0");
 
         UpdateSisaUang();
 
-        toggleMakan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
-        toggleNabung.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
-        toggleJajan.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+        toggleMakan?.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+        toggleNabung?.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
+        toggleJajan?.onValueChanged.AddListener(delegate { UpdateSisaUang(); });
 
-        if (btnLanjut != null)
-            btnLanjut.gameObject.SetActive(true);
-
-        if (btnAkhiriGame != null)
-            btnAkhiriGame.gameObject.SetActive(true);
+        btnLanjut?.gameObject.SetActive(true);
+        btnAkhiriGame?.gameObject.SetActive(true);
     }
 
     void UpdateSisaUang()
     {
         int totalPengeluaran = 0;
 
-        if (toggleMakan != null && toggleMakan.isOn) totalPengeluaran += makanCost;
-        if (toggleNabung != null && toggleNabung.isOn) totalPengeluaran += nabungCost;
-        if (toggleJajan != null && toggleJajan.isOn) totalPengeluaran += jajanCost;
+        if (toggleMakan?.isOn == true) totalPengeluaran += makanCost;
+        if (toggleNabung?.isOn == true) totalPengeluaran += nabungCost;
+        if (toggleJajan?.isOn == true) totalPengeluaran += jajanCost;
 
-        int sisa = currentReward - totalPengeluaran;
-        sisa = Mathf.Max(0, sisa);
-
-        if (sisaUangText != null)
-        {
-            sisaUangText.text = "Sisa: Rp" + sisa.ToString("N0");
-            Debug.Log("UpdateSisaUang() berhasil: " + sisaUangText.text);
-        }
-        else
-        {
-            Debug.LogError("sisaUangText belum di-assign di Inspector!");
-        }
+        int sisa = Mathf.Max(0, currentReward - totalPengeluaran);
+        sisaUangText.text = "Sisa: Rp" + sisa.ToString("N0");
 
         PlayerPrefs.SetInt("SisaUang", sisa);
         PlayerPrefs.Save();
@@ -208,11 +222,11 @@ public class BoxPenyimpanan : MonoBehaviour
 
     public void TerapkanPilihan()
     {
-        if (jajanSudahDiterapkan) return;
+        if (isLevel1 || jajanSudahDiterapkan) return;
 
-        bool playerMakan = toggleMakan.isOn;
-        bool playerJajan = toggleJajan.isOn;
-        bool playerNabung = toggleNabung.isOn;
+        bool playerMakan = toggleMakan?.isOn == true;
+        bool playerJajan = toggleJajan?.isOn == true;
+        bool playerNabung = toggleNabung?.isOn == true;
 
         if (playerJajan && !buffJajanSudahDipakai && currentReward >= jajanCost)
         {
@@ -238,7 +252,6 @@ public class BoxPenyimpanan : MonoBehaviour
         {
             currentReward -= nabungCost;
             totalTabungan += nabungCost;
-
             PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
 
             if (tabunganText != null)
@@ -262,8 +275,6 @@ public class BoxPenyimpanan : MonoBehaviour
 
     void UpdateTimerUI()
     {
-        if (timerText == null) return;
-
         int minutes = Mathf.FloorToInt(timer / 60f);
         int seconds = Mathf.FloorToInt(timer % 60f);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
@@ -271,14 +282,12 @@ public class BoxPenyimpanan : MonoBehaviour
 
     void UpdateMoneyUI()
     {
-        if (moneyText != null)
-            moneyText.text = "Uang Rp" + currentReward.ToString("N0");
+        moneyText.text = "Rp" + currentReward.ToString("N0");
     }
 
     void GoToNextLevel()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = currentSceneIndex + 1;
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
@@ -286,7 +295,18 @@ public class BoxPenyimpanan : MonoBehaviour
         }
         else
         {
-            Debug.Log("No more levels to load.");
+            Debug.Log("🎉 Semua level selesai.");
         }
+    }
+
+    public void TampilkanRingkasanLangsungDariVN()
+    {
+        isGameOver = true;
+        ShowFinanceSummary();
+    }
+
+    public List<string> GetPelanggaranList()
+    {
+        return daftarPelanggaran;
     }
 }

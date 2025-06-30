@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor.AnimatedValues;
-using UnityEngine.Playables;
+//using UnityEngine.UIElements;
+using UnityEngine.UI;
+
 
 public class VN_BottomBarController : MonoBehaviour
 {
+    [SerializeField] private Button nextButton;
+
+    [Header("Character Settings")]
+    public VN_SpriteCtrl characterController;
+    public VN_Speaker lastSpeaker;
+
     public TextMeshProUGUI barText;
     public TextMeshProUGUI personNameText;
 
@@ -15,8 +22,6 @@ public class VN_BottomBarController : MonoBehaviour
     private State state = State.COMPLETED;
     private Animator animator;
     private bool isHidden = false;
-
-
 
     private enum State
     {
@@ -32,14 +37,14 @@ public class VN_BottomBarController : MonoBehaviour
     {
         if (!isHidden)
         {
-            animator.SetTrigger("BG_Hide");
+            animator.SetTrigger("BBar_Hide");
             isHidden = true;
         }
     }
 
     public void Show()
     {
-        animator.SetTrigger("BG_Show");
+        animator.SetTrigger("BBar_Show");
         isHidden = false;
     }
 
@@ -57,9 +62,17 @@ public class VN_BottomBarController : MonoBehaviour
 
     public void PlayNextSentence()
     {
-        StartCoroutine(TypeText(currentScene.sentences[++sentenceIndex].text));
-        personNameText.text = currentScene.sentences[sentenceIndex].speaker.SpeakerName;
-        personNameText.color = currentScene.sentences[sentenceIndex].speaker.textColor;
+        var sentence = currentScene.sentences[++sentenceIndex];
+
+        // Handle character changes
+        if (characterController != null)
+        {
+            characterController.HandleCharacter(sentence.speaker);
+        }
+
+        lastSpeaker = sentence.speaker;
+        StartCoroutine(TypeText(sentence.text));
+        UpdateSpeakerUI(sentence.speaker);
     }
 
     public bool IsCompleted()
@@ -74,19 +87,38 @@ public class VN_BottomBarController : MonoBehaviour
 
     private IEnumerator TypeText(string text)
     {
+        if (string.IsNullOrEmpty(text))
+        {
+            state = State.COMPLETED;
+            yield break;
+        }
+
+        if (nextButton != null)
+            nextButton.interactable = false;
+
         barText.text = "";
         state = State.PLAYING;
+
         int wordIndex = 0;
 
-        while (state != State.COMPLETED)
+        while (wordIndex < text.Length)
         {
             barText.text += text[wordIndex];
-            yield return new WaitForSeconds(0.05f);
-            if(++wordIndex == text.Length)
-            {
-                state = State.COMPLETED;
-                break;
-            }
+            yield return new WaitForSeconds(0.025f);
+            wordIndex++;
         }
+
+        state = State.COMPLETED;
+
+        if (nextButton != null)
+            nextButton.interactable = true;
+    }
+
+
+
+    private void UpdateSpeakerUI(VN_Speaker speaker)
+    {
+        personNameText.text = speaker.SpeakerName;
+        personNameText.color = speaker.textColor;
     }
 }
