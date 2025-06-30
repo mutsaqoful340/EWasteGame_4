@@ -26,7 +26,7 @@ public class VN_Controller : MonoBehaviour
     }
 
 
-    public void OnNextButtonPressed()
+    public void ToNextSentence()
     {
         if (state == State.IDLE && bottomBar.IsCompleted())
         {
