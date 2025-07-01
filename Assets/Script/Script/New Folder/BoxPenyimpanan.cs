@@ -66,7 +66,7 @@ public class BoxPenyimpanan : MonoBehaviour
         }
 
         string currentSceneName = SceneManager.GetActiveScene().name;
-        isLevel1 = currentSceneName == "3DLV1 (Milih Sampah)";
+        isLevel1 = currentSceneName == "3DLV2";
 
         if (isLevel1)
         {
