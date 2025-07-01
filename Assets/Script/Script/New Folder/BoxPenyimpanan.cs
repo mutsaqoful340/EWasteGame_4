@@ -49,7 +49,7 @@ public class BoxPenyimpanan : MonoBehaviour
 
     private int makanCost = 15000;
     private int nabungCost = 15000;
-    private int jajanCost = 10000;
+    private int jajanCost = 5000;
 
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
@@ -133,8 +133,14 @@ public class BoxPenyimpanan : MonoBehaviour
 
         if (currentItems >= maxItems)
         {
-            GameOver();
+            StartCoroutine(DelayGameOver()); // Gunakan coroutine delay
         }
+    }
+
+    IEnumerator DelayGameOver()
+    {
+        yield return new WaitForSeconds(1f); // Atur sesuai durasi animasi penghancuran
+        GameOver();
     }
 
     public void RemoveItem()

@@ -5,11 +5,13 @@ using TMPro;
 
 public class PCBMiniGameController : MonoBehaviour
 {
-    public TextMeshProUGUI statusText; // Drag komponen Text Status di Inspector
-    public GameObject miniGamePanel;   // Drag panel mini game dari Hierarchy
+    public TextMeshProUGUI statusText;    // Drag komponen Text Status di Inspector
+    public GameObject miniGamePanel;      // Drag panel mini game dari Hierarchy
 
     private List<string> correctSequence = new List<string> { "Blower", "Cairan", "Sikat", "Lap" };
     private List<string> playerSequence = new List<string>();
+
+    private bool isPuzzleActive = true;
 
     void Start()
     {
@@ -20,10 +22,16 @@ public class PCBMiniGameController : MonoBehaviour
             Debug.LogWarning("⚠️ miniGamePanel belum di-assign di Inspector.");
         else
             miniGamePanel.SetActive(true); // Pastikan panel aktif saat mini game mulai
+
+        isPuzzleActive = true;
+        playerSequence.Clear();
+        statusText.text = "Mulai bersihkan PCB dengan urutan yang tepat!";
     }
 
     public void OnToolClicked(string toolName)
     {
+        if (!isPuzzleActive) return;
+
         playerSequence.Add(toolName);
         CheckSequence();
     }
@@ -35,6 +43,7 @@ public class PCBMiniGameController : MonoBehaviour
         if (correctSequence[i] != playerSequence[i])
         {
             statusText.text = "❌ Salah urutan! PCB rusak.";
+            isPuzzleActive = false;
             Invoke(nameof(ResetPuzzle), 1.5f);
             return;
         }
@@ -42,6 +51,7 @@ public class PCBMiniGameController : MonoBehaviour
         if (playerSequence.Count == correctSequence.Count)
         {
             statusText.text = "✅ PCB bersih sempurna!";
+            isPuzzleActive = false;
             Invoke(nameof(EndMiniGame), 1.5f);
         }
         else
@@ -53,6 +63,7 @@ public class PCBMiniGameController : MonoBehaviour
     void ResetPuzzle()
     {
         playerSequence.Clear();
+        isPuzzleActive = true;
         statusText.text = "Coba lagi dari awal.";
     }
 
