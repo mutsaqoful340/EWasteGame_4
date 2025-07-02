@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HPDragHandler : MonoBehaviour
 {
@@ -6,7 +6,6 @@ public class HPDragHandler : MonoBehaviour
     private Camera cam;
     private bool isDragging = false;
     public LayerMask hpLayerMask;
-    public BoxCollider kardusCollider;
 
     void Start()
     {
@@ -34,8 +33,7 @@ public class HPDragHandler : MonoBehaviour
             {
                 isDragging = false;
 
-                // Panggil TakeHP di script HPTakerKeyboardBoxAnim
-                HPTakerKeyboardBoxAnim hpTakeScript = GetComponent<HPTakerKeyboardBoxAnim>();
+                var hpTakeScript = GetComponent<HPTakerKeyboardBoxAnim>();
                 if (hpTakeScript != null && !hpTakeScript.isTaken)
                 {
                     hpTakeScript.TakeHP();
@@ -53,14 +51,30 @@ public class HPDragHandler : MonoBehaviour
             {
                 Vector3 targetPos = hit.point + offset;
 
-                if (kardusCollider != null && kardusCollider.bounds.Contains(targetPos))
+                // Ambil collider HP
+                Collider hpCollider = GetComponent<Collider>();
+                if (hpCollider == null) return;
+
+                Vector3 halfExtents = hpCollider.bounds.extents;
+
+                // Batasi pergerakan ke bawah agar tidak tembus alas
+                LayerMask alasMask = LayerMask.GetMask("Alas");
+
+                Collider[] hitAlas = Physics.OverlapBox(
+                    targetPos,
+                    halfExtents,
+                    Quaternion.identity,
+                    alasMask
+                );
+
+                if (hitAlas.Length > 0)
                 {
-                    Debug.Log("Posisi HP menabrak kardus, gerakan dibatalkan");
+                    // Cegah turun, tetap gunakan posisi X dan Z, tapi Y dipertahankan
+                    targetPos.y = transform.position.y;
+                    Debug.Log("Terdeteksi tabrakan dengan Alas, Y tetap");
                 }
-                else
-                {
-                    transform.position = targetPos;
-                }
+
+                transform.position = targetPos;
             }
         }
     }
