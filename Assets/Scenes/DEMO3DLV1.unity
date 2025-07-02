@@ -5258,8 +5258,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190304
+  m_fontColor: {r: 0.8792453, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5276,8 +5276,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.21
-  m_fontSizeBase: 39.21
+  m_fontSize: 48.65
+  m_fontSizeBase: 48.65
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5312,7 +5312,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -42.514565, w: 0}
+  m_margin: {x: 0, y: 0, z: -196.3775, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -9336,55 +9336,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1184460477}
   m_Mesh: {fileID: 2212009239438826721, guid: 6f9e105183580ad46818c874f6fcac13, type: 3}
---- !u!1 &1186761007
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1186761009}
-  - component: {fileID: 1186761008}
-  m_Layer: 0
-  m_Name: TutorialManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1186761008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186761007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab8ebe2fed92d5340b94680a3b9445e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialSteps:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!4 &1186761009
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186761007}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.28788763, y: 0.3707106, z: 0.068761125, w: 0.88032174}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 27.122, y: 51.06, z: 22.076}
 --- !u!1 &1194232451
 GameObject:
   m_ObjectHideFlags: 0
@@ -13333,7 +13284,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -42.514565, w: 0}
+  m_margin: {x: 0, y: 0, z: -1044.9492, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -18262,11 +18213,17 @@ MonoBehaviour:
   btnLanjut: {fileID: 1794642358}
   dialogList:
   - namaKarakter: Ujang
-    dialog: KAMU APA YAAaaaaaaaaaaaa
-  - namaKarakter: Kera
-    dialog: DIMANA YAAAaaaaaaaa
+    dialog: 'Sekarang, tugasmu adalah memilah dua jenis sampah: elektronik dan nonorganik.'
   - namaKarakter: Ujang
-    dialog: LOH KAMUaaaaaaaaaaaaaaaaaaaa
+    dialog: Perhatikan baik-baik isi kardus yang kamu ambil.
+  - namaKarakter: Ujang
+    dialog: Jika itu sampah ELEKTRONIK, masukkan ke dalam box sampah elektronik
+  - namaKarakter: Ujang
+    dialog: Kalau itu sampah NON ORGANIK, masukkan ke dalam box sampah non organik
+  - namaKarakter: Ujang
+    dialog: Pastikan tidak tertukar, ya.
+  - namaKarakter: Ujang
+    dialog: Yuk, mulai memilah sekarang!
   typingAudio: {fileID: 0}
   isVNEnding: 0
   karakterObjek: {fileID: 1048143962}
@@ -19520,10 +19477,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d1569a154bd434f98518451cc48f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vnDialogManager: {fileID: 0}
+  vnDialogManager: {fileID: 2021492617}
   vnDialogAkhir:
-  - namaKarakter: Bara
-    dialog: yaaa
+  - namaKarakter: Ujang
+    dialog: Bagus, kamu sudah menyelesaikan tugas pemilahan.
+  - namaKarakter: Ujang
+    dialog: Sampah elektronik dan nonorganik telah dimasukkan ke tempatnya masing-masing.
+  - namaKarakter: Ujang
+    dialog: Pemilahan yang benar sangat penting untuk menjaga lingkungan dan memudahkan
+      proses daur ulang.
+  - namaKarakter: Ujang
+    dialog: Sekarang, mari kita lihat hasil dan ringkasan kerjamu hari ini.
   totalTime: 300
   maxItems: 3
   financeSummaryPanel: {fileID: 1209859757}
@@ -20495,7 +20459,6 @@ SceneRoots:
   - {fileID: 2048093842}
   - {fileID: 2119042956}
   - {fileID: 768133378}
-  - {fileID: 1186761009}
   - {fileID: 628990001}
   - {fileID: 1846554574}
   - {fileID: 505524282}

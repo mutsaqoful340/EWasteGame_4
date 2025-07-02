@@ -66,7 +66,7 @@ public class BoxPenyimpanan : MonoBehaviour
         }
 
         string currentSceneName = SceneManager.GetActiveScene().name;
-        isLevel1 = currentSceneName == "DEMO3DLV2";
+        isLevel1 = currentSceneName == "DEMO3DLV1";
 
         if (isLevel1)
         {
@@ -86,7 +86,7 @@ public class BoxPenyimpanan : MonoBehaviour
         UpdateTimerUI();
 
         if (tabunganText != null)
-            tabunganText.text = "Tabungan Rp" + totalTabungan.ToString("N0");
+            tabunganText.text = "Rp" + totalTabungan.ToString("N0");
 
         financeSummaryPanel?.SetActive(false);
         btnAkhiriGame?.gameObject.SetActive(false);

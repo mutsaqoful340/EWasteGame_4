@@ -30,7 +30,7 @@ public class NextButton : MonoBehaviour
         string sceneName = SceneManager.GetActiveScene().name;
 
         // Cek apakah ini adalah scene level 1
-        if (sceneName.Equals("DEMO3DLV2"))
+        if (sceneName.Equals("DEMO3DLV1"))
         {
             isLevel1 = true;
             Debug.Log("🔁 Reset semua data karena ini scene awal");
