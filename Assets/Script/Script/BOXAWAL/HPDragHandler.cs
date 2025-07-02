@@ -6,10 +6,25 @@ public class HPDragHandler : MonoBehaviour
     private Camera cam;
     private bool isDragging = false;
     public LayerMask hpLayerMask;
+    public LayerMask alasLayerMask; // <-- Tambahkan LayerMask untuk Alas
+
+    private float minimumY; // Y alas yang akan dijaga
 
     void Start()
     {
         cam = Camera.main;
+
+        // Cari posisi Y alas secara otomatis (gunakan Raycast ke bawah dari HP awal)
+        Ray downRay = new Ray(transform.position + Vector3.up * 2f, Vector3.down);
+        if (Physics.Raycast(downRay, out RaycastHit hit, 10f, alasLayerMask))
+        {
+            minimumY = hit.point.y + GetComponent<Collider>().bounds.extents.y;
+        }
+        else
+        {
+            minimumY = transform.position.y; // fallback
+            Debug.LogWarning("Tidak menemukan Alas, minimumY diset ke posisi awal");
+        }
     }
 
     void Update()
@@ -33,14 +48,14 @@ public class HPDragHandler : MonoBehaviour
             {
                 isDragging = false;
 
-                var hpTakeScript = GetComponent<HPTakerKeyboardBoxAnim>();
+                // Jalankan aksi ambil HP
+                HPTakerKeyboardBoxAnim hpTakeScript = GetComponent<HPTakerKeyboardBoxAnim>();
                 if (hpTakeScript != null && !hpTakeScript.isTaken)
                 {
                     hpTakeScript.TakeHP();
                 }
 
                 transform.SetParent(null);
-                Debug.Log("Selesai drag HP, TakeHP dijalankan");
             }
         }
 
@@ -51,27 +66,10 @@ public class HPDragHandler : MonoBehaviour
             {
                 Vector3 targetPos = hit.point + offset;
 
-                // Ambil collider HP
-                Collider hpCollider = GetComponent<Collider>();
-                if (hpCollider == null) return;
-
-                Vector3 halfExtents = hpCollider.bounds.extents;
-
-                // Batasi pergerakan ke bawah agar tidak tembus alas
-                LayerMask alasMask = LayerMask.GetMask("Alas");
-
-                Collider[] hitAlas = Physics.OverlapBox(
-                    targetPos,
-                    halfExtents,
-                    Quaternion.identity,
-                    alasMask
-                );
-
-                if (hitAlas.Length > 0)
+                // Jaga agar Y tidak lebih rendah dari minimum
+                if (targetPos.y < minimumY)
                 {
-                    // Cegah turun, tetap gunakan posisi X dan Z, tapi Y dipertahankan
-                    targetPos.y = transform.position.y;
-                    Debug.Log("Terdeteksi tabrakan dengan Alas, Y tetap");
+                    targetPos.y = minimumY;
                 }
 
                 transform.position = targetPos;

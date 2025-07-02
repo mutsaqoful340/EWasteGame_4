@@ -177,7 +177,7 @@ public class VNDialogManager : MonoBehaviour
             BoxPenyimpanan penyimpanan = FindObjectOfType<BoxPenyimpanan>();
             if (penyimpanan != null)
             {
-                penyimpanan.TampilkanRingkasanLangsungDariVN();
+                gameObject.SetActive(false); // ⬅️ biar BoxPenyimpanan bisa deteksi VN selesai
                 return;
             }
 
