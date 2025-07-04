@@ -1,9 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class DraggableStorageItem : MonoBehaviour
 {
     private Vector3 startPos;
+    private Vector3 lastSafePos;
     private bool isDragging = false;
     private float zOffset;
     private float startY;
@@ -17,9 +18,9 @@ public class DraggableStorageItem : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
+        lastSafePos = startPos;
         startY = startPos.y;
 
-        // Cari salah satu box manager yang aktif di scene
         boxManager = FindObjectOfType<BoxPenyimpanan>();
         simpleBoxManager = FindObjectOfType<BoxPenyimpananSimple>();
 
@@ -37,14 +38,32 @@ public class DraggableStorageItem : MonoBehaviour
 
     void OnMouseDrag()
     {
-        if (isDragging)
+        if (!isDragging) return;
+
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = zOffset;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        worldPos.y = startY;
+
+        Collider myCollider = GetComponent<Collider>();
+        if (myCollider == null) return;
+
+        Vector3 halfExtents = myCollider.bounds.extents;
+
+        LayerMask obstacleLayers = LayerMask.GetMask("Kardus", "Meja", "Alas");
+
+        Collider[] hits = Physics.OverlapBox(worldPos, halfExtents, Quaternion.identity, obstacleLayers);
+
+        if (hits.Length > 0)
         {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = zOffset;
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-            worldPos.y = startY;
-            transform.position = worldPos;
+            Debug.Log("❌ Tabrakan dengan: " + hits[0].name + ", posisi dibatalkan.");
+            transform.position = lastSafePos;
+            return;
         }
+
+        // Aman → gerakkan objek dan simpan posisi valid
+        transform.position = worldPos;
+        lastSafePos = worldPos;
     }
 
     void OnMouseUp()
@@ -61,10 +80,8 @@ public class DraggableStorageItem : MonoBehaviour
         }
         else if (other.CompareTag("StorageZone"))
         {
-            // Pastikan hanya item dengan tag sesuai yang bisa dimasukkan
             if (gameObject.CompareTag("SmallEWaste"))
             {
-                // Jika pakai BoxPenyimpanan (versi utama)
                 if (boxManager != null)
                 {
                     if (!boxManager.IsFull())
@@ -79,7 +96,6 @@ public class DraggableStorageItem : MonoBehaviour
                         StartCoroutine(BalikKeAwal());
                     }
                 }
-                // Jika pakai BoxPenyimpananSimple (versi ringkas)
                 else if (simpleBoxManager != null)
                 {
                     if (!simpleBoxManager.IsFull())

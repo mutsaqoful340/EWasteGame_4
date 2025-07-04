@@ -11,6 +11,10 @@ public class BoxPenyimpanan : MonoBehaviour
     public VNDialogManager vnDialogManager;
     public List<VNDialog> vnDialogAkhir;
 
+    [Header("Transisi Setelah VN")]
+    public GameObject panelSetelahVN;
+    public Button btnLanjutSetelahVN;
+
     private bool sudahMakanHariIni = false;
     private int hariTidakMakan = 0;
 
@@ -66,7 +70,7 @@ public class BoxPenyimpanan : MonoBehaviour
         }
 
         string currentSceneName = SceneManager.GetActiveScene().name;
-        isLevel1 = currentSceneName == "3DLV2";
+        isLevel1 = currentSceneName == "DEMO3DLV1";
 
         if (isLevel1)
         {
@@ -86,7 +90,7 @@ public class BoxPenyimpanan : MonoBehaviour
         UpdateTimerUI();
 
         if (tabunganText != null)
-            tabunganText.text = "Tabungan Rp" + totalTabungan.ToString("N0");
+            tabunganText.text = "Rp" + totalTabungan.ToString("N0");
 
         financeSummaryPanel?.SetActive(false);
         btnAkhiriGame?.gameObject.SetActive(false);
@@ -96,6 +100,9 @@ public class BoxPenyimpanan : MonoBehaviour
             btnLanjut.gameObject.SetActive(false);
             btnLanjut.onClick.AddListener(OnNextButtonClicked);
         }
+
+        if (panelSetelahVN != null)
+            panelSetelahVN.SetActive(false);
 
         UpdateSisaUang();
     }
@@ -191,8 +198,25 @@ public class BoxPenyimpanan : MonoBehaviour
     IEnumerator TungguVNSelesai()
     {
         yield return new WaitUntil(() => !vnDialogManager.gameObject.activeInHierarchy);
-        ShowFinanceSummary();
+
+        if (panelSetelahVN != null)
+        {
+            panelSetelahVN.SetActive(true);
+
+            // Tambahkan listener hanya sekali
+            btnLanjutSetelahVN.onClick.RemoveAllListeners();
+            btnLanjutSetelahVN.onClick.AddListener(() =>
+            {
+                panelSetelahVN.SetActive(false);
+                ShowFinanceSummary();
+            });
+        }
+        else
+        {
+            ShowFinanceSummary(); // fallback kalau panel transisi tidak ada
+        }
     }
+
 
     void ShowFinanceSummary()
     {

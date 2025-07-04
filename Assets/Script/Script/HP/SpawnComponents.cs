@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using System.Collections;
 
 public class SpawnOnClick : MonoBehaviour
 {
@@ -20,6 +22,12 @@ public class SpawnOnClick : MonoBehaviour
     public GameObject tooltipPanel;
     public TextMeshProUGUI tooltipText;
 
+    [Header("Tutorial Panel Settings")]
+    public GameObject tutorialPanelPrefab;
+    [TextArea]
+    public string tutorialText = "Geser dan masukkan komponen ke dalam box sesuai jenisnya.";
+    public float tutorialHideDelay = 5f;
+
     void Start()
     {
         if (tooltipPanel != null)
@@ -34,23 +42,14 @@ public class SpawnOnClick : MonoBehaviour
         {
             if (centerPoint == null) centerPoint = this.transform;
 
-            if (spawnType == SpawnType.HP)
-            {
-                SpawnFlatCircle();
-            }
-            else if (spawnType == SpawnType.Laptop)
-            {
-                SpawnLaptopComponents();
-            }
-            else if (spawnType == SpawnType.PC)  // ⬅ Tambahan untuk PC
-            {
-                SpawnPCComponents();
-            }
+            if (spawnType == SpawnType.HP) SpawnFlatCircle();
+            else if (spawnType == SpawnType.Laptop) SpawnLaptopComponents();
+            else if (spawnType == SpawnType.PC) SpawnPCComponents();
 
+            ShowTutorialPanel();
             hasSpawned = true;
         }
     }
-
 
     void SpawnFlatCircle()
     {
@@ -110,8 +109,6 @@ public class SpawnOnClick : MonoBehaviour
 
             float angleRad = angleStep * i * Mathf.Deg2Rad;
             Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
-
-            // Tambahkan offset Y agar tidak tembus permukaan
             Vector3 spawnPos = centerPoint.position + offset + Vector3.up * 0.01f;
 
             Quaternion flatRotation = Quaternion.Euler(90f, 0f, 0f);
@@ -120,7 +117,6 @@ public class SpawnOnClick : MonoBehaviour
         }
     }
 
-
     void SetupTooltip(GameObject obj)
     {
         TooltipTrigger trigger = obj.GetComponent<TooltipTrigger>();
@@ -128,7 +124,30 @@ public class SpawnOnClick : MonoBehaviour
         {
             trigger.tooltipPanel = tooltipPanel;
             trigger.tooltipText = tooltipText;
-            // infoText diisi manual di prefab, tidak perlu lewat script
         }
+    }
+
+    void ShowTutorialPanel()
+    {
+        if (tutorialPanelPrefab == null) return;
+
+        GameObject panel = Instantiate(tutorialPanelPrefab, FindObjectOfType<Canvas>().transform);
+        panel.transform.localPosition = Vector3.zero;
+
+        // Tidak perlu ubah teks, karena sudah diatur di prefab
+        Animator animator = panel.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger("SlideIn");
+        }
+
+        StartCoroutine(HideAfterDelay(panel));
+    }
+
+
+    IEnumerator HideAfterDelay(GameObject panel)
+    {
+        yield return new WaitForSecondsRealtime(tutorialHideDelay);
+        Destroy(panel);
     }
 }

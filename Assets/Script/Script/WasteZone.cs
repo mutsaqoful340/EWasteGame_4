@@ -4,10 +4,17 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class SampahTargetData
+{
+    public string tipeSampah;
+    public List<Transform> targetPositions;
+}
+
 public class WasteZone : MonoBehaviour
 {
-    [Header("Tipe sampah yang diterima")]
-    public string acceptedType = "ewaste";
+    [Header("Tipe Sampah & Target Posisi")]
+    public List<SampahTargetData> sampahTargetList = new List<SampahTargetData>();
 
     [Header("Referensi VN")]
     public VNDialogManager vnDialogManager;
@@ -21,16 +28,13 @@ public class WasteZone : MonoBehaviour
     [Header("Reward Settings")]
     public int rewardPerTipe = 10000;
 
-    [Header("Posisi Target Kardus")]
-    public List<Transform> targetPositions;
-
     [Header("Referensi BoxPenyimpanan (untuk pelanggaran)")]
     public BoxPenyimpanan boxPenyimpanan;
 
     [Header("Jumlah Kardus Diharapkan")]
     public int jumlahKardusYangDiharapkan = 3;
 
-    private int currentTargetIndex = 0;
+    private Dictionary<string, int> currentTargetIndexPerType = new Dictionary<string, int>();
     private int jumlahKardusYangSudahMasuk = 0;
 
     private bool alreadyTriggered = false;
@@ -52,13 +56,16 @@ public class WasteZone : MonoBehaviour
         if (financeSummaryPanel != null)
             financeSummaryPanel.SetActive(false);
 
-        Debug.Log($"🔍 Jumlah targetPositions: {targetPositions.Count}");
-        foreach (var t in targetPositions)
+        foreach (var data in sampahTargetList)
         {
-            if (t != null)
-                Debug.Log($"📍 Target Posisi: {t.name} di {t.position}");
-            else
-                Debug.LogError("❌ Salah satu target position NULL!");
+            Debug.Log($"📦 Tipe: {data.tipeSampah}, Target Count: {data.targetPositions.Count}");
+            foreach (var pos in data.targetPositions)
+            {
+                if (pos != null)
+                    Debug.Log($"   ↪ Posisi: {pos.name} di {pos.position}");
+                else
+                    Debug.LogError($"❌ Posisi NULL untuk tipe {data.tipeSampah}");
+            }
         }
     }
 
@@ -73,20 +80,20 @@ public class WasteZone : MonoBehaviour
         {
             Debug.Log($"🔍 Terdeteksi box dengan tipe: {box.boxType}");
 
-            if (box.boxType == acceptedType)
+            var data = sampahTargetList.Find(d => d.tipeSampah == box.boxType);
+            if (data != null)
             {
                 alreadyTriggered = true;
                 Debug.Log($"✅ Sampah cocok: {box.boxType}");
 
-                StartCoroutine(ProsesKardusMasuk(other.gameObject));
+                StartCoroutine(ProsesKardusMasuk(other.gameObject, box.boxType, data));
             }
             else
             {
-                Debug.Log($"❌ Sampah salah. Diberikan: {box.boxType}, diterima: {acceptedType}");
-
+                Debug.Log($"❌ Sampah salah. Diberikan: {box.boxType}, tidak ada dalam daftar yang diterima.");
                 if (boxPenyimpanan != null)
                 {
-                    string pesan = $"Sampah salah: {box.boxType} dimasukkan ke {acceptedType}";
+                    string pesan = $"Sampah salah: {box.boxType} tidak dikenali dalam zona ini.";
                     boxPenyimpanan.CatatPelanggaran(pesan);
                 }
             }
@@ -97,26 +104,30 @@ public class WasteZone : MonoBehaviour
         }
     }
 
-    IEnumerator ProsesKardusMasuk(GameObject boxObj)
+    IEnumerator ProsesKardusMasuk(GameObject boxObj, string tipeSampah, SampahTargetData data)
     {
         yield return new WaitForSeconds(1.5f);
         kardusYangMasuk = boxObj;
 
-        if (currentTargetIndex < targetPositions.Count)
+        if (!currentTargetIndexPerType.ContainsKey(tipeSampah))
+            currentTargetIndexPerType[tipeSampah] = 0;
+
+        int idx = currentTargetIndexPerType[tipeSampah];
+
+        if (idx < data.targetPositions.Count)
         {
-            currentTarget = targetPositions[currentTargetIndex];
-            currentTargetIndex++;
+            currentTarget = data.targetPositions[idx];
+            currentTargetIndexPerType[tipeSampah]++;
         }
         else
         {
-            Debug.LogWarning("⚠️ Tidak cukup targetPositions, gunakan yang terakhir.");
-            currentTarget = targetPositions[targetPositions.Count - 1];
+            Debug.LogWarning($"⚠️ Tidak cukup targetPositions untuk tipe {tipeSampah}, gunakan terakhir.");
+            currentTarget = data.targetPositions[data.targetPositions.Count - 1];
         }
 
-        Debug.Log($"📦 Kardus diarahkan ke target {currentTargetIndex}: {currentTarget.name}");
+        Debug.Log($"📦 Kardus ({tipeSampah}) diarahkan ke target {currentTarget.name}");
         isMovingToTarget = true;
 
-        // Optional: nonaktifkan Rigidbody jika ada
         var rb = kardusYangMasuk.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -137,8 +148,6 @@ public class WasteZone : MonoBehaviour
             );
 
             float distance = Vector3.Distance(kardusYangMasuk.transform.position, currentTarget.position);
-            Debug.Log($"📍 Bergerak ke target, jarak tersisa: {distance}");
-
             if (distance < 0.05f)
             {
                 Debug.Log("✅ Kardus sampai ke target.");
