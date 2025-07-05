@@ -70,7 +70,7 @@ public class BoxPenyimpanan : MonoBehaviour
         }
 
         string currentSceneName = SceneManager.GetActiveScene().name;
-        isLevel1 = currentSceneName == "DEMO3DLV1";
+        isLevel1 = currentSceneName == "DEMOLVL1";
 
         if (isLevel1)
         {
