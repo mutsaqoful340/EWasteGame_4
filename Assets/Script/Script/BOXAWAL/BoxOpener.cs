@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class BoxOpener : MonoBehaviour
@@ -11,6 +11,9 @@ public class BoxOpener : MonoBehaviour
 
     [Header("Delay waktu muncul HP setelah buka kotak")]
     public float delayBeforeShowHP = 1.5f;
+
+    [Header("Audio")]
+    public AudioSource openBoxAudio; // 🔊 drag AudioSource di Inspector
 
     void Start()
     {
@@ -30,6 +33,12 @@ public class BoxOpener : MonoBehaviour
         {
             animator.Play("OpenBox");
             isOpen = true;
+
+            // 🔊 Putar suara buka kardus
+            if (openBoxAudio != null)
+                openBoxAudio.Play();
+            else
+                Debug.LogWarning("❗ AudioSource belum diset di Inspector!");
 
             StartCoroutine(ShowAllHPAfterDelay(delayBeforeShowHP));
         }
