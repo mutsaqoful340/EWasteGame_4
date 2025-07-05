@@ -3965,51 +3965,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335444426}
   m_Mesh: {fileID: 8861180440997155986, guid: 6f9e105183580ad46818c874f6fcac13, type: 3}
---- !u!1 &335457431
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 335457433}
-  - component: {fileID: 335457432}
-  m_Layer: 0
-  m_Name: ChapterGO
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &335457432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335457431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 506b69c45285e5c44822212b4d636702, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chapterJustCompleted: 5
---- !u!4 &335457433
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335457431}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3581631, y: 0.1526404, z: -3.3684428}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &360315529
 GameObject:
   m_ObjectHideFlags: 0
@@ -14336,7 +14291,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 335457432}
+      - m_Target: {fileID: 1823693159}
         m_TargetAssemblyTypeName: ChapterProgressSaver, Assembly-CSharp
         m_MethodName: SaveProgress
         m_Mode: 1
@@ -27201,7 +27156,6 @@ SceneRoots:
   - {fileID: 1186761009}
   - {fileID: 628990001}
   - {fileID: 1846554574}
-  - {fileID: 335457433}
   - {fileID: 530187670}
   - {fileID: 90061323}
   - {fileID: 2032248525}
