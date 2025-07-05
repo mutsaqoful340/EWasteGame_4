@@ -19,6 +19,8 @@ public class NextButton : MonoBehaviour
     public string endingSceneName2 = "Ending2";
     public string endingSceneName3 = "Ending3";
 
+    public int chapterJustCompleted = 1; // ⬅️ Tambahkan ini agar bisa unlock chapter berikutnya
+
     private bool pelanggaranSudahDihitung = false;
     private bool overlaySudahDibuka = false;
     private bool ringkasanSudahDitampilkan = false;
@@ -42,6 +44,7 @@ public class NextButton : MonoBehaviour
             PlayerPrefs.SetInt("PelanggaranNabung", 0);
             PlayerPrefs.SetInt("BuffJajanAktif", 0);
             PlayerPrefs.SetInt("TidakMakanKemarin", 0);
+            PlayerPrefs.SetInt("ChapterUnlocked", 1); // Reset chapter juga
             PlayerPrefs.Save();
         }
 
@@ -57,7 +60,6 @@ public class NextButton : MonoBehaviour
 
         if (!pelanggaranSudahDihitung)
         {
-            // Kalau bukan level 1, jalankan cek toggle
             if (!isLevel1)
             {
                 if (makanToggle == null || nabungToggle == null)
@@ -109,16 +111,14 @@ public class NextButton : MonoBehaviour
         {
             try
             {
-                // Ambil angka dari teks (hilangkan "Sisa:", "Rp", spasi, titik)
                 string cleanedText = sisaUangText.text
-                    .ToLower()                         // biar aman: "SISA", "sisa", "Sisa" semua jadi "sisa"
+                    .ToLower()
                     .Replace("sisa:", "")
                     .Replace("sisa", "")
                     .Replace("rp", "")
                     .Replace(".", "")
                     .Replace(",", "")
                     .Trim();
-
 
                 if (int.TryParse(cleanedText, out int sisa))
                 {
@@ -140,7 +140,6 @@ public class NextButton : MonoBehaviour
         {
             Debug.LogError("❌ sisaUangText kosong atau belum di-assign!");
         }
-
 
         if (financeSummaryPanel != null)
             financeSummaryPanel.SetActive(true);
@@ -190,6 +189,15 @@ public class NextButton : MonoBehaviour
             }
         }
 
+        // ✅ Simpan progress sebelum lanjut ke scene berikutnya
+        int currentUnlocked = PlayerPrefs.GetInt("ChapterUnlocked", 1);
+        if (chapterJustCompleted + 1 > currentUnlocked)
+        {
+            PlayerPrefs.SetInt("ChapterUnlocked", chapterJustCompleted + 1);
+            PlayerPrefs.Save();
+            Debug.Log("✅ ChapterUnlocked disimpan: " + (chapterJustCompleted + 1));
+        }
+
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
@@ -201,5 +209,4 @@ public class NextButton : MonoBehaviour
             Debug.Log("🎉 Semua level selesai.");
         }
     }
-
 }
