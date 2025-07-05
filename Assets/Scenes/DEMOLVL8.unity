@@ -1755,6 +1755,7 @@ MonoBehaviour:
   endingSceneName: EndingScene
   endingSceneName2: Ending2
   endingSceneName3: Ending3
+  chapterJustCompleted: 1
 --- !u!1 &239827398
 GameObject:
   m_ObjectHideFlags: 0
@@ -5912,6 +5913,7 @@ Transform:
   - {fileID: 505524282}
   - {fileID: 1727043890}
   - {fileID: 1419099511}
+  - {fileID: 1875229736}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &766157723
@@ -16130,6 +16132,7 @@ MonoBehaviour:
   endingSceneName: EndingScene
   endingSceneName2: Ending2
   endingSceneName3: Ending3
+  chapterJustCompleted: 1
 --- !u!4 &1727043890
 Transform:
   m_ObjectHideFlags: 0
@@ -18474,6 +18477,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873209088}
   m_CullTransparentMesh: 1
+--- !u!1 &1875229735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1875229736}
+  - component: {fileID: 1875229737}
+  m_Layer: 0
+  m_Name: ProggressSaver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1875229736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875229735}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.8685553, y: -0.57752424, z: -3.104831}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 756320791}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1875229737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875229735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506b69c45285e5c44822212b4d636702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chapterJustCompleted: 9
 --- !u!1 &1901531364
 GameObject:
   m_ObjectHideFlags: 0
@@ -18994,6 +19042,7 @@ MonoBehaviour:
   endingSceneName: Ending3
   endingSceneName2: Ending2
   endingSceneName3: Ending1
+  chapterJustCompleted: 1
 --- !u!114 &1947309545
 MonoBehaviour:
   m_ObjectHideFlags: 0
