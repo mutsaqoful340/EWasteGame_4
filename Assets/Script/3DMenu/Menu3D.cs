@@ -63,8 +63,6 @@ public class Menu3D : MonoBehaviour
     // Call this to show the canvas
     public void ActivateCanvas(GameObject canvasToShow)
     {
-        if (audioManager != null)
-            audioManager.PlaySFX(audioManager.buttonClick);
 
         if (canvasToShow != null)
         {
@@ -78,8 +76,6 @@ public class Menu3D : MonoBehaviour
 
     public void DeactivateCanvas(GameObject canvasToHide)
     {
-        if (audioManager != null)
-            audioManager.PlaySFX(audioManager.buttonClick);
 
         if (canvasToHide != null)
         {
