@@ -2847,6 +2847,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP 1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7958116021813839914, guid: 1e88c4d5624f07f4da836effdfc5d80b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     m_RemovedGameObjects: []
@@ -3372,12 +3377,12 @@ PrefabInstance:
         type: 3}
       propertyPath: tooltipText
       value: 
-      objectReference: {fileID: 635778358}
+      objectReference: {fileID: 0}
     - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
         type: 3}
       propertyPath: tooltipPanel
       value: 
-      objectReference: {fileID: 1775926850}
+      objectReference: {fileID: 0}
     - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
         type: 3}
       propertyPath: prefabsToSpawn.Array.size
@@ -14195,12 +14200,12 @@ PrefabInstance:
         type: 3}
       propertyPath: tooltipText
       value: 
-      objectReference: {fileID: 635778358}
+      objectReference: {fileID: 0}
     - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
         type: 3}
       propertyPath: tooltipPanel
       value: 
-      objectReference: {fileID: 1775926850}
+      objectReference: {fileID: 0}
     - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
         type: 3}
       propertyPath: prefabsToSpawn.Array.size
@@ -14758,6 +14763,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1775300616174382393, guid: ecd60f9aed05a1344be0080ebde03600,
         type: 3}
+      propertyPath: radius
+      value: 0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 1775300616174382393, guid: ecd60f9aed05a1344be0080ebde03600,
+        type: 3}
       propertyPath: spawnType
       value: 0
       objectReference: {fileID: 0}
@@ -14843,6 +14853,11 @@ PrefabInstance:
         type: 3}
       propertyPath: boxPosisiBaru.z
       value: -0.708
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937736880861491253, guid: ecd60f9aed05a1344be0080ebde03600,
+        type: 3}
+      propertyPath: radius
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 5937736880861491253, guid: ecd60f9aed05a1344be0080ebde03600,
         type: 3}
@@ -20114,7 +20129,7 @@ MonoBehaviour:
   panelSetelahVN: {fileID: 0}
   btnLanjutSetelahVN: {fileID: 0}
   totalTime: 300
-  maxItems: 1
+  maxItems: 26
   financeSummaryPanel: {fileID: 1209859757}
   timerText: {fileID: 359947316}
   moneyText: {fileID: 617260692}
@@ -20126,7 +20141,7 @@ MonoBehaviour:
   toggleJajan: {fileID: 862648196}
   btnLanjut: {fileID: 0}
   btnAkhiriGame: {fileID: 0}
-  initialReward: 50000
+  initialReward: 65000
 --- !u!65 &1836265378
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20565,7 +20580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1864313048
 Transform:
   m_ObjectHideFlags: 0

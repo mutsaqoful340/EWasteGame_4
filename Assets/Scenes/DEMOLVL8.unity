@@ -13363,6 +13363,7 @@ GameObject:
   - component: {fileID: 1337995932}
   - component: {fileID: 1337995934}
   - component: {fileID: 1337995933}
+  - component: {fileID: 1337995935}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -13436,6 +13437,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337995931}
   m_Mesh: {fileID: 8733429697405204941, guid: 6f9e105183580ad46818c874f6fcac13, type: 3}
+--- !u!65 &1337995935
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337995931}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01795591, y: 0.014932703, z: 0.015624998}
+  m_Center: {x: -0.0018220458, y: 0.003333647, z: 0.007012498}
 --- !u!1 &1356425288
 GameObject:
   m_ObjectHideFlags: 0
@@ -20192,7 +20214,7 @@ MonoBehaviour:
   panelSetelahVN: {fileID: 0}
   btnLanjutSetelahVN: {fileID: 0}
   totalTime: 300
-  maxItems: 1
+  maxItems: 31
   financeSummaryPanel: {fileID: 1209859757}
   timerText: {fileID: 359947316}
   moneyText: {fileID: 617260692}
@@ -20632,13 +20654,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1864313048}
+  - component: {fileID: 1864313049}
   m_Layer: 0
   m_Name: Room1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1864313048
 Transform:
   m_ObjectHideFlags: 0
@@ -20679,6 +20702,28 @@ Transform:
   - {fileID: 660519372}
   m_Father: {fileID: 17822642}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1864313049
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864313047}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1869619796
 GameObject:
   m_ObjectHideFlags: 0
