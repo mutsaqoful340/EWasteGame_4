@@ -1148,6 +1148,7 @@ MonoBehaviour:
   endingSceneName: EndingScene
   endingSceneName2: Ending2
   endingSceneName3: Ending3
+  chapterJustCompleted: 1
 --- !u!114 &96259868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3964,51 +3965,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335444426}
   m_Mesh: {fileID: 8861180440997155986, guid: 6f9e105183580ad46818c874f6fcac13, type: 3}
---- !u!1 &335457431
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 335457433}
-  - component: {fileID: 335457432}
-  m_Layer: 0
-  m_Name: ChapterGO
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &335457432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335457431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 506b69c45285e5c44822212b4d636702, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chapterJustCompleted: 5
---- !u!4 &335457433
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335457431}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3581631, y: 0.1526404, z: -3.3684428}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &360315529
 GameObject:
   m_ObjectHideFlags: 0
@@ -6380,6 +6336,7 @@ Transform:
   - {fileID: 1655943177}
   - {fileID: 1419099511}
   - {fileID: 884966006}
+  - {fileID: 1866347845}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &625279266
@@ -14277,6 +14234,7 @@ MonoBehaviour:
   endingSceneName: Ending3
   endingSceneName2: Ending2
   endingSceneName3: Ending1
+  chapterJustCompleted: 1
 --- !u!114 &1295819766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14333,7 +14291,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 335457432}
+      - m_Target: {fileID: 1866347846}
         m_TargetAssemblyTypeName: ChapterProgressSaver, Assembly-CSharp
         m_MethodName: SaveProgress
         m_Mode: 1
@@ -20865,6 +20823,7 @@ MonoBehaviour:
   endingSceneName: EndingScene
   endingSceneName2: Ending2
   endingSceneName3: Ending3
+  chapterJustCompleted: 1
 --- !u!4 &1727043890
 Transform:
   m_ObjectHideFlags: 0
@@ -23083,6 +23042,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865932268}
   m_CullTransparentMesh: 1
+--- !u!1 &1866347844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1866347845}
+  - component: {fileID: 1866347846}
+  m_Layer: 0
+  m_Name: ProggressSaver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1866347845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866347844}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.11644459, y: -0.15452424, z: -0.87183094}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 622257758}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1866347846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866347844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506b69c45285e5c44822212b4d636702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chapterJustCompleted: 10
 --- !u!1001 &1869292212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27152,7 +27156,6 @@ SceneRoots:
   - {fileID: 1186761009}
   - {fileID: 628990001}
   - {fileID: 1846554574}
-  - {fileID: 335457433}
   - {fileID: 530187670}
   - {fileID: 90061323}
   - {fileID: 2032248525}
