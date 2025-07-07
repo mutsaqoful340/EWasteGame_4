@@ -48,8 +48,12 @@ public class SpawnOnClick : MonoBehaviour
 
             ShowTutorialPanel();
             hasSpawned = true;
+
+            // Sembunyikan objek utama
+            gameObject.SetActive(false);
         }
     }
+
 
     void SpawnFlatCircle()
     {
@@ -111,11 +115,14 @@ public class SpawnOnClick : MonoBehaviour
             Vector3 offset = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad)) * radius;
             Vector3 spawnPos = centerPoint.position + offset + Vector3.up * 0.01f;
 
-            Quaternion flatRotation = Quaternion.Euler(90f, 0f, 0f);
-            GameObject obj = Instantiate(prefab, spawnPos, flatRotation);
+            // Gunakan rotasi asli dari prefab (biar gak "maksa" semua ke 90,0,0)
+            Quaternion prefabRotation = prefab.transform.rotation;
+            GameObject obj = Instantiate(prefab, spawnPos, prefabRotation);
+
             SetupTooltip(obj);
         }
     }
+
 
     void SetupTooltip(GameObject obj)
     {
