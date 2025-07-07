@@ -8,14 +8,31 @@ public class GameManagerAmongUs : MonoBehaviour
     public int totalCables = 4;
     private int connectedCount = 0;
 
+    [Header("Gameplay UI")]
     public TextMeshProUGUI feedbackText;
     public GameObject winPanel;
     public Button btnLanjut;
 
-    public string nextSceneName = "SceneLanjut"; // 👉 Ganti dengan nama scene berikutnya
+    [Header("Start Panel")]
+    public GameObject startPanel;
+    public Button btnMulai;
+
+    [Header("Scene")]
+    public string nextSceneName = "SceneLanjut";
 
     void Start()
     {
+        // Start panel aktif di awal
+        if (startPanel != null)
+            startPanel.SetActive(true);
+
+        if (btnMulai != null)
+            btnMulai.onClick.AddListener(() =>
+            {
+                if (startPanel != null)
+                    startPanel.SetActive(false);
+            });
+
         if (winPanel != null)
             winPanel.SetActive(false);
 
