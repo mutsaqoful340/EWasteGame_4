@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 
 public class StretchCable2D : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -9,7 +8,6 @@ public class StretchCable2D : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     public string correctEndTag = "End_Red"; // Tag tujuan yang benar
     private RectTransform startPoint;
 
-    public TextMeshProUGUI feedbackText;
     public GameManagerAmongUs gameManagerAmongUs; // Drag dari Inspector
 
     private bool connected = false;
@@ -54,20 +52,12 @@ public class StretchCable2D : MonoBehaviour, IPointerDownHandler, IDragHandler, 
             Debug.Log("✅ Kabel tersambung!");
             connected = true;
 
-            feedbackText.text = "✅ Tersambung dengan benar!";
-            feedbackText.color = Color.green;
-            Invoke("ClearFeedback", 2f);
-
             gameManagerAmongUs.CableConnected(); // ✅ Lapor ke GameManager
         }
         else
         {
             Debug.Log("❌ Salah sambung!");
             cableImage.gameObject.SetActive(false);
-
-            feedbackText.text = "❌ Salah sambung, coba lagi.";
-            feedbackText.color = Color.red;
-            Invoke("ClearFeedback", 2f);
         }
     }
 
@@ -83,10 +73,5 @@ public class StretchCable2D : MonoBehaviour, IPointerDownHandler, IDragHandler, 
             return results[0].gameObject;
 
         return null;
-    }
-
-    void ClearFeedback()
-    {
-        feedbackText.text = "";
     }
 }
