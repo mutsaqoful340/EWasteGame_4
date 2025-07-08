@@ -53,7 +53,7 @@ public class GameManagerAmongUs : MonoBehaviour
 
             if (feedbackText != null)
             {
-                feedbackText.text = "🎉 Semua kabel berhasil disambung!";
+                feedbackText.text = "";
                 feedbackText.color = Color.yellow;
             }
 
