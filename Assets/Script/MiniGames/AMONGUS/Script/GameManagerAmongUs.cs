@@ -12,6 +12,7 @@ public class GameManagerAmongUs : MonoBehaviour
     public TextMeshProUGUI feedbackText;
     public GameObject winPanel;
     public Button btnLanjut;
+    public Button btnUlang; // ✅ Tombol coba lagi
 
     [Header("Start Panel")]
     public GameObject startPanel;
@@ -22,7 +23,6 @@ public class GameManagerAmongUs : MonoBehaviour
 
     void Start()
     {
-        // Start panel aktif di awal
         if (startPanel != null)
             startPanel.SetActive(true);
 
@@ -38,6 +38,9 @@ public class GameManagerAmongUs : MonoBehaviour
 
         if (btnLanjut != null)
             btnLanjut.onClick.AddListener(LanjutKeSceneBerikutnya);
+
+        if (btnUlang != null)
+            btnUlang.onClick.AddListener(RestartMinigame); // ✅ Tambahkan listener tombol ulang
     }
 
     public void CableConnected()
@@ -68,6 +71,27 @@ public class GameManagerAmongUs : MonoBehaviour
         else
         {
             Debug.LogError("❌ Nama scene kosong! Isi di Inspector.");
+        }
+    }
+
+    public void RestartMinigame()
+    {
+        Debug.Log("🔁 Ulangi minigame!");
+
+        connectedCount = 0;
+
+        if (feedbackText != null)
+        {
+            feedbackText.text = "";
+        }
+
+        if (winPanel != null)
+        {
+            winPanel.SetActive(false);
+        }
+        foreach (StretchCable2D kabel in FindObjectsOfType<StretchCable2D>())
+        {
+            kabel.ResetConnection();
         }
     }
 }

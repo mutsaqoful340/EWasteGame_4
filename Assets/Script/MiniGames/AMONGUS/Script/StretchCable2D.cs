@@ -74,4 +74,17 @@ public class StretchCable2D : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
         return null;
     }
+
+    public void ResetConnection()
+    {
+        connected = false;
+
+        if (cableImage != null)
+            cableImage.gameObject.SetActive(false);
+
+        // Reset posisi & rotasi kabel ke awal
+        cableImage.anchoredPosition = Vector2.zero;
+        cableImage.rotation = Quaternion.identity;
+        cableImage.sizeDelta = new Vector2(0f, cableImage.sizeDelta.y);
+    }
 }

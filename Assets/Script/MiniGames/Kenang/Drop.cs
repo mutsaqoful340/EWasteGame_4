@@ -1,49 +1,93 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.UI;
 
 public class DropSlot : MonoBehaviour, IDropHandler
 {
     public bool isSlotBenar;
 
-    [Header("UI Tujuan (Panel Info)")]
+    [Header("UI Panel Info")]
+    public GameObject panelInfo;
     public TextMeshProUGUI namaText;
     public TextMeshProUGUI deskripsiText;
+    public Image gambarItem;
+    public Button closeButton;
+
+    private void Start()
+    {
+        // Sembunyikan panel info di awal
+        if (panelInfo != null)
+            panelInfo.SetActive(false);
+
+        // Tombol close panel
+        if (closeButton != null)
+            closeButton.onClick.AddListener(ClosePanel);
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
         GameObject droppedObj = eventData.pointerDrag;
+
         if (droppedObj != null)
         {
             KomponenItem item = droppedObj.GetComponent<KomponenItem>();
             if (item != null)
             {
+                // Tampilkan panel info
+                if (panelInfo != null)
+                    panelInfo.SetActive(true);
+
                 if (item.isKomponenBenar == isSlotBenar)
                 {
-                    // ✅ Tampilkan info benar
+                    // ✅ Benar
                     namaText.text = item.nama;
                     deskripsiText.text = item.deskripsi;
 
-                    // ✅ Tempelkan objek ke slot
-                    droppedObj.transform.SetParent(transform);
-
-                    // ✅ Posisikan ke tengah slot
-                    var rt = droppedObj.GetComponent<RectTransform>();
-                    if (rt != null)
-                        rt.anchoredPosition = Vector2.zero;
-
-                    // ✅ Matikan drag
-                    var drag = droppedObj.GetComponent<DragHandler11>();
-                    if (drag != null)
-                        drag.enabled = false;
+                    if (gambarItem != null)
+                    {
+                        Image draggedImage = droppedObj.GetComponentInChildren<Image>();
+                        if (draggedImage != null)
+                            gambarItem.sprite = draggedImage.sprite;
+                    }
                 }
                 else
                 {
-                    // ❌ Salah tempat
+                    // ❌ Salah
                     namaText.text = "SALAH!";
                     deskripsiText.text = "Itu bukan tempatnya.";
+                    if (gambarItem != null)
+                        gambarItem.sprite = null;
                 }
+
+                // Tempelkan item ke slot
+                droppedObj.transform.SetParent(transform);
+
+                // Posisikan ke tengah slot
+                RectTransform rt = droppedObj.GetComponent<RectTransform>();
+                if (rt != null)
+                    rt.anchoredPosition = Vector2.zero;
+
+                // Nonaktifkan drag
+                DragHandler11 drag = droppedObj.GetComponent<DragHandler11>();
+                if (drag != null)
+                    drag.enabled = false;
+
+                // Hitung bahwa satu item sudah masuk (benar/salah)
+                GameManagerKenang.instance.TambahItemMasuk();
             }
+        }
+    }
+
+    private void ClosePanel()
+    {
+        if (panelInfo != null)
+            panelInfo.SetActive(false);
+
+        // ✅ Tampilkan panel akhir hanya jika semua item sudah masuk
+        if (GameManagerKenang.instance.sudahSelesai)
+        {
+            GameManagerKenang.instance.TampilkanPanelAkhir();
         }
     }
 }
