@@ -10,9 +10,25 @@ public class KomponenItem : MonoBehaviour
     public string deskripsi;
     public bool isKomponenBenar;
 
-    // Tidak perlu drag Image/Text dari inspector manual
     private Image gambarUI;
     private TMP_Text namaText;
+
+    [HideInInspector] public Transform parentAwal;
+    [HideInInspector] public Vector3 posisiAwal;
+
+    private void Start()
+    {
+        // Simpan posisi awal saat pertama kali muncul
+        parentAwal = transform.parent;
+        posisiAwal = transform.localPosition;
+
+        // Cari komponen UI otomatis dari anak
+        if (gambarUI == null)
+            gambarUI = GetComponentInChildren<Image>();
+
+        if (namaText == null)
+            namaText = GetComponentInChildren<TMP_Text>();
+    }
 
     public void Init(string _nama, string _deskripsi, Sprite _sprite, bool _isBenar)
     {
@@ -20,7 +36,6 @@ public class KomponenItem : MonoBehaviour
         deskripsi = _deskripsi;
         isKomponenBenar = _isBenar;
 
-        // Cari komponen UI otomatis dari anak-anak prefab
         if (gambarUI == null)
             gambarUI = GetComponentInChildren<Image>();
 

@@ -886,15 +886,20 @@ MonoBehaviour:
   spawnParent: {fileID: 869630456}
   gambarKomponen:
   - {fileID: 21300000, guid: 20df67a9045ee5644a9fa0b1e71a38ee, type: 3}
-  - {fileID: 21300000, guid: ddf548ffe7f7161438547929159d31aa, type: 3}
+  - {fileID: 21300000, guid: 7652cd249bc20b148981c9f64e746261, type: 3}
   - {fileID: 21300000, guid: 6f20c947dd58df645807183878c3c0a5, type: 3}
   - {fileID: 21300000, guid: f580865e0f52a08498916b00e88c00e3, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: ddf548ffe7f7161438547929159d31aa, type: 3}
+  - {fileID: 21300000, guid: 3ccd9acd8494a8740a11201f88775a03, type: 3}
+  - {fileID: 21300000, guid: d3fc603d19aed6949be31c4d94f9c36a, type: 3}
   nama:
   - MOTHERBOARD
   - BATERAI
   - SSDSHORT
   - KEYBOARD
+  - CASE PC
+  - MOBO PC
+  - CPU PC
   deskripsi:
   - Motherboard adalah papan utama di dalam komputer yang menghubungkan semua komponen
     seperti prosesor, RAM, dan penyimpanan. Tanpa motherboard, Laptop tidak bisa
@@ -905,7 +910,19 @@ MonoBehaviour:
     di laptop dan komputer modern.
   - Keyboard adalah alat input yang digunakan untuk mengetik dan mengontrol komputer.
     Setiap tombolnya terhubung ke papan sirkuit di dalamnya.
-  valid: 01000100
+  - Case PC berfungsi sebagai wadah utama untuk semua komponen komputer desktop,
+    seperti motherboard, power supply, hard disk, dan lainnya.
+  - Motherboard adalah papan sirkuit utama di komputer yang menghubungkan semua komponen
+    seperti prosesor, RAM, penyimpanan, dan lainnya.
+  - 'CPU (Central Processing Unit) adalah komponen utama yang menjalankan semua perintah
+    di komputer.
+
+    Bisa dibilang, ini adalah "otak" dari PC.
+
+    Setiap kali
+    kamu membuka program, mengetik, atau bermain game, CPU yang memproses semuanya
+    di balik layar.'
+  valid: 00000000010101
 --- !u!1 &812973558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2737,10 +2754,10 @@ MonoBehaviour:
     Setiap kali kamu memasukkan komponen, kamu akan melihat penjelasan singkat tentang
     fungsinya.
 
-    4. Setelah semua komponen selesai dipilah, kamu akan lanjut
-    ke tahap berikutnya.
+    4. Setelah semua komponen selesai dipilah, kamu akan lanjut ke
+    tahap berikutnya.
 
-    
+
 
 '
   m_isRightToLeft: 0

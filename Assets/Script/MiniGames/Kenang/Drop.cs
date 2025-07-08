@@ -16,11 +16,9 @@ public class DropSlot : MonoBehaviour, IDropHandler
 
     private void Start()
     {
-        // Sembunyikan panel info di awal
         if (panelInfo != null)
             panelInfo.SetActive(false);
 
-        // Tombol close panel
         if (closeButton != null)
             closeButton.onClick.AddListener(ClosePanel);
     }
@@ -34,13 +32,12 @@ public class DropSlot : MonoBehaviour, IDropHandler
             KomponenItem item = droppedObj.GetComponent<KomponenItem>();
             if (item != null)
             {
-                // Tampilkan panel info
                 if (panelInfo != null)
                     panelInfo.SetActive(true);
 
                 if (item.isKomponenBenar == isSlotBenar)
                 {
-                    // ✅ Benar
+                    // ✅ Drop benar
                     namaText.text = item.nama;
                     deskripsiText.text = item.deskripsi;
 
@@ -50,30 +47,32 @@ public class DropSlot : MonoBehaviour, IDropHandler
                         if (draggedImage != null)
                             gambarItem.sprite = draggedImage.sprite;
                     }
+
+                    // Tempel dan posisikan
+                    droppedObj.transform.SetParent(transform);
+                    RectTransform rt = droppedObj.GetComponent<RectTransform>();
+                    if (rt != null)
+                        rt.anchoredPosition = Vector2.zero;
+
+                    // Nonaktifkan drag
+                    DragHandler11 drag = droppedObj.GetComponent<DragHandler11>();
+                    if (drag != null)
+                        drag.enabled = false;
                 }
                 else
                 {
-                    // ❌ Salah
+                    // ❌ Drop salah
                     namaText.text = "SALAH!";
                     deskripsiText.text = "Itu bukan tempatnya.";
                     if (gambarItem != null)
                         gambarItem.sprite = null;
+
+                    // Kembalikan item ke posisi awal
+                    droppedObj.transform.SetParent(item.parentAwal);
+                    droppedObj.transform.localPosition = item.posisiAwal;
                 }
 
-                // Tempelkan item ke slot
-                droppedObj.transform.SetParent(transform);
-
-                // Posisikan ke tengah slot
-                RectTransform rt = droppedObj.GetComponent<RectTransform>();
-                if (rt != null)
-                    rt.anchoredPosition = Vector2.zero;
-
-                // Nonaktifkan drag
-                DragHandler11 drag = droppedObj.GetComponent<DragHandler11>();
-                if (drag != null)
-                    drag.enabled = false;
-
-                // Hitung bahwa satu item sudah masuk (benar/salah)
+                // Hitung bahwa satu item sudah masuk (tetap dihitung walau salah)
                 GameManagerKenang.instance.TambahItemMasuk();
             }
         }
@@ -84,7 +83,6 @@ public class DropSlot : MonoBehaviour, IDropHandler
         if (panelInfo != null)
             panelInfo.SetActive(false);
 
-        // ✅ Tampilkan panel akhir hanya jika semua item sudah masuk
         if (GameManagerKenang.instance.sudahSelesai)
         {
             GameManagerKenang.instance.TampilkanPanelAkhir();
