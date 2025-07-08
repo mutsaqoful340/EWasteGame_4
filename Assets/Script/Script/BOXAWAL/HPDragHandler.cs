@@ -6,15 +6,20 @@ public class HPDragHandler : MonoBehaviour
     private Camera cam;
     private bool isDragging = false;
     public LayerMask hpLayerMask;
-    public LayerMask alasLayerMask; // <-- Tambahkan LayerMask untuk Alas
+    public LayerMask alasLayerMask;
 
-    private float minimumY; // Y alas yang akan dijaga
+    private float minimumY;
+    private bool hasBeenDragged = false; // ✅ Agar hanya bisa di-drag 1x
+
+    private TutorialTrigger tutorialTrigger; // ✅ Referensi ke tutorial
 
     void Start()
     {
         cam = Camera.main;
 
-        // Cari posisi Y alas secara otomatis (gunakan Raycast ke bawah dari HP awal)
+        tutorialTrigger = GetComponent<TutorialTrigger>();
+
+        // Deteksi posisi alas
         Ray downRay = new Ray(transform.position + Vector3.up * 2f, Vector3.down);
         if (Physics.Raycast(downRay, out RaycastHit hit, 10f, alasLayerMask))
         {
@@ -22,13 +27,15 @@ public class HPDragHandler : MonoBehaviour
         }
         else
         {
-            minimumY = transform.position.y; // fallback
+            minimumY = transform.position.y;
             Debug.LogWarning("Tidak menemukan Alas, minimumY diset ke posisi awal");
         }
     }
 
     void Update()
     {
+        if (hasBeenDragged) return; // ✅ Cegah interaksi ulang setelah dilepas
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -47,6 +54,7 @@ public class HPDragHandler : MonoBehaviour
             if (isDragging)
             {
                 isDragging = false;
+                hasBeenDragged = true; // ✅ Tandai sudah di-drag
 
                 // Jalankan aksi ambil HP
                 HPTakerKeyboardBoxAnim hpTakeScript = GetComponent<HPTakerKeyboardBoxAnim>();
@@ -56,6 +64,12 @@ public class HPDragHandler : MonoBehaviour
                 }
 
                 transform.SetParent(null);
+
+                // Tampilkan tutorial (jika belum pernah)
+                if (tutorialTrigger != null)
+                {
+                    tutorialTrigger.SendMessage("ShowTutorial");
+                }
             }
         }
 
@@ -66,7 +80,7 @@ public class HPDragHandler : MonoBehaviour
             {
                 Vector3 targetPos = hit.point + offset;
 
-                // Jaga agar Y tidak lebih rendah dari minimum
+                // Jaga agar Y tidak kurang dari minimum
                 if (targetPos.y < minimumY)
                 {
                     targetPos.y = minimumY;

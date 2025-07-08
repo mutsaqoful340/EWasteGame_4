@@ -22611,7 +22611,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Masukan komponen ini ke box Daur ulang
+  m_text: KLIK HP INI UNTUK MENUJU MINI GAMES
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: abe2811a26805bc48a7ec98ca9d72aec, type: 2}
   m_sharedMaterial: {fileID: -8562081214569187112, guid: abe2811a26805bc48a7ec98ca9d72aec,
@@ -24604,6 +24604,7 @@ GameObject:
   - component: {fileID: 1686949771}
   - component: {fileID: 8462285878833473143}
   - component: {fileID: 8462285878833473144}
+  - component: {fileID: 8462285878833473145}
   m_Layer: 7
   m_Name: HP_MainGame
   m_TagString: Untagged
@@ -24784,6 +24785,25 @@ MonoBehaviour:
   alasLayerMask:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &8462285878833473145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958116022408693667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330128410dd17f34c83abe3a9b51c0e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectID: HP3
+  panelObject: {fileID: 950004224}
+  tutorialAnimator: {fileID: 950004228}
+  animationName: SlideIn
+  displayDuration: 3
+  requireSecondClick: 1
+  showOnlyOnce: 1
 --- !u!4 &8673174584204522524
 Transform:
   m_ObjectHideFlags: 0
