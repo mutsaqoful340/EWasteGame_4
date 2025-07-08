@@ -4119,15 +4119,15 @@ RectTransform:
   m_GameObject: {fileID: 548686257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2087302, y: 0.2087302, z: 0.2087302}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.22, y: 0.22, z: 0.22}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 711279739}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -856, y: 159}
-  m_SizeDelta: {x: 1748.5938, y: 2480}
+  m_AnchoredPosition: {x: -713, y: 141}
+  m_SizeDelta: {x: 2303.9998, y: 3071.9998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &548686259
 MonoBehaviour:
@@ -4149,7 +4149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 998ebd1eb580da7409b0a008fb66d5a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1dd9485f345b54244980472bafb51ea4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4461,7 +4461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -607, y: 9}
+  m_AnchoredPosition: {x: -390, y: -9}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &588599195
@@ -6540,6 +6540,10 @@ MonoBehaviour:
   karakterObjek: {fileID: 548686257}
   scaleAmount: 0.9
   scaleSpeed: 0.5
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: LaptopTutorial_SlideIn
+  tutorialDisplayDuration: 3
   dialogIndex: 0
 --- !u!4 &800574213
 Transform:
@@ -7207,7 +7211,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -607, y: 137}
+  m_AnchoredPosition: {x: -390, y: 119}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &854292269
@@ -8477,7 +8481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!320 &922435998
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -17220,6 +17224,10 @@ MonoBehaviour:
   karakterObjek: {fileID: 548686257}
   scaleAmount: 0.9
   scaleSpeed: 0.5
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: LaptopTutorial_SlideIn
+  tutorialDisplayDuration: 3
   dialogIndex: 0
 --- !u!4 &1611974433
 Transform:
@@ -23287,6 +23295,10 @@ MonoBehaviour:
   - {fileID: 0}
   delayBeforeShowHP: 1
   openBoxAudio: {fileID: 0}
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: PanelSlideIn
+  panelDisplayDuration: 3
 --- !u!65 &6487958636427000195
 BoxCollider:
   m_ObjectHideFlags: 0
