@@ -34,7 +34,12 @@ public class VNDialogManager : MonoBehaviour
     public float scaleAmount = 1.05f;
     public float scaleSpeed = 2f;
 
-    // ===⬇️ DIBUAT PUBLIC agar bisa diakses dari luar (misalnya oleh BoxPenyimpanan.cs)
+    [Header("Panel Tutorial Setelah VN")]
+    public GameObject panelTutorial;
+    public Animator tutorialAnimator;
+    public string tutorialAnimName = "LaptopTutorial_SlideIn";
+    public float tutorialDisplayDuration = 3f;
+
     public int dialogIndex = 0;
 
     private bool isTyping = false;
@@ -55,9 +60,6 @@ public class VNDialogManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Bisa dipanggil dari luar saat ingin memulai VN manual.
-    /// </summary>
     public void StartVN(List<VNDialog> dialogBaru = null)
     {
         if (dialogBaru != null)
@@ -84,7 +86,6 @@ public class VNDialogManager : MonoBehaviour
         ShowDialog(dialogIndex);
     }
 
-    // ===⬇️ DIBUAT PUBLIC agar bisa dipanggil dari luar (misalnya restart dialog terakhir)
     public void ShowDialog(int index)
     {
         if (index < dialogList.Count)
@@ -160,12 +161,10 @@ public class VNDialogManager : MonoBehaviour
 
         Debug.Log("📢 VN Selesai");
 
-        // 🔥 Tampilkan ringkasan jika ini adalah VN akhir
         if (isVNEnding)
         {
             Debug.Log("📢 VN akhir terdeteksi, menampilkan ringkasan...");
 
-            // Coba cari WasteZone dulu
             WasteZone ewasteZone = FindObjectOfType<WasteZone>();
             if (ewasteZone != null)
             {
@@ -173,20 +172,44 @@ public class VNDialogManager : MonoBehaviour
                 return;
             }
 
-            // Jika tidak ditemukan, coba cari BoxPenyimpanan
             BoxPenyimpanan penyimpanan = FindObjectOfType<BoxPenyimpanan>();
             if (penyimpanan != null)
             {
-                gameObject.SetActive(false); // ⬅️ biar BoxPenyimpanan bisa deteksi VN selesai
+                gameObject.SetActive(false);
                 return;
             }
 
-            // Kalau dua-duanya nggak ada
             Debug.LogWarning("❗ WasteZone dan BoxPenyimpanan tidak ditemukan.");
+        }
+        else
+        {
+            // VN awal selesai, tampilkan panel tutorial
+            ShowTutorialSetelahVN();
         }
     }
 
+    void ShowTutorialSetelahVN()
+    {
+        Debug.Log("👉 Memanggil panel tutorial setelah VN.");
 
+        if (panelTutorial == null || tutorialAnimator == null)
+        {
+            Debug.LogWarning("⚠️ Panel Tutorial atau Animator belum diset.");
+            return;
+        }
+
+        panelTutorial.SetActive(true);
+        tutorialAnimator.Play("SlideIn", 0, 0f);
+        Invoke(nameof(HideTutorialPanel), tutorialDisplayDuration);
+    }
+
+    void HideTutorialPanel()
+    {
+        if (panelTutorial != null)
+        {
+            panelTutorial.SetActive(false);
+        }
+    }
 
     IEnumerator PulseKarakterObject()
     {

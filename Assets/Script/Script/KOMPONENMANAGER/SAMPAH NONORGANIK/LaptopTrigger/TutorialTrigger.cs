@@ -1,41 +1,43 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class TutorialTrigger : MonoBehaviour
 {
-    // Menyimpan jumlah klik per objectID
     private static Dictionary<string, int> objectClickCounts = new Dictionary<string, int>();
 
     [Header("Tutorial Settings")]
-    public string objectID;                        // Unik per objek, misalnya "BotolA", "LaptopB"
-    public GameObject panelObject;                 // Panel tutorial
-    public Animator tutorialAnimator;              // Animator panel
-    public string animationName = "SlideIn";       // Nama animasi
-    public float displayDuration = 3f;             // Lama tampil panel
+    public string objectID;
+    public GameObject panelObject;
+    public Animator tutorialAnimator;
+    public string animationName = "SlideIn";
+    public float displayDuration = 3f;
 
     [Header("Optional Behavior")]
-    public bool requireSecondClick = false;        // Centang jika butuh klik 2x
+    public bool requireSecondClick = false;
+
+    [Header("Advanced Options")]
+    public bool showOnlyOnce = true;   // ✅ Panel hanya tampil sekali
 
     private bool tutorialActive = false;
+    private bool hasShown = false;     // ✅ Untuk tracking apakah sudah pernah tampil
 
     void OnMouseDown()
     {
-        // Cek apakah ID valid
+        if (hasShown && showOnlyOnce) return;
+
         if (string.IsNullOrEmpty(objectID))
         {
             Debug.LogWarning("objectID belum diisi di: " + gameObject.name);
             return;
         }
 
-        // Inisialisasi klik count jika belum ada
         if (!objectClickCounts.ContainsKey(objectID))
-            objectClickCounts[objectID] = 1;
-        else
-            objectClickCounts[objectID]++;
+            objectClickCounts[objectID] = 0;
+
+        objectClickCounts[objectID]++;
 
         if (requireSecondClick)
         {
-            // Jika butuh klik ke-2
             if (objectClickCounts[objectID] == 2)
             {
                 ShowTutorial();
@@ -43,7 +45,6 @@ public class TutorialTrigger : MonoBehaviour
         }
         else
         {
-            // Tampilkan hanya di klik pertama
             if (objectClickCounts[objectID] == 1)
             {
                 ShowTutorial();
@@ -51,13 +52,16 @@ public class TutorialTrigger : MonoBehaviour
         }
     }
 
-    void ShowTutorial()
+    public void ShowTutorial()
     {
+        if (hasShown && showOnlyOnce) return;
+
         if (panelObject == null || tutorialAnimator == null) return;
 
         panelObject.SetActive(true);
         tutorialAnimator.Play(animationName, 0, 0f);
         tutorialActive = true;
+        hasShown = true; // ✅ tandai sudah tampil
 
         Invoke(nameof(HidePanel), displayDuration);
     }

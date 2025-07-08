@@ -3119,15 +3119,15 @@ RectTransform:
   m_GameObject: {fileID: 368499360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01788275, y: 0.01788275, z: 0.01788275}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 513707347}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: -21.8, y: 0.0000091968}
+  m_SizeDelta: {x: 904.99994, y: 727.2469}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &368499362
 MonoBehaviour:
@@ -3149,7 +3149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -1002263830, guid: 8d2d59378a8e57b4080553fad834645a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4077,7 +4077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   director: {fileID: 493874965}
-  sceneName: DEMO3DLVL6
+  sceneName: MiniGameAmogus
 --- !u!1 &451796781
 GameObject:
   m_ObjectHideFlags: 0
@@ -4792,7 +4792,7 @@ GameObject:
   - component: {fileID: 548686260}
   - component: {fileID: 548686259}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4807,15 +4807,15 @@ RectTransform:
   m_GameObject: {fileID: 548686257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2087302, y: 0.2087302, z: 0.2087302}
+  m_LocalScale: {x: 0.15457758, y: 0.15457758, z: 0.15457758}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 711279739}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -856, y: 159}
-  m_SizeDelta: {x: 1748.5938, y: 2480}
+  m_AnchoredPosition: {x: -823, y: 215}
+  m_SizeDelta: {x: 2303.9998, y: 3071.9998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &548686259
 MonoBehaviour:
@@ -4837,7 +4837,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 998ebd1eb580da7409b0a008fb66d5a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d15270908e647f849990ec42d11129e1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7375,6 +7375,10 @@ MonoBehaviour:
   karakterObjek: {fileID: 548686257}
   scaleAmount: 0.9
   scaleSpeed: 0.5
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: LaptopTutorial_SlideIn
+  tutorialDisplayDuration: 3
   dialogIndex: 0
 --- !u!4 &800574213
 Transform:
@@ -8050,7 +8054,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -607, y: 137}
+  m_AnchoredPosition: {x: -578, y: 137}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &854292269
@@ -8697,16 +8701,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'MAKAN: 15.000'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: abe2811a26805bc48a7ec98ca9d72aec, type: 2}
-  m_sharedMaterial: {fileID: -8562081214569187112, guid: abe2811a26805bc48a7ec98ca9d72aec,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: efa7df5a7ce02a14eb240c6f9b8769f8, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: efa7df5a7ce02a14eb240c6f9b8769f8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -11149,7 +11152,7 @@ Transform:
   m_GameObject: {fileID: 1054321265}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -83.605965, y: -8.419475, z: -60.491398}
+  m_LocalPosition: {x: -83.605965, y: -8.45, z: -60.491398}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13190,7 +13193,7 @@ Transform:
   m_GameObject: {fileID: 1243085021}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -83.60296, y: -8.389475, z: -59.571396}
+  m_LocalPosition: {x: -83.60296, y: -8.423, z: -59.592}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13471,16 +13474,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'NABUNG: 20.000'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: abe2811a26805bc48a7ec98ca9d72aec, type: 2}
-  m_sharedMaterial: {fileID: -8562081214569187112, guid: abe2811a26805bc48a7ec98ca9d72aec,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: efa7df5a7ce02a14eb240c6f9b8769f8, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: efa7df5a7ce02a14eb240c6f9b8769f8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -15147,7 +15149,7 @@ Transform:
   m_GameObject: {fileID: 1387388778}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -82.74096, y: -8.353475, z: -59.693398}
+  m_LocalPosition: {x: -82.74096, y: -8.442, z: -59.693398}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17915,6 +17917,10 @@ MonoBehaviour:
   karakterObjek: {fileID: 548686257}
   scaleAmount: 0.9
   scaleSpeed: 0.5
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: LaptopTutorial_SlideIn
+  tutorialDisplayDuration: 3
   dialogIndex: 0
 --- !u!4 &1611974433
 Transform:
@@ -18497,7 +18503,7 @@ Transform:
   m_GameObject: {fileID: 1664940599}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00069049717, y: -0, z: -0, w: 0.99999976}
-  m_LocalPosition: {x: -83.62196, y: -8.397474, z: -58.780396}
+  m_LocalPosition: {x: -83.62196, y: -8.444, z: -58.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22361,7 +22367,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.3, y: -0.1}
+  m_AnchoredPosition: {x: 3.3, y: -2.2}
   m_SizeDelta: {x: 132, y: 204.65813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1981089524
@@ -22436,16 +22442,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'JAJAN: 20.000'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: abe2811a26805bc48a7ec98ca9d72aec, type: 2}
-  m_sharedMaterial: {fileID: -8562081214569187112, guid: abe2811a26805bc48a7ec98ca9d72aec,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: efa7df5a7ce02a14eb240c6f9b8769f8, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: efa7df5a7ce02a14eb240c6f9b8769f8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -24614,6 +24619,10 @@ MonoBehaviour:
   - {fileID: 0}
   delayBeforeShowHP: 1
   openBoxAudio: {fileID: 0}
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: PanelSlideIn
+  panelDisplayDuration: 3
 --- !u!65 &6487958636427000195
 BoxCollider:
   m_ObjectHideFlags: 0

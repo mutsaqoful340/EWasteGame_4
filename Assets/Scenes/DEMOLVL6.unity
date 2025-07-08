@@ -430,7 +430,7 @@ Transform:
   m_GameObject: {fileID: 42010033}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -82.76796, y: -8.405475, z: -59.615395}
+  m_LocalPosition: {x: -82.76796, y: -8.457, z: -59.615395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5259,7 +5259,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: bb3c609ad097ef74ba7291f00f5dc250,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.381
+      value: -0.429
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb3c609ad097ef74ba7291f00f5dc250,
         type: 3}
@@ -6745,6 +6745,10 @@ MonoBehaviour:
   karakterObjek: {fileID: 548686257}
   scaleAmount: 0.9
   scaleSpeed: 0.5
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: LaptopTutorial_SlideIn
+  tutorialDisplayDuration: 3
   dialogIndex: 0
 --- !u!4 &800574213
 Transform:
@@ -8801,7 +8805,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!320 &922435998
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -10266,7 +10270,7 @@ Transform:
   m_GameObject: {fileID: 1038306489}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -82.74196, y: -8.405475, z: -60.454395}
+  m_LocalPosition: {x: -82.74196, y: -8.451, z: -60.454395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10418,7 +10422,7 @@ Transform:
   m_GameObject: {fileID: 1054321265}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -83.812965, y: -8.353475, z: -59.585396}
+  m_LocalPosition: {x: -83.812965, y: -8.439, z: -59.585396}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14621,7 +14625,7 @@ Transform:
   m_GameObject: {fileID: 1387388778}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -83.54596, y: -8.405475, z: -59.892395}
+  m_LocalPosition: {x: -83.54596, y: -8.462, z: -59.892395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17308,6 +17312,10 @@ MonoBehaviour:
   karakterObjek: {fileID: 548686257}
   scaleAmount: 0.9
   scaleSpeed: 0.5
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: LaptopTutorial_SlideIn
+  tutorialDisplayDuration: 3
   dialogIndex: 0
 --- !u!4 &1611974433
 Transform:
@@ -17755,7 +17763,7 @@ Transform:
   m_GameObject: {fileID: 1664940599}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -82.70896, y: -8.3154745, z: -58.759396}
+  m_LocalPosition: {x: -82.70896, y: -8.444, z: -58.759396}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20496,12 +20504,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: efe4c6ce460a3024b8b0449dad6b696f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.41
+      value: -0.481
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efe4c6ce460a3024b8b0449dad6b696f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.359
+      value: -4.372
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efe4c6ce460a3024b8b0449dad6b696f,
         type: 3}
@@ -23228,6 +23236,10 @@ MonoBehaviour:
   - {fileID: 0}
   delayBeforeShowHP: 1
   openBoxAudio: {fileID: 0}
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: PanelSlideIn
+  panelDisplayDuration: 3
 --- !u!65 &6487958636427000195
 BoxCollider:
   m_ObjectHideFlags: 0
