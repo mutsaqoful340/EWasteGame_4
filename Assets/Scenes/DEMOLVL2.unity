@@ -7407,7 +7407,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -669.3, y: 102.6}
+  m_AnchoredPosition: {x: -463, y: 103}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &707590994
@@ -11038,15 +11038,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048143962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
+  m_LocalPosition: {x: 0, y: 0, z: -24}
+  m_LocalScale: {x: 0.21999998, y: 0.21999998, z: 0.21999998}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 597788228}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -883.2, y: 165.8}
+  m_AnchoredPosition: {x: -772, y: 96}
   m_SizeDelta: {x: 1748.5938, y: 2480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1048143964
@@ -11069,7 +11069,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 998ebd1eb580da7409b0a008fb66d5a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1dd9485f345b54244980472bafb51ea4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14002,6 +14002,7 @@ MonoBehaviour:
   animationName: SlideIn
   displayDuration: 3
   requireSecondClick: 0
+  showOnlyOnce: 1
 --- !u!114 &1290607101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17309,7 +17310,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575867226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000020023435}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17317,7 +17318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -669.3, y: -1.3}
+  m_AnchoredPosition: {x: -462.99994, y: -0.89994705}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1575867228
@@ -21212,6 +21213,7 @@ MonoBehaviour:
   animationName: SlideIn
   displayDuration: 3
   requireSecondClick: 0
+  showOnlyOnce: 1
 --- !u!1 &1814441637
 GameObject:
   m_ObjectHideFlags: 0
@@ -22656,6 +22658,7 @@ MonoBehaviour:
   animationName: SlideIn
   displayDuration: 3
   requireSecondClick: 0
+  showOnlyOnce: 1
 --- !u!1 &1989729599
 GameObject:
   m_ObjectHideFlags: 0
@@ -23031,6 +23034,10 @@ MonoBehaviour:
   karakterObjek: {fileID: 1048143962}
   scaleAmount: 0.9
   scaleSpeed: 0.5
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: LaptopTutorial_SlideIn
+  tutorialDisplayDuration: 3
   dialogIndex: 0
 --- !u!4 &2021492618
 Transform:
@@ -25066,6 +25073,10 @@ MonoBehaviour:
   - {fileID: 0}
   delayBeforeShowHP: 1
   openBoxAudio: {fileID: 0}
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: PanelSlideIn
+  panelDisplayDuration: 3
 --- !u!65 &6487958636427000195
 BoxCollider:
   m_ObjectHideFlags: 0
