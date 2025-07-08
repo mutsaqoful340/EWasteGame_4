@@ -178,7 +178,7 @@ public class NextButton : MonoBehaviour
                 SceneManager.LoadScene(endingSceneName); return;
             }
 
-            if (pelanggaranNabung >= 10)
+            if (pelanggaranNabung >= 6)
             {
                 SceneManager.LoadScene(endingSceneName2); return;
             }
