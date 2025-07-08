@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class TutorialTrigger : MonoBehaviour
@@ -17,25 +17,21 @@ public class TutorialTrigger : MonoBehaviour
     public bool requireSecondClick = false;        // Centang jika butuh klik 2x
 
     private bool tutorialActive = false;
-
     void OnMouseDown()
     {
-        // Cek apakah ID valid
         if (string.IsNullOrEmpty(objectID))
         {
             Debug.LogWarning("objectID belum diisi di: " + gameObject.name);
             return;
         }
 
-        // Inisialisasi klik count jika belum ada
         if (!objectClickCounts.ContainsKey(objectID))
-            objectClickCounts[objectID] = 1;
-        else
-            objectClickCounts[objectID]++;
+            objectClickCounts[objectID] = 0;  // ✅ mulai dari 0 klik
+
+        objectClickCounts[objectID]++; // ⬆️ setiap klik, tambahkan 1
 
         if (requireSecondClick)
         {
-            // Jika butuh klik ke-2
             if (objectClickCounts[objectID] == 2)
             {
                 ShowTutorial();
@@ -43,13 +39,14 @@ public class TutorialTrigger : MonoBehaviour
         }
         else
         {
-            // Tampilkan hanya di klik pertama
             if (objectClickCounts[objectID] == 1)
             {
                 ShowTutorial();
             }
         }
     }
+
+
 
     void ShowTutorial()
     {

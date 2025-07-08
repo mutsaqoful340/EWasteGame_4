@@ -15,6 +15,12 @@ public class BoxOpener : MonoBehaviour
     [Header("Audio")]
     public AudioSource openBoxAudio; // 🔊 drag AudioSource di Inspector
 
+    [Header("Panel Tutorial Setelah Buka Kardus")]
+    public GameObject panelTutorial; // Drag panel GameObject di sini
+    public Animator tutorialAnimator; // Drag Animator dari panel
+    public string tutorialAnimName = "PanelSlideIn"; // Nama animasi di Animator
+    public float panelDisplayDuration = 3f; // Berapa detik panel muncul
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -25,6 +31,10 @@ public class BoxOpener : MonoBehaviour
             if (hp != null)
                 hp.SetActive(false);
         }
+
+        // Panel tutorial dimatikan dulu
+        if (panelTutorial != null)
+            panelTutorial.SetActive(false);
     }
 
     void OnMouseDown()
@@ -53,5 +63,19 @@ public class BoxOpener : MonoBehaviour
             if (hp != null)
                 hp.SetActive(true);
         }
+
+        // Munculkan panel tutorial setelah buka kardus
+        if (panelTutorial != null && tutorialAnimator != null)
+        {
+            panelTutorial.SetActive(true);
+            tutorialAnimator.Play("SlideIn", 0, 0f);
+            Invoke(nameof(HidePanelTutorial), panelDisplayDuration);
+        }
+    }
+
+    void HidePanelTutorial()
+    {
+        if (panelTutorial != null)
+            panelTutorial.SetActive(false);
     }
 }

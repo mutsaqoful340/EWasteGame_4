@@ -14729,7 +14729,7 @@ Transform:
   m_GameObject: {fileID: 1387388778}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7525554, y: 0.20752424, z: 0.22783089}
+  m_LocalPosition: {x: -0.097, y: 0.20752424, z: 0.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18038,7 +18038,7 @@ MonoBehaviour:
   zoomTransition: {fileID: 1419099510}
   mainCamera: {fileID: 973448811}
   miniGameCamera: {fileID: 154147540}
-  pcbOnTable: {fileID: 7958116022408693667}
+  pcbOnTable: {fileID: 7958116022448817473}
   miniGameUIPanel: {fileID: 331383541}
   gameplayUI: {fileID: 0}
 --- !u!4 &1655943177
@@ -24401,6 +24401,7 @@ Transform:
   - {fileID: 2102856514}
   - {fileID: 228927434}
   - {fileID: 1330507869}
+  - {fileID: 7294486656570334489}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6487958636427000194
@@ -24504,11 +24505,11 @@ Transform:
   m_GameObject: {fileID: 7958116022408693667}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3097612, y: 0.3097612, z: 0.6356478, w: 0.6356478}
-  m_LocalPosition: {x: -2.8508456, y: -0.475, z: -2.4156203}
-  m_LocalScale: {x: 9.533469, y: 9.533469, z: 9.533469}
+  m_LocalPosition: {x: 0.016, y: -0.15048544, z: 0.058}
+  m_LocalScale: {x: 4.6278973, y: 4.6278977, z: 4.6278977}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 6487958636427000193}
   m_LocalEulerAnglesHint: {x: 0, y: 51.961, z: 90}
 --- !u!54 &7504967887830317583
 Rigidbody:
@@ -24593,6 +24594,8 @@ GameObject:
   - component: {fileID: 7504967887862184173}
   - component: {fileID: 3237886183776424686}
   - component: {fileID: 1686949771}
+  - component: {fileID: 8462285878833473143}
+  - component: {fileID: 8462285878833473144}
   m_Layer: 7
   m_Name: HP_MainGame
   m_TagString: Untagged
@@ -24736,6 +24739,45 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8462285878833473143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958116022408693667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6712544a2a497914381e7e49cac5465f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosition: {fileID: 1387388779}
+  komponenTambahanPrefab: {fileID: 0}
+  spawnPosisi: {fileID: 0}
+  boxTransform: {fileID: 6487958636427000193}
+  boxPosisiBaru: {x: -1.572, y: -0.138, z: -1.171}
+  durasiAnimasi: 1
+  isTaken: 0
+--- !u!114 &8462285878833473144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7958116022408693667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71404465ae6f9f45ab585724ad8a46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  alasLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  restrictedObjectName: HP_MainGame
+  boxTag: Cardboard
 --- !u!4 &8673174584204522524
 Transform:
   m_ObjectHideFlags: 0
@@ -24790,5 +24832,4 @@ SceneRoots:
   - {fileID: 1842062890}
   - {fileID: 756320791}
   - {fileID: 7294486656539189243}
-  - {fileID: 7294486656570334489}
   - {fileID: 1242131751}
