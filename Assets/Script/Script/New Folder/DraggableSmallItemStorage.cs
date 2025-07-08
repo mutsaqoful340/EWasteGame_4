@@ -48,7 +48,8 @@ public class DraggableStorageItem : MonoBehaviour
         Collider myCollider = GetComponent<Collider>();
         if (myCollider == null) return;
 
-        Vector3 halfExtents = myCollider.bounds.extents;
+        // Kurangi ukuran deteksi agar tidak terlalu sensitif
+        Vector3 halfExtents = myCollider.bounds.extents * 0.7f;
 
         LayerMask obstacleLayers = LayerMask.GetMask("Kardus", "Meja", "Alas");
 
