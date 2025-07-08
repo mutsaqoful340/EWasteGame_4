@@ -3119,15 +3119,15 @@ RectTransform:
   m_GameObject: {fileID: 368499360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.01788275, y: 0.01788275, z: 0.01788275}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 513707347}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: -21.8, y: 0.0000091968}
+  m_SizeDelta: {x: 904.99994, y: 727.2469}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &368499362
 MonoBehaviour:
@@ -3149,7 +3149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -1002263830, guid: 8d2d59378a8e57b4080553fad834645a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7375,6 +7375,10 @@ MonoBehaviour:
   karakterObjek: {fileID: 548686257}
   scaleAmount: 0.9
   scaleSpeed: 0.5
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: LaptopTutorial_SlideIn
+  tutorialDisplayDuration: 3
   dialogIndex: 0
 --- !u!4 &800574213
 Transform:
@@ -17915,6 +17919,10 @@ MonoBehaviour:
   karakterObjek: {fileID: 548686257}
   scaleAmount: 0.9
   scaleSpeed: 0.5
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: LaptopTutorial_SlideIn
+  tutorialDisplayDuration: 3
   dialogIndex: 0
 --- !u!4 &1611974433
 Transform:
@@ -22361,7 +22369,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.3, y: -0.1}
+  m_AnchoredPosition: {x: 3.3, y: -2.2}
   m_SizeDelta: {x: 132, y: 204.65813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1981089524
@@ -24614,6 +24622,10 @@ MonoBehaviour:
   - {fileID: 0}
   delayBeforeShowHP: 1
   openBoxAudio: {fileID: 0}
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
+  tutorialAnimName: PanelSlideIn
+  panelDisplayDuration: 3
 --- !u!65 &6487958636427000195
 BoxCollider:
   m_ObjectHideFlags: 0
