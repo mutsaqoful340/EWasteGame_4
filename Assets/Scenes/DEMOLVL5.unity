@@ -4807,14 +4807,14 @@ RectTransform:
   m_GameObject: {fileID: 548686257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15457758, y: 0.15457758, z: 0.15457758}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.22, y: 0.22, z: 0.22}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 711279739}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -823, y: 215}
+  m_AnchoredPosition: {x: -693, y: 145}
   m_SizeDelta: {x: 2303.9998, y: 3071.9998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &548686259
@@ -4837,7 +4837,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d15270908e647f849990ec42d11129e1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1dd9485f345b54244980472bafb51ea4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4964,7 +4964,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -607, y: 9}
+  m_AnchoredPosition: {x: -361, y: 9}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &588599195
@@ -7357,19 +7357,19 @@ MonoBehaviour:
   dialogText: {fileID: 588599196}
   btnLanjut: {fileID: 601306889}
   dialogList:
-  - namaKarakter: Ujang
-    dialog: Kita lanjut ke tahap berikutnya kamu akan memilah isi dari HP bekas.
-  - namaKarakter: Ujang
-    dialog: Setelah dikeluarkan, kamu bisa mulai membongkar komponennya dengan klik
-      HP nya.
-  - namaKarakter: Ujang
-    dialog: Ingat, kamu harus memilih apakah komponennya bisa dijual atau didaur
-      ulang.
-  - namaKarakter: Ujang
-    dialog: Taruh komponen ke box penjualan jika masih bernilai, atau ke box daur
-      ulang  jika sudah rusak.
-  - namaKarakter: Ujang
-    dialog: Ayo, mulai dengan mengeluarkan HP pertama dari kardus.
+  - namaKarakter: Saka
+    dialog: Pagi! Aku lihat kamu makin cepat dan rapi tiap harinya.
+  - namaKarakter: Saka
+    dialog: 'Hari ini, kamu akan menangani 3 HP seperti kemarin... dan ada tambahan:
+      1 laptop bekas.'
+  - namaKarakter: Saka
+    dialog: Laptop punya komponen yang lebih besar dan lebih banyak. Tapi prinsipnya
+      tetap sama yaitu pilah mana yang bisa dijual, mana yang perlu didaur ulang.
+  - namaKarakter: Saka
+    dialog: Kalau kamu bisa melewati hari ini dengan lancar, kamu akan naik ke level
+      yang benar-benar profesional.
+  - namaKarakter: Saka
+    dialog: Siap? Ayo mulai!
   typingAudio: {fileID: 711279743}
   isVNEnding: 0
   karakterObjek: {fileID: 548686257}
@@ -8054,7 +8054,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -578, y: 137}
+  m_AnchoredPosition: {x: -332, y: 137}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &854292269
@@ -21015,17 +21015,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vnDialogManager: {fileID: 800574212}
   vnDialogAkhir:
-  - namaKarakter: Ujang
-    dialog: Bagus sekali! Semua komponen HP berhasil kamu pilah.
-  - namaKarakter: Ujang
-    dialog: Komponen yang masih bernilai bisa dijual kembali, dan sisanya akan didaur
-      ulang.
-  - namaKarakter: Ujang
-    dialog: Pemilahan seperti ini penting agar sampah elektronik tidak mencemari
-      lingkungan.
-  - namaKarakter: Ujang
-    dialog: Kamu sudah semakin mahir! Sekarang, mari kita lihat hasil dari pemilahan
-      ini.
+  - namaKarakter: Saka
+    dialog: Hebat. Kamu berhasil menyelesaikannya tanpa ragu.
+  - namaKarakter: Saka
+    dialog: "Tiga HP dan satu laptop bukan jumlah yang sedikit\u2014dan tiap komponennya
+      juga punya tingkat kesulitan sendiri."
+  - namaKarakter: Saka
+    dialog: Aku lihat kamu sudah bisa membedakan mana komponen bernilai, mana yang
+      perlu langsung didaur ulang.
+  - namaKarakter: Saka
+    dialog: Kamu sudah paham, bahwa e-waste itu bukan sekadar sampah tapi juga sumber
+      daya, kalau ditangani dengan benar
+  - namaKarakter: Saka
+    dialog: Kerja bagus. Kamu udah selangkah lagi jadi pengelola limbah elektronik
+      yang profesional.
+  - namaKarakter: Saka
+    dialog: "Besok jumlah laptopnya bertambah\u2014kerjanya makin banyak, tapi aku
+      yakin kamu bisa."
   panelSetelahVN: {fileID: 0}
   btnLanjutSetelahVN: {fileID: 0}
   totalTime: 300

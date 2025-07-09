@@ -4793,15 +4793,15 @@ RectTransform:
   m_GameObject: {fileID: 548686257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2087302, y: 0.2087302, z: 0.2087302}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.22, y: 0.22, z: 0.22}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 711279739}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -856, y: 159}
-  m_SizeDelta: {x: 1748.5938, y: 2480}
+  m_AnchoredPosition: {x: -704, y: 145}
+  m_SizeDelta: {x: 2303.9998, y: 3071.9998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &548686259
 MonoBehaviour:
@@ -4823,7 +4823,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 998ebd1eb580da7409b0a008fb66d5a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1dd9485f345b54244980472bafb51ea4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4950,7 +4950,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -607, y: 9}
+  m_AnchoredPosition: {x: -359, y: -5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &588599195
@@ -7180,24 +7180,22 @@ MonoBehaviour:
   dialogText: {fileID: 588599196}
   btnLanjut: {fileID: 601306889}
   dialogList:
-  - namaKarakter: Ujang
+  - namaKarakter: Saka
     dialog: Tugas kali ini sedikit lebih kompleks.
-  - namaKarakter: Ujang
-    dialog: Di hadapanmu ada 1 HP, 2 laptop, dan 1 unit PC bekas.
-  - namaKarakter: Ujang
-    dialog: Semua perangkat masih di dalam kardus. Keluarkan satu per satu terlebih
-      dahulu.
-  - namaKarakter: Ujang
-    dialog: Setelah dikeluarkan, kamu harus membongkar tiap perangkat dan memilah
-      komponennya.
-  - namaKarakter: Ujang
-    dialog: Sama seperti sebelumnya, pilih komponen yang bisa dijual atau didaur
-      ulang.
-  - namaKarakter: Ujang
-    dialog: gunakan box penjualan untuk komponen yang masih bernilai, dan box daur
-      ulang untuk sisanya.
-  - namaKarakter: Ujang
-    dialog: Ayo, mulai dengan mengeluarkan perangkat dari kardus.
+  - namaKarakter: Saka
+    dialog: Selamat datang di hari ketujuh.
+  - namaKarakter: Saka
+    dialog: Kali ini kamu nggak cuma menangani laptop, tapi juga satu unit PC bekas.
+  - namaKarakter: Saka
+    dialog: PC punya komponen yang lebih besar, lebih berat, dan kadang lebih berbahaya
+      kalau salah ditangani.
+  - namaKarakter: Saka
+    dialog: Perhatikan bagian seperti power supply, kipas, dan mainboard itu semua
+      bisa punya nilai, tapi juga potensi limbah berbahaya.
+  - namaKarakter: Saka
+    dialog: Ini salah satu tugas paling rumit sejauh ini. Tapi aku percaya kamu siap.
+  - namaKarakter: Saka
+    dialog: Ambil napas, fokus, dan mulai.
   typingAudio: {fileID: 711279743}
   isVNEnding: 0
   karakterObjek: {fileID: 548686257}
@@ -7781,7 +7779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -607, y: 137}
+  m_AnchoredPosition: {x: -359, y: 123}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &854292269
@@ -19743,17 +19741,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vnDialogManager: {fileID: 800574212}
   vnDialogAkhir:
-  - namaKarakter: Ujang
-    dialog: Kerja bagus! Semua perangkat berhasil kamu bongkar dan pilah komponennya.
-  - namaKarakter: Ujang
-    dialog: Kamu sudah menangani HP, laptop, bahkan PC bekas dengan baik.
-  - namaKarakter: Ujang
-    dialog: Komponen yang masih bernilai akan dijual, dan sisanya masuk ke daur ulang.
-  - namaKarakter: Ujang
-    dialog: Dengan memilah seperti ini, kamu membantu mengurangi limbah elektronik
-      yang mencemari lingkungan.
-  - namaKarakter: Ujang
-    dialog: Sekarang, mari kita lihat hasil akhir dari usahamu hari ini.
+  - namaKarakter: Saka
+    dialog: Gila, kamu beneran hebat hari ini.
+  - namaKarakter: Saka
+    dialog: PC bekas itu bukan barang ringan secara ukuran, bobot, dan juga tantangan
+      pas dibongkar.
+  - namaKarakter: Saka
+    dialog: Tugas hari ini nggak cuma soal jumlah, tapi juga kompleksitas. Dan kamu
+      berhasil melewatinya dengan lancar.
+  - namaKarakter: Saka
+    dialog: Setiap komponen yang kamu selamatkan hari ini bisa jadi awal dari kehidupan
+      baru dan itu berarti lebih sedikit limbah beracun di bumi ini.
+  - namaKarakter: Saka
+    dialog: Besok kita masuk ke tahap yang lebih serius lagi.
   panelSetelahVN: {fileID: 0}
   btnLanjutSetelahVN: {fileID: 0}
   totalTime: 300
