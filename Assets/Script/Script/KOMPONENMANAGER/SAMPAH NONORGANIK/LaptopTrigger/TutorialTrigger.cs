@@ -8,9 +8,10 @@ public class TutorialTrigger : MonoBehaviour
     [Header("Tutorial Settings")]
     public string objectID;
     public GameObject panelObject;
-    public Animator tutorialAnimator;
-    public string animationName = "SlideIn";
-    public float displayDuration = 3f;
+    //public float displayDuration = 3f;
+
+    //public Animator tutorialAnimator;
+    //public string animationName = "SlideIn";
 
     [Header("Optional Behavior")]
     public bool requireSecondClick = false;
@@ -56,24 +57,24 @@ public class TutorialTrigger : MonoBehaviour
     {
         if (hasShown && showOnlyOnce) return;
 
-        if (panelObject == null || tutorialAnimator == null) return;
+        if (panelObject == null) return;
 
         panelObject.SetActive(true);
-        tutorialAnimator.Play(animationName, 0, 0f);
+        //tutorialAnimator.Play(animationName, 0, 0f);
         tutorialActive = true;
         hasShown = true; // ✅ tandai sudah tampil
 
-        Invoke(nameof(HidePanel), displayDuration);
+        //Invoke(nameof(HidePanel), displayDuration);
     }
 
-    void HidePanel()
-    {
-        if (tutorialActive)
-        {
-            panelObject.SetActive(false);
-            tutorialActive = false;
-        }
-    }
+    //void HidePanel()
+    //{
+    //    if (tutorialActive)
+    //    {
+    //        panelObject.SetActive(false);
+    //        tutorialActive = false;
+    //    }
+    //}
 
     private void OnDestroy()
     {
