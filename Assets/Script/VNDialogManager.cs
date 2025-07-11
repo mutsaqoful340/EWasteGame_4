@@ -19,6 +19,7 @@ public class VNDialogManager : MonoBehaviour
     public TextMeshProUGUI namaText;
     public TextMeshProUGUI dialogText;
     public Button btnLanjut;
+    public int dialogIndex = 0;
 
     [Header("Daftar Dialog (Isi dari Inspector)")]
     public List<VNDialog> dialogList;
@@ -29,23 +30,23 @@ public class VNDialogManager : MonoBehaviour
     [Header("Apakah Ini VN Akhir?")]
     public bool isVNEnding = false;
 
-    [Header("Efek Karakter")]
-    public GameObject karakterObjek;
-    public float scaleAmount = 1.05f;
-    public float scaleSpeed = 2f;
+    //[Header("Efek Karakter")]
+    //public GameObject karakterObjek;
+    //public float scaleAmount = 1.05f;
+    //public float scaleSpeed = 2f;
 
     [Header("Panel Tutorial Setelah VN")]
     public GameObject panelTutorial;
-    public Animator tutorialAnimator;
-    public string tutorialAnimName = "LaptopTutorial_SlideIn";
-    public float tutorialDisplayDuration = 3f;
+    //public Animator tutorialAnimator;
+    //public string tutorialAnimName = "LaptopTutorial_SlideIn";
+    //public float tutorialDisplayDuration = 3f;
 
-    public int dialogIndex = 0;
+
 
     private bool isTyping = false;
     private bool selesaiVN = false;
     private Coroutine typingCoroutine;
-    private Coroutine pulseCoroutine;
+    //private Coroutine pulseCoroutine;
     private Vector3 karakterOriginalScale;
 
     void Start()
@@ -71,11 +72,11 @@ public class VNDialogManager : MonoBehaviour
         vnPanel.SetActive(true);
         Time.timeScale = 0f;
 
-        if (karakterObjek != null)
-        {
-            karakterOriginalScale = karakterObjek.transform.localScale;
-            pulseCoroutine = StartCoroutine(PulseKarakterObject());
-        }
+        //if (karakterObjek != null)
+        //{
+        //    karakterOriginalScale = karakterObjek.transform.localScale;
+        //    pulseCoroutine = StartCoroutine(PulseKarakterObject());
+        //}
 
         if (btnLanjut != null)
         {
@@ -153,11 +154,11 @@ public class VNDialogManager : MonoBehaviour
         if (typingAudio != null && typingAudio.isPlaying)
             typingAudio.Stop();
 
-        if (pulseCoroutine != null)
-            StopCoroutine(pulseCoroutine);
+        //if (pulseCoroutine != null)
+        //    StopCoroutine(pulseCoroutine);
 
-        if (karakterObjek != null)
-            karakterObjek.transform.localScale = karakterOriginalScale;
+        //if (karakterObjek != null)
+        //    karakterObjek.transform.localScale = karakterOriginalScale;
 
         Debug.Log("📢 VN Selesai");
 
@@ -192,15 +193,15 @@ public class VNDialogManager : MonoBehaviour
     {
         Debug.Log("👉 Memanggil panel tutorial setelah VN.");
 
-        if (panelTutorial == null || tutorialAnimator == null)
+        if (panelTutorial == null)
         {
             Debug.LogWarning("⚠️ Panel Tutorial atau Animator belum diset.");
             return;
         }
 
         panelTutorial.SetActive(true);
-        tutorialAnimator.Play("SlideIn", 0, 0f);
-        Invoke(nameof(HideTutorialPanel), tutorialDisplayDuration);
+        //tutorialAnimator.Play("SlideIn", 0, 0f);
+        //Invoke(nameof(HideTutorialPanel), tutorialDisplayDuration);
     }
 
     void HideTutorialPanel()
@@ -211,29 +212,29 @@ public class VNDialogManager : MonoBehaviour
         }
     }
 
-    IEnumerator PulseKarakterObject()
-    {
-        if (karakterObjek == null) yield break;
-
-        Vector3 targetScale = karakterOriginalScale * scaleAmount;
-
-        while (!selesaiVN)
-        {
-            float t = 0;
-            while (t < 1f && !selesaiVN)
-            {
-                t += Time.unscaledDeltaTime * scaleSpeed;
-                karakterObjek.transform.localScale = Vector3.Lerp(karakterOriginalScale, targetScale, t);
-                yield return null;
-            }
-
-            t = 0;
-            while (t < 1f && !selesaiVN)
-            {
-                t += Time.unscaledDeltaTime * scaleSpeed;
-                karakterObjek.transform.localScale = Vector3.Lerp(targetScale, karakterOriginalScale, t);
-                yield return null;
-            }
-        }
-    }
+    //IEnumerator PulseKarakterObject()
+    //{
+    //    if (karakterObjek == null) yield break;
+    //
+    //    Vector3 targetScale = karakterOriginalScale * scaleAmount;
+    //
+    //    while (!selesaiVN)
+    //    {
+    //        float t = 0;
+    //        while (t < 1f && !selesaiVN)
+    //        {
+    //            t += Time.unscaledDeltaTime * scaleSpeed;
+    //            karakterObjek.transform.localScale = Vector3.Lerp(karakterOriginalScale, targetScale, t);
+    //            yield return null;
+    //        }
+    //
+    //        t = 0;
+    //        while (t < 1f && !selesaiVN)
+    //        {
+    //            t += Time.unscaledDeltaTime * scaleSpeed;
+    //            karakterObjek.transform.localScale = Vector3.Lerp(targetScale, karakterOriginalScale, t);
+    //            yield return null;
+    //        }
+    //    }
+    //}
 }
