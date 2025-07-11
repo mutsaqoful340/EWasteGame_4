@@ -4293,6 +4293,18 @@ MonoBehaviour:
           m_StringArgument: Laptop_TS
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 169011043}
+        m_TargetAssemblyTypeName: ChapterProgressSaver, Assembly-CSharp
+        m_MethodName: SaveProgress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 404190892}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -14006,9 +14018,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectID: Laptop1
   panelObject: {fileID: 1587282436}
-  tutorialAnimator: {fileID: 1587282438}
-  animationName: SlideIn
-  displayDuration: 3
   requireSecondClick: 0
   showOnlyOnce: 1
 --- !u!114 &1290607101
@@ -21235,9 +21244,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectID: Laptop
   panelObject: {fileID: 1587282436}
-  tutorialAnimator: {fileID: 1587282438}
-  animationName: SlideIn
-  displayDuration: 3
   requireSecondClick: 0
   showOnlyOnce: 1
 --- !u!114 &1813916865
