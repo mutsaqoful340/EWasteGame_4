@@ -940,7 +940,6 @@ GameObject:
   - component: {fileID: 119485789}
   - component: {fileID: 119485788}
   - component: {fileID: 119485787}
-  - component: {fileID: 119485786}
   - component: {fileID: 119485785}
   - component: {fileID: 119485784}
   m_Layer: 7
@@ -996,23 +995,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 
---- !u!114 &119485786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 119485782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10467a4a9e83c2e4699607a673b52f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bottleID: BotolK
-  panelObject: {fileID: 767831875}
-  tutorialAnimator: {fileID: 66276150}
-  animationName: BotolTutorial_SlideIn
-  displayDuration: 3
 --- !u!114 &119485787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2199,10 +2181,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eca4275a488913842baa29a5e823442b,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 207568257}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eca4275a488913842baa29a5e823442b,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 207568259}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eca4275a488913842baa29a5e823442b,
         type: 3}
@@ -2288,23 +2266,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0007834135, y: 0.0007847769, z: 0.002697998}
   m_Center: {x: -0.0000041473095, y: -0.0000005865732, z: -0.0006863249}
---- !u!114 &207568257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207568253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10467a4a9e83c2e4699607a673b52f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bottleID: CocaCola
-  panelObject: {fileID: 767831875}
-  tutorialAnimator: {fileID: 66276150}
-  animationName: BotolTutorial_SlideIn
-  displayDuration: 3
 --- !u!114 &207568258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4731,10 +4692,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eca4275a488913842baa29a5e823442b,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 398387948}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eca4275a488913842baa29a5e823442b,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 398387947}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eca4275a488913842baa29a5e823442b,
         type: 3}
@@ -4784,23 +4741,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 
---- !u!114 &398387948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 398387945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10467a4a9e83c2e4699607a673b52f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bottleID: CocaCola1
-  panelObject: {fileID: 767831875}
-  tutorialAnimator: {fileID: 66276150}
-  animationName: BotolTutorial_SlideIn
-  displayDuration: 3
 --- !u!114 &398387949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7222,7 +7162,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9043752f062c1d2479a0362d93c66716,
         type: 3}
       propertyPath: m_Name
-      value: new box
+      value: BoxElektronik
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9043752f062c1d2479a0362d93c66716,
         type: 3}
@@ -8302,23 +8242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 
---- !u!114 &827144408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827144402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10467a4a9e83c2e4699607a673b52f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bottleID: BotolD
-  panelObject: {fileID: 767831875}
-  tutorialAnimator: {fileID: 66276150}
-  animationName: BotolTutorial_SlideIn
-  displayDuration: 3
 --- !u!114 &827144409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13974,10 +13897,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9122032043361677684, guid: ecd60f9aed05a1344be0080ebde03600,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1290607100}
-    - targetCorrespondingSourceObject: {fileID: 9122032043361677684, guid: ecd60f9aed05a1344be0080ebde03600,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1290607108}
   m_SourcePrefab: {fileID: 100100000, guid: ecd60f9aed05a1344be0080ebde03600, type: 3}
 --- !u!4 &1290607098 stripped
@@ -13992,25 +13911,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1290607097}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1290607100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1290607099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 330128410dd17f34c83abe3a9b51c0e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectID: Laptop1
-  panelObject: {fileID: 1587282436}
-  tutorialAnimator: {fileID: 1587282438}
-  animationName: SlideIn
-  displayDuration: 3
-  requireSecondClick: 0
-  showOnlyOnce: 1
 --- !u!114 &1290607101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17647,10 +17547,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 78c7553e9d8c7994598ff2933ee7ec57,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 827144408}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 78c7553e9d8c7994598ff2933ee7ec57,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 827144407}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 78c7553e9d8c7994598ff2933ee7ec57,
         type: 3}
@@ -21190,10 +21086,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9122032043361677684, guid: ecd60f9aed05a1344be0080ebde03600,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1813916858}
-    - targetCorrespondingSourceObject: {fileID: 9122032043361677684, guid: ecd60f9aed05a1344be0080ebde03600,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1813916865}
   m_SourcePrefab: {fileID: 100100000, guid: ecd60f9aed05a1344be0080ebde03600, type: 3}
 --- !u!4 &1813916849 stripped
@@ -21221,25 +21113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: TrashItem
---- !u!114 &1813916858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1813916850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 330128410dd17f34c83abe3a9b51c0e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectID: Laptop
-  panelObject: {fileID: 1587282436}
-  tutorialAnimator: {fileID: 1587282438}
-  animationName: SlideIn
-  displayDuration: 3
-  requireSecondClick: 0
-  showOnlyOnce: 1
 --- !u!114 &1813916865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21793,7 +21666,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: efe4c6ce460a3024b8b0449dad6b696f,
         type: 3}
       propertyPath: m_Name
-      value: BoxElektronik
+      value: BoxElektronik2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: efe4c6ce460a3024b8b0449dad6b696f,
         type: 3}
@@ -22466,7 +22339,6 @@ GameObject:
   - component: {fileID: 1989729606}
   - component: {fileID: 1989729605}
   - component: {fileID: 1989729604}
-  - component: {fileID: 1989729603}
   - component: {fileID: 1989729602}
   - component: {fileID: 1989729601}
   m_Layer: 7
@@ -22522,23 +22394,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 
---- !u!114 &1989729603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1989729599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10467a4a9e83c2e4699607a673b52f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bottleID: BotolL
-  panelObject: {fileID: 767831875}
-  tutorialAnimator: {fileID: 66276150}
-  animationName: BotolTutorial_SlideIn
-  displayDuration: 3
 --- !u!114 &1989729604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24606,23 +24461,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5438421696172210431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5504752554022059472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10467a4a9e83c2e4699607a673b52f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bottleID: BotolC
-  panelObject: {fileID: 767831875}
-  tutorialAnimator: {fileID: 66276150}
-  animationName: BotolTutorial_SlideIn
-  displayDuration: 3
 --- !u!1 &5504752554022059472
 GameObject:
   m_ObjectHideFlags: 0
@@ -24637,7 +24475,6 @@ GameObject:
   - component: {fileID: 3132149188933516087}
   - component: {fileID: 9058067013095385419}
   - component: {fileID: 4717854013746418620}
-  - component: {fileID: 5438421696172210431}
   - component: {fileID: 5709549761349076404}
   - component: {fileID: 6218836189654579899}
   m_Layer: 7
@@ -24860,17 +24697,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504b42938a01d2e4598d35e3a9701097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpInsideBox:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  delayBeforeShowHP: 1
   openBoxAudio: {fileID: 0}
   panelTutorial: {fileID: 0}
-  tutorialAnimator: {fileID: 0}
-  tutorialAnimName: PanelSlideIn
-  panelDisplayDuration: 3
 --- !u!65 &6487958636427000195
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24941,7 +24769,6 @@ GameObject:
   - component: {fileID: 8088947356407369198}
   - component: {fileID: 3786366053287321120}
   - component: {fileID: 5711645177640895758}
-  - component: {fileID: 8088947356407369201}
   - component: {fileID: 2000970271928900648}
   - component: {fileID: 8088947356407369200}
   - component: {fileID: 8088947356407369199}
@@ -25143,23 +24970,6 @@ MonoBehaviour:
   alasLayerMask:
     serializedVersion: 2
     m_Bits: 2048
---- !u!114 &8088947356407369201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7333088957492091884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10467a4a9e83c2e4699607a673b52f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bottleID: BotolB
-  panelObject: {fileID: 66276146}
-  tutorialAnimator: {fileID: 66276150}
-  animationName: BotolTutorial_SlideIn
-  displayDuration: 3
 --- !u!33 &8106695321332476111
 MeshFilter:
   m_ObjectHideFlags: 0
