@@ -50,13 +50,9 @@ public class PlayerInteraction : MonoBehaviour
     {
         inGPMode = true;
 
-        // Lower Free Roam VCam priority
         freeRoamVCam.Priority = 5;
-
-        // Disable movement
         fpsController.enabled = false;
 
-        // Unlock cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
