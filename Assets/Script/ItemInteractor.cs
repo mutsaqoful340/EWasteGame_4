@@ -18,11 +18,11 @@ public class ItemInteractor : MonoBehaviour
     private PickableItem heldItem = null;
     private Rigidbody heldRb;
 
-    private PlayerInputActions inputActions;
+    private PlayerControls inputActions;
 
     private void Awake()
     {
-        inputActions = new PlayerInputActions();
+        inputActions = new PlayerControls();
 
         inputActions.Player.Interact.performed += _ => TryPickupOrDrop();
         inputActions.Player.Drop.performed += _ => DropItem();
