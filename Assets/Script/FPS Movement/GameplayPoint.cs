@@ -11,7 +11,9 @@ public class GameplayPoint : MonoBehaviour
     [Header("Gameplay UI")]
     public GameObject gameplayUI;
     public Animator gameplayUIAnimCtrl;
-    
+
+    [Header("Item Position Slots")]
+    public Transform itemSlotPoint;
 
     private bool playerInRange = false;
     private PlayerInteraction playerInteraction;
@@ -46,6 +48,7 @@ public class GameplayPoint : MonoBehaviour
     // Called by PlayerInteraction when player presses E
     public void ActivateGameplay()
     {
+
         Debug.Log("Activating GameplayPoint: " + name);
 
         // Boost this GP VCam priority
@@ -64,6 +67,6 @@ public class GameplayPoint : MonoBehaviour
 
         // Lower this GP VCam priority
         gpVirtualCamera.Priority = 5;
-        //gameplayUI.SetActive(false);
+        gameplayUIAnimCtrl.Play("CnvGameplay_GPOUT");
     }
 }
