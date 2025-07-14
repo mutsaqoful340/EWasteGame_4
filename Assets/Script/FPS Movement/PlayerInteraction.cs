@@ -6,9 +6,11 @@ public class PlayerInteraction : MonoBehaviour
     [Header("References")]
     public FirstPersonController fpsController; // Your movement script
     public Cinemachine.CinemachineVirtualCamera freeRoamVCam;
+    
 
     [Header("UI")]
     public TextMeshProUGUI hoverUIText;
+    public Animator GPUI_Aniamtor;
 
     private GameplayPoint nearbyGP;
     private bool inGPMode = false;
@@ -25,6 +27,7 @@ public class PlayerInteraction : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 nearbyGP.ActivateGameplay();
+                hoverUIText.enabled = false;
             }
         }
         else
@@ -52,6 +55,7 @@ public class PlayerInteraction : MonoBehaviour
 
         freeRoamVCam.Priority = 5;
         fpsController.enabled = false;
+        GPUI_Aniamtor.Play("");
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -61,16 +65,12 @@ public class PlayerInteraction : MonoBehaviour
     {
         inGPMode = false;
 
-        // Boost Free Roam VCam priority
         freeRoamVCam.Priority = 20;
-
-        // Deactivate GP
         gp.DeactivateGameplay();
+        GPUI_Aniamtor.Play("");
 
-        // Re-enable movement
         fpsController.enabled = true;
 
-        // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
