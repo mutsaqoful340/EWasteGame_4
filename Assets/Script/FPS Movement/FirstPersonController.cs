@@ -63,6 +63,8 @@ public class FirstPersonController : MonoBehaviour
         inputActions.Player.Crouch.performed += ctx => isCrouching = !isCrouching;
 
         inputActions.Player.Jump.performed += ctx => Jump();
+
+        inputActions.Player.MenuHP.performed += ctx => OpenHPMenu();
     }
 
     void OnEnable()
@@ -160,6 +162,11 @@ public class FirstPersonController : MonoBehaviour
 
             cameraTransform.localPosition = originalCameraLocalPos;
         }
+    }
+
+    void OpenHPMenu()
+    {
+        
     }
 
 
