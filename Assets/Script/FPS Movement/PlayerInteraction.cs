@@ -7,6 +7,10 @@ public class PlayerInteraction : MonoBehaviour
     [Header("References")]
     public FirstPersonController fpsController; // Your movement script
     public Cinemachine.CinemachineVirtualCamera freeRoamVCam;
+    public ItemInteractor itemInteractor; // Your item interaction script
+    public TMP_Text itemNameText;
+    private GameObject heldItem = null;
+
     
     [Header("UI")]
     public TextMeshProUGUI hoverUIText;
@@ -16,6 +20,7 @@ public class PlayerInteraction : MonoBehaviour
     private CharacterController controller;
     private PlayerControls inputActions;
     private GameplayPoint nearbyGP;
+
     private bool inGPMode = false;
     private bool isHPOpened = false; // For HP menu toggle
 
@@ -34,7 +39,7 @@ public class PlayerInteraction : MonoBehaviour
             hoverUIText.text = nearbyGP.hoverText;
             hoverUIText.enabled = true;
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (inputActions.Player.Interact.triggered)
             {
                 nearbyGP.ActivateGameplay();
                 hoverUIText.enabled = false;
@@ -44,6 +49,18 @@ public class PlayerInteraction : MonoBehaviour
         {
             hoverUIText.enabled = false;
         }
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.MenuHP.performed += ctx => OnHPMenuToggle();
+        inputActions.Player.Pickup.performed += ctx => OnPickupItem();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Player.MenuHP.performed -= ctx => OnHPMenuToggle();
+        inputActions.Player.Interact.performed -= ctx => OnPickupItem();
     }
 
     public void SetNearbyGP(GameplayPoint gp)
@@ -64,6 +81,7 @@ public class PlayerInteraction : MonoBehaviour
         inGPMode = true;
 
         freeRoamVCam.Priority = 5;
+        itemInteractor.enabled = false; // Disable item interaction in GP mode
         fpsController.enabled = false;
         GPUI_Aniamtor.Play("");
 
@@ -80,6 +98,7 @@ public class PlayerInteraction : MonoBehaviour
         GPUI_Aniamtor.Play("");
 
         fpsController.enabled = true;
+        itemInteractor.enabled = true; // Re-enable item interaction
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -92,20 +111,11 @@ public class PlayerInteraction : MonoBehaviour
             isHPOpened = false;
             HPMenuAnimator.Play("HPMenu_OUT");
             fpsController.enabled = true; // Re-enable player controls when HP menu is closed
+            itemInteractor.enabled = true; // Re-enable item interaction
             
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-    }
-
-    private void OnEnable()
-    {
-        inputActions.Player.MenuHP.performed += ctx => OnHPMenuToggle();
-    }
-
-    private void OnDisable()
-    {
-        inputActions.Player.MenuHP.performed -= ctx => OnHPMenuToggle();
     }
 
     private void OnHPMenuToggle()
@@ -117,28 +127,33 @@ public class PlayerInteraction : MonoBehaviour
         if (isHPOpened)
         {
             HPMenuAnimator.Play("HPMenu_IN");
-            //Time.timeScale = 0.01f;
             fpsController.enabled = false; // Disable player controls when HP menu is open
+            itemInteractor.enabled = false; // Disable item interaction when HP menu is open
+            itemNameText.enabled = false; // Hide item name text when HP menu is open
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            
         }
         else
         {
             HPMenuAnimator.Play("HPMenu_OUT");
-            //Time.timeScale = 1f;
             fpsController.enabled = true; // Re-enable player controls when HP menu is closed
-            
+            itemInteractor.enabled = true; // Re-enable item interaction when HP menu is closed
+            itemNameText.enabled = true; // Show item name text when HP menu is closed
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
     }
 
+    private void OnPickupItem()
+    {
+        // Handle item pickup logic here
+        Debug.Log("Item picked up!");
+    }
+
     void LateUpdate()
     {
-        if (inGPMode && Input.GetKeyDown(KeyCode.Escape))
-        {
-            ExitGPMode(nearbyGP);
-        }
     }
 }
