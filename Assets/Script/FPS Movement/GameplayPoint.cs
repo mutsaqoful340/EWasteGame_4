@@ -10,6 +10,8 @@ public class GameplayPoint : MonoBehaviour
 
     [Header("Gameplay UI")]
     public GameObject gameplayUI;
+    public Animator gameplayUIAnimCtrl;
+    
 
     private bool playerInRange = false;
     private PlayerInteraction playerInteraction;
@@ -51,7 +53,8 @@ public class GameplayPoint : MonoBehaviour
 
         // Tell player to switch to GP mode
         playerInteraction.EnterGPMode(this);
-        gameplayUI.SetActive(true);
+        //gameplayUI.SetActive(true);
+        gameplayUIAnimCtrl.Play("CnvGameplay_GPIN");
     }
 
     // Called when done
@@ -61,6 +64,6 @@ public class GameplayPoint : MonoBehaviour
 
         // Lower this GP VCam priority
         gpVirtualCamera.Priority = 5;
-        gameplayUI.SetActive(false);
+        //gameplayUI.SetActive(false);
     }
 }
