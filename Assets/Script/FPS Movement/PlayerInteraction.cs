@@ -12,7 +12,6 @@ public class PlayerInteraction : MonoBehaviour
     public TMP_Text itemNameText;
     private GameObject heldItem = null;
 
-
     [Header("UI")]
     public TextMeshProUGUI hoverUIText;
     public Animator GPUI_Aniamtor;
@@ -24,9 +23,13 @@ public class PlayerInteraction : MonoBehaviour
     public LayerMask interactLayer; // Layer for interaction
     public float FRCamReturnDelay = 0.5f; // Delay to return to free roam camera after interaction
 
+    //References for other scripts
+    [HideInInspector] public RaycastHit currentHit;
+
     private CharacterController controller;
     private PlayerControls inputActions;
     private GameplayPoint nearbyGP;
+    public GameplayPoint DTCheck;
 
     [HideInInspector] public bool inGPMode = false;
     private bool isHPOpened = false; // For HP menu toggle
@@ -40,12 +43,12 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        RaycastHit hit;
+        RaycastHit currentHit;
         Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.red);
 
-        if (!isHPOpened && !inGPMode && Physics.Raycast(ray, out hit, interactDistance, interactLayer))
+        if (!isHPOpened && !inGPMode && Physics.Raycast(ray, out currentHit, interactDistance, interactLayer))
         {
-            GameplayPoint gp = hit.collider.GetComponent<GameplayPoint>();
+            GameplayPoint gp = currentHit.collider.GetComponent<GameplayPoint>();
             if (gp != null)
             {
                 if (nearbyGP != gp)
