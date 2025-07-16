@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class GameplayPoint : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class GameplayPoint : MonoBehaviour
     public Transform itemSlotPoint;
 
     private bool playerInRange = false;
-    private PlayerInteraction playerInteraction;
+    public PlayerInteraction playerInteraction;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -56,9 +57,10 @@ public class GameplayPoint : MonoBehaviour
 
         // Tell player to switch to GP mode
         playerInteraction.EnterGPMode(this);
-        //gameplayUI.SetActive(true);
+        gameplayUI.SetActive(true);
         gameplayUIAnimCtrl.Play("CnvGameplay_GPIN");
     }
+
 
     // Called when done
     public void DeactivateGameplay()
@@ -68,5 +70,11 @@ public class GameplayPoint : MonoBehaviour
         // Lower this GP VCam priority
         gpVirtualCamera.Priority = 5;
         gameplayUIAnimCtrl.Play("CnvGameplay_GPOUT");
+        playerInteraction.StartCoroutine(playerInteraction.CoExitGPMode(this));
+    }
+
+    public void ASDASDSAD()
+    {
+        Debug.Log("ASDASDSAD called for GameplayPoint");
     }
 }
