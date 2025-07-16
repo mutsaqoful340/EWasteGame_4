@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using TMPro; // If you use TextMeshPro
+using System.Collections;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -11,17 +12,23 @@ public class PlayerInteraction : MonoBehaviour
     public TMP_Text itemNameText;
     private GameObject heldItem = null;
 
-    
+
     [Header("UI")]
     public TextMeshProUGUI hoverUIText;
     public Animator GPUI_Aniamtor;
     public Animator HPMenuAnimator; // Animator for HP menu
 
+    [Header("Interact GP")]
+    public Camera playerCamera;
+    public float interactDistance = 1.5f; // Distance to interact with items
+    public LayerMask interactLayer; // Layer for interaction
+    public float FRCamReturnDelay = 0.5f; // Delay to return to free roam camera after interaction
+
     private CharacterController controller;
     private PlayerControls inputActions;
     private GameplayPoint nearbyGP;
 
-    private bool inGPMode = false;
+    [HideInInspector] public bool inGPMode = false;
     private bool isHPOpened = false; // For HP menu toggle
 
     private void Awake()
@@ -32,9 +39,28 @@ public class PlayerInteraction : MonoBehaviour
 
     void Update()
     {
-        if (inGPMode) return;
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.red);
 
-        if (nearbyGP != null)
+        if (!isHPOpened && !inGPMode && Physics.Raycast(ray, out hit, interactDistance, interactLayer))
+        {
+            GameplayPoint gp = hit.collider.GetComponent<GameplayPoint>();
+            if (gp != null)
+            {
+                if (nearbyGP != gp)
+                {
+                    hoverUIText.text = gp.hoverText;
+                    hoverUIText.enabled = true;
+                    if (inputActions.Player.Interact.triggered)
+                    {
+                        gp.ActivateGameplay();
+                        hoverUIText.enabled = false;
+                    }
+                }
+            }
+        }
+        else if (nearbyGP != null)
         {
             hoverUIText.text = nearbyGP.hoverText;
             hoverUIText.enabled = true;
@@ -49,6 +75,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             hoverUIText.enabled = false;
         }
+        return;
     }
 
     private void OnEnable()
@@ -83,7 +110,7 @@ public class PlayerInteraction : MonoBehaviour
         freeRoamVCam.Priority = 5;
         itemInteractor.enabled = false; // Disable item interaction in GP mode
         fpsController.enabled = false;
-        GPUI_Aniamtor.Play("");
+        //GPUI_Aniamtor.Play("");
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -91,11 +118,17 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ExitGPMode(GameplayPoint gp)
     {
+        gp.DeactivateGameplay();
+    }
+
+    public IEnumerator CoExitGPMode(GameplayPoint gp)
+    {
+        freeRoamVCam.Priority = 20;
+        yield return new WaitForSeconds(FRCamReturnDelay);
         inGPMode = false;
 
-        freeRoamVCam.Priority = 20;
-        gp.DeactivateGameplay();
-        GPUI_Aniamtor.Play("");
+        //gp.DeactivateGameplay();
+        //GPUI_Aniamtor.Play("");
 
         fpsController.enabled = true;
         itemInteractor.enabled = true; // Re-enable item interaction
@@ -130,6 +163,7 @@ public class PlayerInteraction : MonoBehaviour
             fpsController.enabled = false; // Disable player controls when HP menu is open
             itemInteractor.enabled = false; // Disable item interaction when HP menu is open
             itemNameText.enabled = false; // Hide item name text when HP menu is open
+            hoverUIText.enabled = false; // Hide hover text when HP menu is open
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -141,6 +175,7 @@ public class PlayerInteraction : MonoBehaviour
             fpsController.enabled = true; // Re-enable player controls when HP menu is closed
             itemInteractor.enabled = true; // Re-enable item interaction when HP menu is closed
             itemNameText.enabled = true; // Show item name text when HP menu is closed
+            hoverUIText.enabled = true; // Show hover text when HP menu is closed
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -151,6 +186,19 @@ public class PlayerInteraction : MonoBehaviour
     {
         // Handle item pickup logic here
         Debug.Log("Item picked up!");
+    }
+
+    private void ShowGPName(string name)
+    {
+        if (isHPOpened || itemNameText != null)
+        {
+            hoverUIText.text = name;
+        }
+        else
+        {
+            ShowGPName("");
+        }
+
     }
 
     void LateUpdate()
