@@ -45,7 +45,7 @@ public class BoxPenyimpanan : MonoBehaviour
     private bool isGameOver = false;
 
     [Header("Reward Settings")]
-    public int initialReward = 50000;
+    public int initialReward = 0;
     private int currentReward;
 
     private int totalTabungan = 0;
@@ -58,7 +58,6 @@ public class BoxPenyimpanan : MonoBehaviour
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
     private bool isLevel1 = false;
-
     void Start()
     {
         timer = totalTime;
@@ -105,7 +104,12 @@ public class BoxPenyimpanan : MonoBehaviour
             panelSetelahVN.SetActive(false);
 
         UpdateSisaUang();
+
+        // Jangan tampilkan ringkasan langsung di Level 3
+        // Biarkan flag tetap hidup, nanti diproses di GameOver
     }
+
+
 
     void Update()
     {
@@ -129,9 +133,10 @@ public class BoxPenyimpanan : MonoBehaviour
 
         if (timer <= 0f)
         {
-            GameOver();
+            GameOver(); // Setelah ini, Update() tidak akan jalan lagi karena isGameOver akan true
         }
     }
+
 
     public void AddItem(string itemType)
     {
@@ -183,39 +188,88 @@ public class BoxPenyimpanan : MonoBehaviour
         PlayerPrefs.SetInt("TotalTabungan", totalTabungan);
         PlayerPrefs.Save();
 
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // === LEVEL 2 ke 3 ===
+        if (currentSceneName == "DEMOLVL2")
+        {
+            PlayerPrefs.SetInt("TampilkanRingkasan", 1);
+            GoToNextLevel();
+            return;
+        }
+
+        // === LEVEL 8 ke 9 ===
+        if (currentSceneName == "DEMOLVL8")
+        {
+            PlayerPrefs.SetInt("TampilkanRingkasanL9", 1);
+            GoToNextLevel();
+            return;
+        }
+
+        // === Tampilkan Ringkasan HANYA di DEMOLVL3 atau DEMOLVL9 ===
+        bool tampilkanRingkasan = false;
+        if ((currentSceneName == "DEMOLVL3" && PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1) ||
+            (currentSceneName == "DEMOLVL9" && PlayerPrefs.GetInt("TampilkanRingkasanL9", 0) == 1))
+        {
+            tampilkanRingkasan = true;
+            PlayerPrefs.SetInt("TampilkanRingkasan", 0);
+            PlayerPrefs.SetInt("TampilkanRingkasanL9", 0);
+            PlayerPrefs.Save();
+        }
+
+        // === Jalankan VN atau langsung ShowFinanceSummary ===
         if (vnDialogManager != null && vnDialogAkhir != null && vnDialogAkhir.Count > 0)
         {
             vnDialogManager.isVNEnding = true;
             vnDialogManager.StartVN(vnDialogAkhir);
-            StartCoroutine(TungguVNSelesai());
+            StartCoroutine(TungguVNSelesai(tampilkanRingkasan));
         }
         else
         {
-            ShowFinanceSummary();
+            if (tampilkanRingkasan)
+                ShowFinanceSummary();
+            else
+                GoToNextLevel(); // ➕ fallback supaya lanjut otomatis jika tidak ada ringkasan
         }
     }
 
-    IEnumerator TungguVNSelesai()
+
+
+
+
+
+
+
+
+
+    IEnumerator TungguVNSelesai(bool tampilkanRingkasan)
     {
         yield return new WaitUntil(() => !vnDialogManager.gameObject.activeInHierarchy);
 
         if (panelSetelahVN != null)
         {
             panelSetelahVN.SetActive(true);
-
-            // Tambahkan listener hanya sekali
             btnLanjutSetelahVN.onClick.RemoveAllListeners();
             btnLanjutSetelahVN.onClick.AddListener(() =>
             {
                 panelSetelahVN.SetActive(false);
-                ShowFinanceSummary();
+                if (tampilkanRingkasan)
+                    ShowFinanceSummary();
+                else
+                    GoToNextLevel();
             });
         }
         else
         {
-            ShowFinanceSummary(); // fallback kalau panel transisi tidak ada
+            if (tampilkanRingkasan)
+                ShowFinanceSummary();
+            else
+                GoToNextLevel();
         }
     }
+
+
+
 
 
     void ShowFinanceSummary()

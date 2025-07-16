@@ -26,11 +26,11 @@ public class BoxOpener : MonoBehaviour
         animator = GetComponent<Animator>();
 
         // Matikan semua HP di awal
-    //    foreach (GameObject hp in hpInsideBox)
-    //    {
-    //        if (hp != null)
-    //            hp.SetActive(false);
-    //    }
+        //    foreach (GameObject hp in hpInsideBox)
+        //    {
+        //        if (hp != null)
+        //            hp.SetActive(false);
+        //    }
 
         // Panel tutorial dimatikan dulu
         if (panelTutorial != null)
@@ -69,12 +69,12 @@ public class BoxOpener : MonoBehaviour
     //            hp.SetActive(true);
     //    }
     //
-        // Munculkan panel tutorial setelah buka kardus
+    // Munculkan panel tutorial setelah buka kardus
     //    if (panelTutorial != null) //&& tutorialAnimator != null)
     //    {
     //        panelTutorial.SetActive(true);
-        //    tutorialAnimator.Play("SlideIn", 0, 0f);
-        //    Invoke(nameof(HidePanelTutorial), panelDisplayDuration);
+    //    tutorialAnimator.Play("SlideIn", 0, 0f);
+    //    Invoke(nameof(HidePanelTutorial), panelDisplayDuration);
     //    }
     //}
 
