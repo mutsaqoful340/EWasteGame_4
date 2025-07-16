@@ -1,8 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameplayPoint : MonoBehaviour
 {
+    private static Dictionary<string, int> clickCountsDT = new Dictionary<string, int>();
+
     [Header("Virtual Camera for this GP")]
     public Cinemachine.CinemachineVirtualCamera gpVirtualCamera;
 
@@ -13,11 +16,44 @@ public class GameplayPoint : MonoBehaviour
     public GameObject gameplayUI;
     public Animator gameplayUIAnimCtrl;
 
-    [Header("Item Position Slots")]
-    public Transform itemSlotPoint;
+    [Header("Doom Tutorial")]
+    public DoomTutorial doomTutorial; // Reference to DoomTutorial script
+    public GameObject DTPanel;
+    public Animator DTAnimCtrl;
+    private bool DThasShown = false;
+    public bool DTActive = false; // Flag to check if Doom Tutorial is active
+    public string dtID;
 
     private bool playerInRange = false;
-    public PlayerInteraction playerInteraction;
+    private PlayerControls inputActions;
+    [HideInInspector] public ItemInteractor itemInteractor;
+    [HideInInspector] public FirstPersonController fpsController;
+    [HideInInspector] public PlayerInteraction playerInteraction;
+
+    private void Start()
+    {
+        inputActions = new PlayerControls();
+        inputActions.Player.Enable();
+
+        DTActive = true; // Reset the flag when starting the tutorial
+
+        if (!DTActive)
+        {
+            itemInteractor.enabled = true; // Disable item interaction in GP mode
+            fpsController.enabled = true;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
+        }
+        else
+        {
+            itemInteractor.enabled = false; // Disable item interaction in GP mode
+            fpsController.enabled = false;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }        
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -49,8 +85,11 @@ public class GameplayPoint : MonoBehaviour
     // Called by PlayerInteraction when player presses E
     public void ActivateGameplay()
     {
-
-        Debug.Log("Activating GameplayPoint: " + name);
+        DTActive = true; // Set Doom Tutorial active
+        if (!DThasShown)
+        {
+            DTPanel.SetActive(true);
+        }
 
         // Boost this GP VCam priority
         gpVirtualCamera.Priority = 20;
@@ -71,10 +110,8 @@ public class GameplayPoint : MonoBehaviour
         gpVirtualCamera.Priority = 5;
         gameplayUIAnimCtrl.Play("CnvGameplay_GPOUT");
         playerInteraction.StartCoroutine(playerInteraction.CoExitGPMode(this));
+        DTAnimCtrl.Play("DT2_1_OUT");
     }
 
-    public void ASDASDSAD()
-    {
-        Debug.Log("ASDASDSAD called for GameplayPoint");
-    }
+
 }
