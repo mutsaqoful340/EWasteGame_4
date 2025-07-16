@@ -1,15 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System.Collections;
 using TMPro;
 
 public class ItemInteractor : MonoBehaviour
 {
     [Header("Raycast Settings")]
-    public float interactDistance = 1.5f;
+    public float pickupDistance = 1.5f;
     public LayerMask pickupLayer;
     public Transform holdPoint;
     public Camera playerCamera;
+    public LayerMask interactLayer;
 
     [Header("UI")]
     public TMP_Text itemNameText;
@@ -17,6 +19,8 @@ public class ItemInteractor : MonoBehaviour
     [Header("Item Properties")]
     public float setScale;
 
+
+    private GameplayPoint focusedGP = null;
     private PickableItem focusedItem = null;
     private bool isHPOpened = false; // For HP menu toggle
 
@@ -40,8 +44,9 @@ public class ItemInteractor : MonoBehaviour
     {
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction * pickupDistance, Color.red);
 
-        if (heldItem == null && Physics.Raycast(ray, out hit, interactDistance, pickupLayer))
+        if (heldItem == null && Physics.Raycast(ray, out hit, pickupDistance, pickupLayer))
         {
             PickableItem item = hit.collider.GetComponent<PickableItem>();
 
