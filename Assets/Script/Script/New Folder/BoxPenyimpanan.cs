@@ -191,7 +191,7 @@ public class BoxPenyimpanan : MonoBehaviour
         string currentSceneName = SceneManager.GetActiveScene().name;
 
         // === LEVEL 2 ke 3 ===
-        if (currentSceneName == "DEMOLVL2")
+        if (currentSceneName == "DEMOLVL2.1")
         {
             PlayerPrefs.SetInt("TampilkanRingkasan", 1);
             GoToNextLevel();
@@ -199,7 +199,7 @@ public class BoxPenyimpanan : MonoBehaviour
         }
 
         // === LEVEL 8 ke 9 ===
-        if (currentSceneName == "DEMOLVL8")
+        if (currentSceneName == "DEMOLVL8.2")
         {
             PlayerPrefs.SetInt("TampilkanRingkasanL9", 1);
             GoToNextLevel();
@@ -212,8 +212,8 @@ public class BoxPenyimpanan : MonoBehaviour
         {
             tampilkanRingkasan = true;
         }
-        else if ((currentSceneName == "DEMOLVL3" && PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1) ||
-                 (currentSceneName == "DEMOLVL9" && PlayerPrefs.GetInt("TampilkanRingkasanL9", 0) == 1))
+        else if ((currentSceneName == "DEMOLVL2.2" && PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1) ||
+                 (currentSceneName == "DEMOLVL8.3" && PlayerPrefs.GetInt("TampilkanRingkasanL9", 0) == 1))
 
         {
             tampilkanRingkasan = true;
