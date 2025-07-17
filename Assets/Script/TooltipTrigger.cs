@@ -1,39 +1,58 @@
 using UnityEngine;
-using TMPro;
 
 public class TooltipTrigger : MonoBehaviour
 {
-    public GameObject tooltipPanel;
-    public TextMeshProUGUI tooltipText;
-    [TextArea]
-    public string infoText;
+    public enum TooltipType { DaurUlang, Dijual }
+    public TooltipType tooltipType;
+
+    [HideInInspector] public GameObject tooltipPanelDaurUlang;
+    [HideInInspector] public GameObject tooltipPanelDijual;
 
     private bool isTooltipVisible = false;
 
     private void OnMouseDown()
     {
-        if (tooltipPanel != null && tooltipText != null)
-        {
-            isTooltipVisible = !isTooltipVisible;
+        ShowTooltip();
+    }
 
-            tooltipPanel.SetActive(isTooltipVisible);
-            if (isTooltipVisible)
-            {
-                tooltipText.text = infoText;
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Tooltip Panel atau Text belum di-assign!");
-        }
+    private void OnMouseUp()
+    {
+        HideAllTooltips();
     }
 
     private void OnMouseExit()
     {
-        if (tooltipPanel != null)
+        HideAllTooltips();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Hide tooltip jika masuk ke salah satu box
+        if (other.CompareTag("StorageZone") || other.CompareTag("TrashZone"))
         {
-            tooltipPanel.SetActive(false);
-            isTooltipVisible = false;
+            HideAllTooltips();
         }
+    }
+
+    void ShowTooltip()
+    {
+        HideAllTooltips(); // Hide yang lain dulu
+        isTooltipVisible = true;
+
+        if (tooltipType == TooltipType.DaurUlang && tooltipPanelDaurUlang != null)
+            tooltipPanelDaurUlang.SetActive(true);
+        else if (tooltipType == TooltipType.Dijual && tooltipPanelDijual != null)
+            tooltipPanelDijual.SetActive(true);
+    }
+
+    void HideAllTooltips()
+    {
+        if (tooltipPanelDaurUlang != null)
+            tooltipPanelDaurUlang.SetActive(false);
+
+        if (tooltipPanelDijual != null)
+            tooltipPanelDijual.SetActive(false);
+
+        isTooltipVisible = false;
     }
 }

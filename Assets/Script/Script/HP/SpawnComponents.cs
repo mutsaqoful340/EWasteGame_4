@@ -19,8 +19,8 @@ public class SpawnOnClick : MonoBehaviour
     public float spacing = 0.5f;
 
     [Header("Tooltip Settings")]
-    public GameObject tooltipPanel;
-    public TextMeshProUGUI tooltipText;
+    public GameObject tooltipPanelDaurUlang;
+    public GameObject tooltipPanelDijual;
 
     [Header("Tutorial Panel Settings")]
     public GameObject tutorialPanelPrefab;
@@ -30,10 +30,8 @@ public class SpawnOnClick : MonoBehaviour
 
     void Start()
     {
-        if (tooltipPanel != null)
-        {
-            tooltipPanel.SetActive(false);
-        }
+        if (tooltipPanelDaurUlang != null) tooltipPanelDaurUlang.SetActive(false);
+        if (tooltipPanelDijual != null) tooltipPanelDijual.SetActive(false);
     }
 
     void OnMouseDown()
@@ -42,7 +40,7 @@ public class SpawnOnClick : MonoBehaviour
         {
             if (centerPoint == null) centerPoint = this.transform;
 
-            ShufflePrefabs(); // 🔀 Acak urutan prefab
+            ShufflePrefabs();
 
             if (spawnType == SpawnType.HP) SpawnFlatCircle();
             else if (spawnType == SpawnType.Laptop) SpawnLaptopComponents();
@@ -51,7 +49,6 @@ public class SpawnOnClick : MonoBehaviour
             ShowTutorialPanel();
             hasSpawned = true;
 
-            // Sembunyikan objek utama
             gameObject.SetActive(false);
         }
     }
@@ -69,16 +66,10 @@ public class SpawnOnClick : MonoBehaviour
             Vector2 randomCircle = Random.insideUnitCircle * radius;
             Vector3 spawnPos = centerPoint.position + new Vector3(randomCircle.x, 0, randomCircle.y);
 
-            Quaternion randomRotation = Quaternion.Euler(
-                90f,
-                Random.Range(0f, 360f),
-                0f
-            );
+            Quaternion randomRotation = Quaternion.Euler(90f, Random.Range(0f, 360f), 0f);
 
             GameObject obj = Instantiate(prefab, spawnPos, randomRotation);
-
-            float scaleFactor = Random.Range(0.9f, 1.1f);
-            obj.transform.localScale *= scaleFactor;
+            obj.transform.localScale *= Random.Range(0.9f, 1.1f);
 
             SetupTooltip(obj);
         }
@@ -107,7 +98,6 @@ public class SpawnOnClick : MonoBehaviour
                 -(row * spacing) + halfHeight
             );
 
-            // 🔄 Acak tapi masih dekat, tidak jauh dari grid
             Vector3 randomOffset = new Vector3(
                 Random.Range(-0.1f, 0.1f),
                 0f,
@@ -115,20 +105,14 @@ public class SpawnOnClick : MonoBehaviour
             );
 
             Vector3 spawnPos = centerPoint.position + baseOffset + randomOffset;
+            Quaternion rotation = Quaternion.Euler(90f, Random.Range(-5f, 5f), 0f);
 
-            Quaternion rotation = Quaternion.Euler(90f, Random.Range(-5f, 5f), 0f); // Biar gak terlalu flat
             GameObject obj = Instantiate(prefab, spawnPos, rotation);
-
-            float scaleFactor = Random.Range(0.97f, 1.03f);
-            obj.transform.localScale *= scaleFactor;
+            obj.transform.localScale *= Random.Range(0.97f, 1.03f);
 
             SetupTooltip(obj);
         }
     }
-
-
-
-
 
     void SpawnPCComponents()
     {
@@ -142,37 +126,29 @@ public class SpawnOnClick : MonoBehaviour
 
             Vector2 randomCircle = Random.insideUnitCircle * radius;
             Vector3 spawnPos = centerPoint.position + new Vector3(randomCircle.x, 0, randomCircle.y) + Vector3.up * 0.01f;
-
-            // Pakai rotasi 90 derajat agar datar
             Quaternion flatRotation = Quaternion.Euler(0f, 0f, 90f);
 
             GameObject obj = Instantiate(prefab, spawnPos, flatRotation);
-
-            // Paksa transform lokal anak-anak ikut rata juga
             obj.transform.rotation = flatRotation;
 
-            // Reset rotasi lokal jika prefab punya anak2 yg miring
             foreach (Transform child in obj.transform)
             {
                 child.localRotation = Quaternion.identity;
             }
 
-            float scaleFactor = Random.Range(0.9f, 1.1f);
-            obj.transform.localScale *= scaleFactor;
+            obj.transform.localScale *= Random.Range(0.9f, 1.1f);
 
             SetupTooltip(obj);
         }
     }
-
-
 
     void SetupTooltip(GameObject obj)
     {
         TooltipTrigger trigger = obj.GetComponent<TooltipTrigger>();
         if (trigger != null)
         {
-            trigger.tooltipPanel = tooltipPanel;
-            trigger.tooltipText = tooltipText;
+            trigger.tooltipPanelDaurUlang = tooltipPanelDaurUlang;
+            trigger.tooltipPanelDijual = tooltipPanelDijual;
         }
     }
 

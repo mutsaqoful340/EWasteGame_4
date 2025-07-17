@@ -7810,7 +7810,7 @@ MonoBehaviour:
   toggleJajan: {fileID: 0}
   btnLanjut: {fileID: 0}
   btnAkhiriGame: {fileID: 0}
-  initialReward: 0
+  initialReward: 20000
 --- !u!65 &608592540
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20260,7 +20260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1639350318
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20517,6 +20517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 584.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962869352370873945, guid: 70ec84fec18476d44b0291c9f20eb4e9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3103645977589416408, guid: 70ec84fec18476d44b0291c9f20eb4e9,
         type: 3}
@@ -25562,8 +25567,8 @@ MonoBehaviour:
   karakterObjek: {fileID: 1048143962}
   scaleAmount: 0.9
   scaleSpeed: 0.5
-  panelTutorial: {fileID: 1639350317}
-  tutorialAnimator: {fileID: 1639350319}
+  panelTutorial: {fileID: 0}
+  tutorialAnimator: {fileID: 0}
   tutorialAnimName: LaptopTutorial_SlideIn
   tutorialDisplayDuration: 3
   dialogIndex: 1

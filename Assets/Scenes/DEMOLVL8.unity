@@ -6708,16 +6708,19 @@ MonoBehaviour:
   btnLanjut: {fileID: 601306889}
   dialogList:
   - namaKarakter: Saka
-    dialog: "Kamu udah hampir seminggu kerja bareng aku, dan sejauh ini\u2026 luar
-      biasa."
+    dialog: Laptop dan PC kelihatan aman, tapi banyak bahan beracun.
   - namaKarakter: Saka
-    dialog: Hari ini kita punya 2 laptop dan 2 PC bekas. Volume kerja besar, dan
-      waktunya nggak longgar.
+    dialog: Timbal di motherboard bisa rusak otak.
   - namaKarakter: Saka
-    dialog: Aku pengen lihat bukan cuma seberapa cepat kamu kerja, tapi juga seberapa
-      akurat kamu memilah.
+    dialog: Kadmium di baterai lama bisa sebabkan kanker.
   - namaKarakter: Saka
-    dialog: Siap? Ayo kita lihat kemampuanmu hari ini.
+    dialog: Merkuri di layar LCD bahaya buat saraf.
+  - namaKarakter: Saka
+    dialog: Baterai lithium bisa meledak kalau rusak.
+  - namaKarakter: Saka
+    dialog: BFR di casing bisa ganggu hormon.
+  - namaKarakter: Saka
+    dialog: Jangan buang sembarangan. Daur ulang, ya!
   typingAudio: {fileID: 711279743}
   isVNEnding: 0
   karakterObjek: {fileID: 548686257}
@@ -6982,8 +6985,8 @@ MonoBehaviour:
   radius: 0.48
   laptopColumns: 3
   spacing: 0.5
-  tooltipPanel: {fileID: 0}
-  tooltipText: {fileID: 0}
+  tooltipPanelDaurUlang: {fileID: 1775926850}
+  tooltipPanelDijual: {fileID: 1257558460}
   tutorialPanelPrefab: {fileID: 0}
   tutorialText: Geser dan masukkan komponen ke dalam box sesuai jenisnya.
   tutorialHideDelay: 5
@@ -8664,7 +8667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!320 &922435998
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -12864,7 +12867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1257558461
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14023,6 +14026,16 @@ PrefabInstance:
       propertyPath: tooltipPanel
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1775300616174382393, guid: ecd60f9aed05a1344be0080ebde03600,
+        type: 3}
+      propertyPath: tooltipPanelDijual
+      value: 
+      objectReference: {fileID: 1257558460}
+    - target: {fileID: 1775300616174382393, guid: ecd60f9aed05a1344be0080ebde03600,
+        type: 3}
+      propertyPath: tooltipPanelDaurUlang
+      value: 
+      objectReference: {fileID: 1775926850}
     - target: {fileID: 1775300616174382393, guid: ecd60f9aed05a1344be0080ebde03600,
         type: 3}
       propertyPath: prefabsToSpawn.Array.data[0]
@@ -20338,7 +20351,7 @@ MonoBehaviour:
   panelSetelahVN: {fileID: 0}
   btnLanjutSetelahVN: {fileID: 0}
   totalTime: 300
-  maxItems: 1
+  maxItems: 30
   financeSummaryPanel: {fileID: 1209859757}
   timerText: {fileID: 359947316}
   moneyText: {fileID: 617260692}
@@ -20462,6 +20475,16 @@ PrefabInstance:
       propertyPath: tooltipPanel
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1775300616174382393, guid: ecd60f9aed05a1344be0080ebde03600,
+        type: 3}
+      propertyPath: tooltipPanelDijual
+      value: 
+      objectReference: {fileID: 1257558460}
+    - target: {fileID: 1775300616174382393, guid: ecd60f9aed05a1344be0080ebde03600,
+        type: 3}
+      propertyPath: tooltipPanelDaurUlang
+      value: 
+      objectReference: {fileID: 1775926850}
     - target: {fileID: 1775300616174382393, guid: ecd60f9aed05a1344be0080ebde03600,
         type: 3}
       propertyPath: prefabsToSpawn.Array.data[0]
@@ -22401,8 +22424,8 @@ MonoBehaviour:
   radius: 0.48
   laptopColumns: 3
   spacing: 0.5
-  tooltipPanel: {fileID: 0}
-  tooltipText: {fileID: 0}
+  tooltipPanelDaurUlang: {fileID: 1775926850}
+  tooltipPanelDijual: {fileID: 1257558460}
   tutorialPanelPrefab: {fileID: 0}
   tutorialText: Geser dan masukkan komponen ke dalam box sesuai jenisnya.
   tutorialHideDelay: 5
@@ -22536,15 +22559,15 @@ RectTransform:
   m_GameObject: {fileID: 2107011818}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 1.1203166, y: 0.687628, z: 0.6876281}
+  m_LocalScale: {x: 0.8271746, y: 0.50770324, z: 0.50770336}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1257558461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -82, y: -0}
-  m_SizeDelta: {x: 2480, y: 1748.5938}
+  m_AnchoredPosition: {x: -34, y: -0}
+  m_SizeDelta: {x: 1655, y: 1656.1797}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107011820
 MonoBehaviour:
@@ -22566,7 +22589,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b388e90e10c0e7441b549b315b992c66, type: 3}
+  m_Sprite: {fileID: -508331981, guid: 2f3d085e30490634fa7b16088663f146, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

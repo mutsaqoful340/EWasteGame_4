@@ -208,8 +208,13 @@ public class BoxPenyimpanan : MonoBehaviour
 
         // === Tampilkan Ringkasan HANYA di DEMOLVL3 atau DEMOLVL9 ===
         bool tampilkanRingkasan = false;
-        if ((currentSceneName == "DEMOLVL3" && PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1) ||
-            (currentSceneName == "DEMOLVL9" && PlayerPrefs.GetInt("TampilkanRingkasanL9", 0) == 1))
+        if (currentSceneName == "DEMOLVL1")
+        {
+            tampilkanRingkasan = true;
+        }
+        else if ((currentSceneName == "DEMOLVL3" && PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1) ||
+                 (currentSceneName == "DEMOLVL9" && PlayerPrefs.GetInt("TampilkanRingkasanL9", 0) == 1))
+
         {
             tampilkanRingkasan = true;
             PlayerPrefs.SetInt("TampilkanRingkasan", 0);

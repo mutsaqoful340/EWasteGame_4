@@ -2578,6 +2578,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
         type: 3}
+      propertyPath: tooltipPanelDijual
+      value: 
+      objectReference: {fileID: 1257558460}
+    - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
+        type: 3}
+      propertyPath: tooltipPanelDaurUlang
+      value: 
+      objectReference: {fileID: 1775926850}
+    - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
+        type: 3}
       propertyPath: prefabsToSpawn.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -8955,20 +8965,36 @@ MonoBehaviour:
   btnLanjut: {fileID: 601306889}
   dialogList:
   - namaKarakter: Saka
-    dialog: Selamat pagi. Hari ini kita masuk ke tahap baru.
+    dialog: Oke, sekarang kita fokus ke komponen beracun yang ada di HP kamu. Ini
+      penting banget biar kamu tahu kenapa limbah HP harus didaur ulang dengan benar!
   - namaKarakter: Saka
-    dialog: Kamu tidak akan mengelola sampah seperti sebelumnya, tapi fokus pada
-      komponen HP bekas.
+    dialog: "Timbal biasa dipakai buat nyolder komponen di papan sirkuit (PCB) HP.\nBahaya
+      banget kalau bocor ke lingkungan\u2014bisa rusak sistem saraf dan otak, apalagi
+      buat anak kecil."
   - namaKarakter: Saka
-    dialog: Tugasmu adalah membongkar HP, lalu memilih bagian-bagian mana yang bisa
-      dijual dan mana yang hanya bisa didaur ulang.
+    dialog: 'Beberapa HP lama punya sensor atau lampu latar yang pakai merkuri.
+
+      Masalahnya,
+      merkuri bisa nyebar ke air, nyerap ke ikan, dan akhirnya kita konsumsi. Bisa
+      ganggu saraf dan hati!'
   - namaKarakter: Saka
-    dialog: Masukkan setiap komponen ke dalam box yang sesuai. Jangan salah taruh.
+    dialog: 'Nah ini yang paling penting baterai lithium-ion di HP kamu.
+
+      Kalau
+      rusak atau ditusuk, bisa meledak! Elektrolit di dalamnya juga racun. Makanya,
+      jangan buang HP sembarangan!'
   - namaKarakter: Saka
-    dialog: "Kamu akan lihat sendiri, kalau satu barang kecil bisa punya banyak nilai\u2026
-      asal kita tahu cara memilahnya."
+    dialog: 'Biasanya tersembunyi di casing plastik dan papan sirkuit.
+
+      Fungsinya
+      buat tahan api, tapi bisa ganggu hormon, sistem imun, bahkan tiroid kita. Ngeri,
+      kan?'
   - namaKarakter: Saka
-    dialog: Ayo, mulai tugasmu!
+    dialog: 'Jadi... walaupun HP kecil, bahayanya nggak kecil!
+
+      Kalau udah
+      rusak atau nggak dipakai, pastikan kamu buang ke tempat daur ulang resmi ya.
+      Bukan ke tempat sampah biasa!'
   typingAudio: {fileID: 711279743}
   isVNEnding: 0
   karakterObjek: {fileID: 548686257}
@@ -11634,7 +11660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!320 &922435998
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -16277,7 +16303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1257558461
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23725,7 +23751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1775926851
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28455,17 +28481,27 @@ PrefabInstance:
         type: 3}
       propertyPath: tooltipText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 635778358}
     - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
         type: 3}
       propertyPath: tooltipPanel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1775926850}
+    - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
+        type: 3}
+      propertyPath: tooltipPanelDijual
+      value: 
+      objectReference: {fileID: 1257558460}
     - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
         type: 3}
       propertyPath: tutorialPanelPrefab
       value: 
       objectReference: {fileID: 950004224}
+    - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
+        type: 3}
+      propertyPath: tooltipPanelDaurUlang
+      value: 
+      objectReference: {fileID: 1775926850}
     - target: {fileID: -7321232290368584445, guid: 55a2a1db613e5a048a67e4a80c21ff9d,
         type: 3}
       propertyPath: prefabsToSpawn.Array.size
@@ -28685,7 +28721,7 @@ RectTransform:
   m_GameObject: {fileID: 2107011818}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 1.1203166, y: 0.687628, z: 0.6876281}
+  m_LocalScale: {x: 0.7717077, y: 0.4736588, z: 0.47365886}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1257558461}
@@ -28693,7 +28729,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -82, y: -0}
-  m_SizeDelta: {x: 2480, y: 1748.5938}
+  m_SizeDelta: {x: 1655, y: 1656.1797}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107011820
 MonoBehaviour:
@@ -28715,7 +28751,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b388e90e10c0e7441b549b315b992c66, type: 3}
+  m_Sprite: {fileID: -508331981, guid: 2f3d085e30490634fa7b16088663f146, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
