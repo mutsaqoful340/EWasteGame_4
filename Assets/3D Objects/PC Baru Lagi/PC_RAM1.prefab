@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 233fe0e35e8c1ec4d90dd22cda394bfd,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 6.96
+      value: 3.48
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 233fe0e35e8c1ec4d90dd22cda394bfd,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 6.96
+      value: 3.48
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 233fe0e35e8c1ec4d90dd22cda394bfd,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 6.96
+      value: 3.48
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 233fe0e35e8c1ec4d90dd22cda394bfd,
         type: 3}
@@ -127,6 +127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  checkScale: 0.7
   itemType: 
 --- !u!65 &84118041605979841
 BoxCollider:

@@ -11,32 +11,32 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 30ca8fdc971d19e46a1e6a1c4cab2ec0,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 20.76
+      value: 4.925976
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30ca8fdc971d19e46a1e6a1c4cab2ec0,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 20.76
+      value: 4.925976
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30ca8fdc971d19e46a1e6a1c4cab2ec0,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 20.76
+      value: 4.925976
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30ca8fdc971d19e46a1e6a1c4cab2ec0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.4947565
+      value: -1.4949
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30ca8fdc971d19e46a1e6a1c4cab2ec0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.000028496
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30ca8fdc971d19e46a1e6a1c4cab2ec0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.8817284
+      value: -2.8819
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30ca8fdc971d19e46a1e6a1c4cab2ec0,
         type: 3}
@@ -127,6 +127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  checkScale: 0.7
   itemType: TrashItem
 --- !u!65 &2661101457334637720
 BoxCollider:
@@ -188,6 +193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe694507f53b19b448f48b864416d20c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipPanel: {fileID: 0}
-  tooltipText: {fileID: 0}
-  infoText: 
+  tooltipType: 0
+  tooltipPanelDaurUlang: {fileID: 0}
+  tooltipPanelDijual: {fileID: 0}
