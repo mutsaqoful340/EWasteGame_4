@@ -8,6 +8,7 @@ public class VolumeSlider : MonoBehaviour
     public VolumeType volumeType = VolumeType.BGM;  // Same enum!
 
     public Slider slider;
+    private VolumeKnob volumeKnob;
 
     private string ExposedParamName => volumeType.ToString();
 
@@ -25,6 +26,11 @@ public class VolumeSlider : MonoBehaviour
         SetVolume(savedVolume);
 
         slider.onValueChanged.AddListener(SetVolume);
+    }
+
+    void Update()
+    {
+
     }
 
     private void SetVolume(float volume01)
