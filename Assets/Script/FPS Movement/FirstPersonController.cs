@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : MonoBehaviour
@@ -21,6 +23,8 @@ public class FirstPersonController : MonoBehaviour
     public float crouchCameraOffset = -0.5f; // How much lower the camera goes
 
     [Header("Look")]
+    public TextMeshProUGUI lookSensDisplay; // Optional UI to display sensitivity
+    [Range(0.1f, 1f)]
     public float mouseSensitivity = 1f;
 
     [Header("Ground Check")]
@@ -47,6 +51,7 @@ public class FirstPersonController : MonoBehaviour
 
     void Awake()
     {
+        SetMouseSensitivity(mouseSensitivity);
         controller = GetComponent<CharacterController>();
         originalCameraLocalPos = cameraTransform.localPosition;
 
@@ -161,5 +166,18 @@ public class FirstPersonController : MonoBehaviour
 
             cameraTransform.localPosition = originalCameraLocalPos;
         }
+    }
+
+    public void SetMouseSensitivity(float lookSensitivity)
+    {
+        mouseSensitivity = lookSensitivity;
+
+        if (lookSensDisplay != null)
+        {
+            float displayValue = lookSensitivity * 10f; // Round to 2 decimal places
+            lookSensDisplay.text = displayValue.ToString("F1");
+        }
+        PlayerPrefs.SetFloat("MouseSensitivity", mouseSensitivity);
+        PlayerPrefs.Save();
     }
 }
