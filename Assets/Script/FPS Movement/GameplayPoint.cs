@@ -23,7 +23,7 @@ public class GameplayPoint : MonoBehaviour
     public bool DTActive = false; // Flag to check if Doom Tutorial is active
     public string dtID;
     private bool DThasShown = false;
-    private Collider colliderGP;
+    public Collider colliderGP;
 
     private bool playerInRange = false;
     private PlayerControls inputActions;
