@@ -39,7 +39,7 @@ public class HPDragHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, hpLayerMask))
+            if (Physics.Raycast(ray, out RaycastHit hit, 10f, hpLayerMask))
             {
                 if (hit.collider.gameObject == this.gameObject)
                 {
