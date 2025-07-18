@@ -9,14 +9,20 @@ public class DraggableStorageItem : MonoBehaviour
     private float zOffset;
     private float startY;
 
+    public float dragDistance = 10f;
+    public LayerMask obstacleLayers;
+    public float checkScale = 0.7f; // shrink bounds for overlap check
+
     public string itemType; // misal: "SmallEWaste"
 
     // Support kedua jenis Box
     private BoxPenyimpanan boxManager;
     private BoxPenyimpananSimple simpleBoxManager;
+    private Camera cam;
 
     void Start()
     {
+        cam = Camera.main;
         startPos = transform.position;
         lastSafePos = startPos;
         startY = startPos.y;
@@ -30,46 +36,50 @@ public class DraggableStorageItem : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
+    void Update()
     {
-        zOffset = Camera.main.WorldToScreenPoint(transform.position).z;
-        isDragging = true;
-    }
-
-    void OnMouseDrag()
-    {
-        if (!isDragging) return;
-
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = zOffset;
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-        worldPos.y = startY;
-
-        Collider myCollider = GetComponent<Collider>();
-        if (myCollider == null) return;
-
-        // Kurangi ukuran deteksi agar tidak terlalu sensitif
-        Vector3 halfExtents = myCollider.bounds.extents * 0.7f;
-
-        LayerMask obstacleLayers = LayerMask.GetMask("Kardus", "Meja", "Alas");
-
-        Collider[] hits = Physics.OverlapBox(worldPos, halfExtents, Quaternion.identity, obstacleLayers);
-
-        if (hits.Length > 0)
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("❌ Tabrakan dengan: " + hits[0].name + ", posisi dibatalkan.");
-            transform.position = lastSafePos;
-            return;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, dragDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    zOffset = cam.WorldToScreenPoint(transform.position).z;
+                    isDragging = true;
+                }
+            }
         }
 
-        // Aman → gerakkan objek dan simpan posisi valid
-        transform.position = worldPos;
-        lastSafePos = worldPos;
-    }
+        if (Input.GetMouseButton(0) && isDragging)
+        {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = zOffset;
+            Vector3 worldPos = cam.ScreenToWorldPoint(mousePos);
+            worldPos.y = startY;
 
-    void OnMouseUp()
-    {
-        isDragging = false;
+            Collider myCollider = GetComponent<Collider>();
+            if (myCollider != null)
+            {
+                Vector3 halfExtents = myCollider.bounds.extents * checkScale;
+                Collider[] hits = Physics.OverlapBox(worldPos, halfExtents, Quaternion.identity, obstacleLayers);
+
+                if (hits.Length > 0)
+                {
+                    Debug.Log("❌ Tabrakan dengan: " + hits[0].name + ", posisi dibatalkan.");
+                    transform.position = lastSafePos;
+                    return;
+                }
+            }
+
+            transform.position = worldPos;
+            lastSafePos = worldPos;
+        }
+
+        if (Input.GetMouseButtonUp(0) && isDragging)
+        {
+            isDragging = false;
+        }
     }
 
     void OnTriggerEnter(Collider other)
