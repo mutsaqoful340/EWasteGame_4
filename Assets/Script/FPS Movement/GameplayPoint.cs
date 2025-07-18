@@ -20,9 +20,10 @@ public class GameplayPoint : MonoBehaviour
     public DoomTutorial doomTutorial; // Reference to DoomTutorial script
     public GameObject DTPanel;
     public Animator DTAnimCtrl;
-    private bool DThasShown = false;
     public bool DTActive = false; // Flag to check if Doom Tutorial is active
     public string dtID;
+    private bool DThasShown = false;
+    private Collider colliderGP;
 
     private bool playerInRange = false;
     private PlayerControls inputActions;
@@ -34,6 +35,7 @@ public class GameplayPoint : MonoBehaviour
     {
         inputActions = new PlayerControls();
         inputActions.Player.Enable();
+        colliderGP = GetComponent<Collider>();
 
         DTActive = true; // Reset the flag when starting the tutorial
 
@@ -98,6 +100,7 @@ public class GameplayPoint : MonoBehaviour
         playerInteraction.EnterGPMode(this);
         gameplayUI.SetActive(true);
         gameplayUIAnimCtrl.Play("CnvGameplay_GPIN");
+        colliderGP.enabled = false; // Disable collider to prevent re-triggering
     }
 
 
@@ -111,6 +114,7 @@ public class GameplayPoint : MonoBehaviour
         gameplayUIAnimCtrl.Play("CnvGameplay_GPOUT");
         playerInteraction.StartCoroutine(playerInteraction.CoExitGPMode(this));
         DTAnimCtrl.Play("DT2_1_OUT");
+        colliderGP.enabled = true; // Re-enable collider for future interactions
     }
 
 
