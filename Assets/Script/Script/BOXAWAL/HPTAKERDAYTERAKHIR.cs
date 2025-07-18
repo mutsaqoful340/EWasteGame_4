@@ -12,11 +12,19 @@ public class BoxLidAnimatorController : MonoBehaviour
     private bool isMoved = false;
     private bool isMoving = false;
     private bool canDrag = false;
+    private bool isDragging = false;
 
     private Vector3 offset;
+    private Camera cam;
+
+    void Start()
+    {
+        cam = Camera.main;
+    }
 
     void Update()
     {
+        // --- Handle Lid Movement ---
         if (isMoving)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition.position, moveSpeed * Time.deltaTime);
@@ -28,6 +36,47 @@ public class BoxLidAnimatorController : MonoBehaviour
                 Debug.Log("Kardus sudah sampai titik tujuan.");
             }
         }
+
+        // --- Raycast Click Detection ---
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 10f))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    if (canDrag)
+                    {
+                        offset = transform.position - GetMouseWorldPos();
+                        isDragging = true;
+                    }
+                    else
+                    {
+                        ToggleBox();
+                    }
+                }
+            }
+        }
+
+        // --- Handle Drag ---
+        if (Input.GetMouseButton(0) && isDragging)
+        {
+            Vector3 newPos = GetMouseWorldPos() + offset;
+            transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);
+        }
+
+        // --- Stop Drag ---
+        if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+        }
+    }
+
+    private Vector3 GetMouseWorldPos()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = cam.WorldToScreenPoint(transform.position).z;
+        return cam.ScreenToWorldPoint(mousePos);
     }
 
     public void ToggleBox()
@@ -61,33 +110,6 @@ public class BoxLidAnimatorController : MonoBehaviour
                 Debug.Log("Buka kardus");
             }
         }
-    }
-
-    private void OnMouseDown()
-    {
-        if (canDrag)
-        {
-            offset = transform.position - GetMouseWorldPos();
-        }
-        else
-        {
-            ToggleBox();
-        }
-    }
-
-    private void OnMouseDrag()
-    {
-        if (!canDrag) return;
-
-        Vector3 newPos = GetMouseWorldPos() + offset;
-        transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);
-    }
-
-    private Vector3 GetMouseWorldPos()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
-        return Camera.main.ScreenToWorldPoint(mousePos);
     }
 
     private void OnTriggerEnter(Collider other)
