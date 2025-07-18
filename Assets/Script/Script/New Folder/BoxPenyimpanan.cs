@@ -212,9 +212,19 @@ public class BoxPenyimpanan : MonoBehaviour
         {
             tampilkanRingkasan = true;
         }
-        else if ((currentSceneName == "DEMOLVL2.2" && PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1) ||
-                 (currentSceneName == "DEMOLVL8.3" && PlayerPrefs.GetInt("TampilkanRingkasanL9", 0) == 1))
+    else if (
+        (currentSceneName == "DEMOLVL2.2_FR" && 
+            (PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1 || Application.isEditor)) ||
+        (currentSceneName == "DEMOLVL8.3" && PlayerPrefs.GetInt("TampilkanRingkasanL9", 0) == 1))
+    {
+        tampilkanRingkasan = true;
 
+        // Reset flag jika memang berasal dari level sebelumnya
+        PlayerPrefs.SetInt("TampilkanRingkasan", 0);
+        PlayerPrefs.SetInt("TampilkanRingkasanL9", 0);
+        PlayerPrefs.Save();
+    }
+        else if (currentSceneName == "DEMOLVL3" || currentSceneName == "DEMOLVL9")
         {
             tampilkanRingkasan = true;
             PlayerPrefs.SetInt("TampilkanRingkasan", 0);
