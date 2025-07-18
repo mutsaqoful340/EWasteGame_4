@@ -29,7 +29,6 @@ public class PlayerInteraction : MonoBehaviour
     private CharacterController controller;
     private PlayerControls inputActions;
     private GameplayPoint nearbyGP;
-    public GameplayPoint DTCheck;
 
     [HideInInspector] public bool inGPMode = false;
     private bool isHPOpened = false; // For HP menu toggle
@@ -42,16 +41,20 @@ public class PlayerInteraction : MonoBehaviour
 
     void Update()
     {
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        Ray ray;
         RaycastHit currentHit;
+
+        ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * interactDistance, Color.red);
 
-        if (!isHPOpened && !inGPMode && Physics.Raycast(ray, out currentHit, interactDistance, interactLayer))
+
+        if (!isHPOpened && Physics.Raycast(ray, out currentHit, interactDistance, interactLayer))
         {
+            Debug.Log("Hit: " + currentHit.collider.name);
             GameplayPoint gp = currentHit.collider.GetComponent<GameplayPoint>();
             if (gp != null)
             {
-                if (nearbyGP != gp)
+                if (nearbyGP != gp && !inGPMode)
                 {
                     hoverUIText.text = gp.hoverText;
                     hoverUIText.enabled = true;
@@ -85,6 +88,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         inputActions.Player.MenuHP.performed += ctx => OnHPMenuToggle();
         inputActions.Player.Pickup.performed += ctx => OnPickupItem();
+        inputActions.Player.MouseInteract.performed += ctx => OnPickupItem();
     }
 
     private void OnDisable()
