@@ -5,6 +5,7 @@ public class BoxOpener : MonoBehaviour
 {
     private Animator animator;
     private bool isOpen = false;
+    private Camera cam;
 
     //[Header("Semua HP di dalam kotak")]
     //public GameObject[] hpInsideBox; // Array untuk 3 HP
@@ -15,8 +16,9 @@ public class BoxOpener : MonoBehaviour
     [Header("Audio")]
     public AudioSource openBoxAudio; // 🔊 drag AudioSource di Inspector
 
-    [Header("Panel Tutorial Setelah Buka Kardus")]
-    public GameObject panelTutorial; // Drag panel GameObject di sini
+    [Header("Box Content")]
+    public GameObject boxContent; // Drag panel GameObject di sini
+    
     //public Animator tutorialAnimator; // Drag Animator dari panel
     //public string tutorialAnimName = "PanelSlideIn"; // Nama animasi di Animator
     //public float panelDisplayDuration = 3f; // Berapa detik panel muncul
@@ -24,7 +26,7 @@ public class BoxOpener : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-
+        cam = Camera.main;
         // Matikan semua HP di awal
         //    foreach (GameObject hp in hpInsideBox)
         //    {
@@ -33,11 +35,29 @@ public class BoxOpener : MonoBehaviour
         //    }
 
         // Panel tutorial dimatikan dulu
-        if (panelTutorial != null)
-            panelTutorial.SetActive(false);
+        if (boxContent != null)
+        {
+            boxContent.SetActive(false);           
+        }
+
     }
 
-    void OnMouseDown()
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 10f))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    openTheBox();
+                }
+            }
+        }
+    }
+
+    void openTheBox()
     {
         if (!isOpen)
         {
@@ -50,9 +70,9 @@ public class BoxOpener : MonoBehaviour
             else
                 Debug.LogWarning("❗ AudioSource belum diset di Inspector!");
 
-            if (panelTutorial != null)
+            if (boxContent != null)
             {
-                panelTutorial.SetActive(true);
+                boxContent.SetActive(true);
             }
 
             //    StartCoroutine(ShowAllHPAfterDelay(delayBeforeShowHP));
@@ -80,7 +100,7 @@ public class BoxOpener : MonoBehaviour
 
     void HidePanelTutorial()
     {
-        if (panelTutorial != null)
-            panelTutorial.SetActive(false);
+        if (boxContent != null)
+            boxContent.SetActive(false);
     }
 }
