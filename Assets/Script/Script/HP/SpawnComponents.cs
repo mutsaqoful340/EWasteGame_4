@@ -27,16 +27,52 @@ public class SpawnOnClick : MonoBehaviour
     [TextArea]
     public string tutorialText = "Geser dan masukkan komponen ke dalam box sesuai jenisnya.";
     public float tutorialHideDelay = 5f;
+    private Camera cam;
 
     void Start()
     {
+        cam = Camera.main;
         if (tooltipPanelDaurUlang != null) tooltipPanelDaurUlang.SetActive(false);
         if (tooltipPanelDijual != null) tooltipPanelDijual.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    SpawnComponents();
+                }
+            }
+        }
     }
 
     void OnMouseDown()
     {
         if (!hasSpawned)
+        {
+            if (centerPoint == null) centerPoint = this.transform;
+
+            ShufflePrefabs();
+
+            if (spawnType == SpawnType.HP) SpawnFlatCircle();
+            else if (spawnType == SpawnType.Laptop) SpawnLaptopComponents();
+            else if (spawnType == SpawnType.PC) SpawnPCComponents();
+
+            ShowTutorialPanel();
+            hasSpawned = true;
+
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void SpawnComponents()
+    {
+                if (!hasSpawned)
         {
             if (centerPoint == null) centerPoint = this.transform;
 
