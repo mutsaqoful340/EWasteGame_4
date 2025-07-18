@@ -190,49 +190,48 @@ public class BoxPenyimpanan : MonoBehaviour
 
         string currentSceneName = SceneManager.GetActiveScene().name;
 
-        // === LEVEL 2 ke 3 ===
-        if (currentSceneName == "DEMOLVL2.1")
+        // === LEVEL 2.1_FR: Set flag untuk tampilkan ringkasan di 2.2_FR
+        if (currentSceneName == "DEMOLVL2.1_FR")
         {
             PlayerPrefs.SetInt("TampilkanRingkasan", 1);
             GoToNextLevel();
             return;
         }
 
-        // === LEVEL 8 ke 9 ===
-        if (currentSceneName == "DEMOLVL8.2")
+        // === LEVEL 8.1_FR: Lanjut ke 8.2_FR tanpa ringkasan
+        if (currentSceneName == "DEMOLVL8.1_FR")
         {
-            PlayerPrefs.SetInt("TampilkanRingkasanL9", 1);
             GoToNextLevel();
             return;
         }
 
-        // === Tampilkan Ringkasan HANYA di DEMOLVL3 atau DEMOLVL9 ===
+        // === LEVEL 8.2_FR: Set flag untuk tampilkan ringkasan di 8.3_FR
+        if (currentSceneName == "DEMOLVL8.2_FR")
+        {
+            PlayerPrefs.SetInt("TampilkanRingkasan", 1);
+            GoToNextLevel();
+            return;
+        }
+
+        // === Tampilkan Ringkasan di Scene Tertentu ===
         bool tampilkanRingkasan = false;
+
+        // DEMOLVL1: selalu tampilkan ringkasan
         if (currentSceneName == "DEMOLVL1")
         {
             tampilkanRingkasan = true;
         }
-    else if (
-        (currentSceneName == "DEMOLVL2.2_FR" && 
-            (PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1 || Application.isEditor)) ||
-        (currentSceneName == "DEMOLVL8.3" && PlayerPrefs.GetInt("TampilkanRingkasanL9", 0) == 1))
-    {
-        tampilkanRingkasan = true;
-
-        // Reset flag jika memang berasal dari level sebelumnya
-        PlayerPrefs.SetInt("TampilkanRingkasan", 0);
-        PlayerPrefs.SetInt("TampilkanRingkasanL9", 0);
-        PlayerPrefs.Save();
-    }
-        else if (currentSceneName == "DEMOLVL3" || currentSceneName == "DEMOLVL9")
+        // DEMOLVL2.2_FR atau DEMOLVL8.3_FR: tampilkan jika flag sebelumnya aktif
+        else if (
+            (currentSceneName == "DEMOLVL2.2_FR" || currentSceneName == "DEMOLVL8.3") &&
+            (PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1 || Application.isEditor))
         {
             tampilkanRingkasan = true;
             PlayerPrefs.SetInt("TampilkanRingkasan", 0);
-            PlayerPrefs.SetInt("TampilkanRingkasanL9", 0);
             PlayerPrefs.Save();
         }
 
-        // === Jalankan VN atau langsung ShowFinanceSummary ===
+        // === Jalankan VN atau langsung tampilkan ringkasan ===
         if (vnDialogManager != null && vnDialogAkhir != null && vnDialogAkhir.Count > 0)
         {
             vnDialogManager.isVNEnding = true;
@@ -244,8 +243,9 @@ public class BoxPenyimpanan : MonoBehaviour
             if (tampilkanRingkasan)
                 ShowFinanceSummary();
             else
-                GoToNextLevel(); // ➕ fallback supaya lanjut otomatis jika tidak ada ringkasan
+                GoToNextLevel(); // fallback auto lanjut jika tidak ada ringkasan
         }
+
     }
 
 
