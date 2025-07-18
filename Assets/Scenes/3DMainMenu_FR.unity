@@ -1070,18 +1070,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12728452}
-  m_LocalRotation: {x: -0, y: -0.93583995, z: -0, w: 0.3524255}
-  m_LocalPosition: {x: 0, y: 0, z: -31.555}
-  m_LocalScale: {x: 0.010000003, y: 0.01, z: 0.010000003}
+  m_LocalRotation: {x: -0, y: -0.903485, z: -0, w: -0.42861974}
+  m_LocalPosition: {x: 0, y: 0, z: -31.728}
+  m_LocalScale: {x: 0.010000001, y: 0.01, z: 0.010000001}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 191825461}
   - {fileID: 339161350}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -138.728, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.545, y: 1.6292}
+  m_AnchoredPosition: {x: -1.317, y: 1.635}
   m_SizeDelta: {x: 297.6285, y: 132.1221}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &12728457
@@ -67009,10 +67009,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1245220498}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1755170105}
+        m_TargetAssemblyTypeName: App_Exit, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -67021,26 +67021,13 @@ MonoBehaviour:
           m_StringArgument: Laptop_Credit
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2024772370}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1475468834}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 815005098}
-        m_TargetAssemblyTypeName: Audio_Manager, Assembly-CSharp
-        m_MethodName: PlaySFX
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 98d83f0dcc262d2418f4eaa0e25c31be,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -82765,14 +82752,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566323651}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.93583995, z: -0, w: 0.3524255}
-  m_LocalPosition: {x: 3.070003, y: 5.931248, z: 26.357668}
+  m_LocalRotation: {x: -0, y: -0.903485, z: 0, w: -0.42861974}
+  m_LocalPosition: {x: -4.523, y: 5.931248, z: 26.046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1994909891}
   m_Father: {fileID: 1629233652}
-  m_LocalEulerAnglesHint: {x: 0, y: -138.728, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -230.76, z: 0}
 --- !u!1 &1566671399
 GameObject:
   m_ObjectHideFlags: 0
@@ -112956,8 +112943,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110286941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.93583995, z: 0, w: 0.3524255}
-  m_LocalPosition: {x: 5.3154078, y: 1.6292, z: -30.677183}
+  m_LocalRotation: {x: 0, y: -0.903485, z: 0, w: -0.42861974}
+  m_LocalPosition: {x: -2.277595, y: 1.6292, z: -30.988852}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -119260,8 +119247,8 @@ SceneRoots:
   - {fileID: 1629233652}
   - {fileID: 1755170104}
   - {fileID: 1869798370}
-  - {fileID: 12728456}
   - {fileID: 595463259}
+  - {fileID: 12728456}
   - {fileID: 1245220502}
   - {fileID: 247175035}
   - {fileID: 2024772375}
