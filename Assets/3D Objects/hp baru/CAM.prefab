@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5244e7553d769fd40be6f32487e24b4f,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 8.7322
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5244e7553d769fd40be6f32487e24b4f,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.7322
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5244e7553d769fd40be6f32487e24b4f,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 8.7322
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5244e7553d769fd40be6f32487e24b4f,
         type: 3}
@@ -175,6 +175,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  checkScale: 0.7
   itemType: TrashItem
 --- !u!114 &-6612224718051218546
 MonoBehaviour:
