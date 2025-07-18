@@ -107,6 +107,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""6aab7d17-1c56-44b9-a536-fab1a4acd343"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,6 +261,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d20619ec-1733-4d03-93b3-add16228855f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -269,6 +289,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
         m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
         m_Player_MenuHP = m_Player.FindAction("MenuHP", throwIfNotFound: true);
+        m_Player_MouseInteract = m_Player.FindAction("MouseInteract", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pickup;
     private readonly InputAction m_Player_Drop;
     private readonly InputAction m_Player_MenuHP;
+    private readonly InputAction m_Player_MouseInteract;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -352,6 +374,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
         public InputAction @Drop => m_Wrapper.m_Player_Drop;
         public InputAction @MenuHP => m_Wrapper.m_Player_MenuHP;
+        public InputAction @MouseInteract => m_Wrapper.m_Player_MouseInteract;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -388,6 +411,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MenuHP.started += instance.OnMenuHP;
             @MenuHP.performed += instance.OnMenuHP;
             @MenuHP.canceled += instance.OnMenuHP;
+            @MouseInteract.started += instance.OnMouseInteract;
+            @MouseInteract.performed += instance.OnMouseInteract;
+            @MouseInteract.canceled += instance.OnMouseInteract;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -419,6 +445,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MenuHP.started -= instance.OnMenuHP;
             @MenuHP.performed -= instance.OnMenuHP;
             @MenuHP.canceled -= instance.OnMenuHP;
+            @MouseInteract.started -= instance.OnMouseInteract;
+            @MouseInteract.performed -= instance.OnMouseInteract;
+            @MouseInteract.canceled -= instance.OnMouseInteract;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -447,5 +476,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnPickup(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
         void OnMenuHP(InputAction.CallbackContext context);
+        void OnMouseInteract(InputAction.CallbackContext context);
     }
 }
