@@ -132,7 +132,7 @@ public class SpawnOnClick : MonoBehaviour
                 (col * spacing) - halfWidth,
                 0,
                 -(row * spacing) + halfHeight
-            );
+            ).normalized * radius;  // ← Di sini radius disamakan
 
             Vector3 randomOffset = new Vector3(
                 Random.Range(-0.1f, 0.1f),
@@ -149,6 +149,7 @@ public class SpawnOnClick : MonoBehaviour
             SetupTooltip(obj);
         }
     }
+
 
     void SpawnPCComponents()
     {
