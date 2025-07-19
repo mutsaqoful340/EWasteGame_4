@@ -30,6 +30,8 @@ public class GameplayPoint : MonoBehaviour
     [HideInInspector] public ItemInteractor itemInteractor;
     [HideInInspector] public FirstPersonController fpsController;
     [HideInInspector] public PlayerInteraction playerInteraction;
+    [HideInInspector] public bool inGPMode = false;
+    public bool ingoreDT = false; // Ignore Doom Tutorial flag
 
     private void Start()
     {
@@ -39,7 +41,7 @@ public class GameplayPoint : MonoBehaviour
 
         DTActive = true; // Reset the flag when starting the tutorial
 
-        if (!DTActive)
+        if (!DTActive && !ingoreDT)
         {
             itemInteractor.enabled = true; // Disable item interaction in GP mode
             fpsController.enabled = true;
@@ -54,7 +56,7 @@ public class GameplayPoint : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        }        
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -88,7 +90,7 @@ public class GameplayPoint : MonoBehaviour
     public void ActivateGameplay()
     {
         DTActive = true; // Set Doom Tutorial active
-        if (!DThasShown)
+        if (!DThasShown && !ingoreDT)
         {
             DTPanel.SetActive(true);
         }
