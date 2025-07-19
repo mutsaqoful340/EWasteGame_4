@@ -2185,7 +2185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506b69c45285e5c44822212b4d636702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapterJustCompleted: 2
+  chapterJustCompleted: 3
 --- !u!1 &170374931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2428,6 +2428,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  checkScale: 0.7
   itemType: 
 --- !u!114 &189819255
 MonoBehaviour:
@@ -8205,6 +8210,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  checkScale: 0.7
   itemType: 
 --- !u!114 &620203859
 MonoBehaviour:
@@ -18403,6 +18413,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  checkScale: 0.7
   itemType: 
 --- !u!114 &1485665840
 MonoBehaviour:
@@ -20675,12 +20690,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1650410995}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1650410997 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2962869352370873945, guid: 70ec84fec18476d44b0291c9f20eb4e9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1650410995}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1655174323
 GameObject:
   m_ObjectHideFlags: 0
@@ -20752,12 +20761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6b246751a256d4eaf7b6c3f939b86b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomTransition: {fileID: 1419099510}
-  mainCamera: {fileID: 973448811}
-  miniGameCamera: {fileID: 154147540}
-  pcbOnTable: {fileID: 1620484206}
-  miniGameUIPanel: {fileID: 331383541}
-  gameplayUI: {fileID: 0}
+  hpMiniGame: {fileID: 0}
+  hpMeja: {fileID: 0}
 --- !u!4 &1655943177
 Transform:
   m_ObjectHideFlags: 0
@@ -23775,6 +23780,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  checkScale: 0.7
   itemType: TrashItem
 --- !u!114 &1813916858
 MonoBehaviour:
@@ -26758,6 +26768,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  checkScale: 0.7
   itemType: TrashItem
 --- !u!114 &2102856540
 MonoBehaviour:
@@ -27741,7 +27756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openBoxAudio: {fileID: 0}
-  panelTutorial: {fileID: 1650410997}
+  boxContent: {fileID: 0}
 --- !u!65 &6487958636427000195
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27858,6 +27873,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7f34d7d74d7164aa8b2637a450b082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragDistance: 10
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  checkScale: 0.7
   itemType: 
 --- !u!114 &8088947356407369200
 MonoBehaviour:
