@@ -48,6 +48,11 @@ public class VNDialogManager : MonoBehaviour
     private Coroutine pulseCoroutine;
     private Vector3 karakterOriginalScale;
 
+    public ItemInteractor itemInteractor;
+    public FirstPersonController fpsController;
+    public PlayerInteraction playerInteraction;
+    public bool notDay1;
+
     void Start()
     {
         if (dialogList != null && dialogList.Count > 0)
@@ -150,6 +155,15 @@ public class VNDialogManager : MonoBehaviour
 
         vnPanel.SetActive(false);
         Time.timeScale = 1f;
+
+        if (notDay1 == true)
+        {
+            itemInteractor.enabled = true; // Re-enable item interaction
+            fpsController.enabled = true;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
         if (typingAudio != null && typingAudio.isPlaying)
             typingAudio.Stop();
