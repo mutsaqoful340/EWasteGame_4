@@ -22833,14 +22833,14 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346408361}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 01ee0a6717afe9b42a97b330b8912a83, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -33518,7 +33518,6 @@ Transform:
   - {fileID: 1727043890}
   - {fileID: 1655943177}
   - {fileID: 1419099511}
-  - {fileID: 2021492618}
   - {fileID: 169011042}
   - {fileID: 277872457}
   - {fileID: 767831877}
@@ -37562,7 +37561,7 @@ MonoBehaviour:
   panelSetelahVN: {fileID: 0}
   btnLanjutSetelahVN: {fileID: 0}
   totalTime: 300
-  maxItems: 1
+  maxItems: 11
   financeSummaryPanel: {fileID: 1732755299}
   timerText: {fileID: 1781458472}
   moneyText: {fileID: 802666868}
@@ -116083,77 +116082,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020883966}
   m_CullTransparentMesh: 1
---- !u!1 &2021492616
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2021492618}
-  - component: {fileID: 2021492617}
-  m_Layer: 0
-  m_Name: VNDIalogueManagerAwal
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &2021492617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2021492616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a7600d4ef0c2d8409d85a4021a6e288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vnPanel: {fileID: 2078969647}
-  namaText: {fileID: 349517187}
-  dialogText: {fileID: 644652752}
-  btnLanjut: {fileID: 2069008480}
-  dialogList:
-  - namaKarakter: Ujang
-    dialog: 'Sekarang, tugasmu adalah memilah dua jenis sampah: elektronik dan nonorganik.'
-  - namaKarakter: Ujang
-    dialog: Perhatikan baik-baik isi kardus yang kamu ambil.
-  - namaKarakter: Ujang
-    dialog: Jika itu sampah ELEKTRONIK, masukkan ke dalam box sampah elektronik
-  - namaKarakter: Ujang
-    dialog: Kalau itu sampah NON ORGANIK, masukkan ke dalam box sampah non organik
-  - namaKarakter: Ujang
-    dialog: Pastikan tidak tertukar, ya.
-  - namaKarakter: Ujang
-    dialog: Yuk, mulai memilah sekarang!
-  typingAudio: {fileID: 0}
-  isVNEnding: 0
-  karakterObjek: {fileID: 1118700708}
-  scaleAmount: 0.9
-  scaleSpeed: 0.5
-  panelTutorial: {fileID: 0}
-  tutorialAnimator: {fileID: 0}
-  tutorialAnimName: LaptopTutorial_SlideIn
-  tutorialDisplayDuration: 3
-  dialogIndex: 1
---- !u!4 &2021492618
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2021492616}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.8685553, y: 0.57752424, z: 3.104831}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 541580796}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2023695866
 GameObject:
   m_ObjectHideFlags: 0
@@ -119410,7 +119338,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: aeb9b2a6c9558ce41b1ecaef72cab25b, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
