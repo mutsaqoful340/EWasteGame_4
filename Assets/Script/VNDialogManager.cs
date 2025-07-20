@@ -156,7 +156,7 @@ public class VNDialogManager : MonoBehaviour
         vnPanel.SetActive(false);
         Time.timeScale = 1f;
 
-        if (notDay1 == true)
+        if (notDay1 == true && !isVNEnding)
         {
             itemInteractor.enabled = true; // Re-enable item interaction
             fpsController.enabled = true;
@@ -195,6 +195,12 @@ public class VNDialogManager : MonoBehaviour
             }
 
             Debug.LogWarning("❗ WasteZone dan BoxPenyimpanan tidak ditemukan.");
+
+            itemInteractor.enabled = false; // Re-enable item interaction
+            fpsController.enabled = false;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
