@@ -113,6 +113,7 @@ public class VNDialogManager : MonoBehaviour
             dialogText.text = dialogList[dialogIndex].dialog;
             isTyping = false;
 
+            // Hentikan audio saat user skip
             if (typingAudio != null && typingAudio.isPlaying)
                 typingAudio.Stop();
         }
@@ -128,7 +129,7 @@ public class VNDialogManager : MonoBehaviour
         dialogText.text = "";
         isTyping = true;
 
-        if (typingAudio != null)
+        if (typingAudio != null && !typingAudio.isPlaying)
             typingAudio.Play();
 
         foreach (char c in text)
@@ -183,7 +184,6 @@ public class VNDialogManager : MonoBehaviour
         }
         else
         {
-            // VN awal selesai, tampilkan panel tutorial
             ShowTutorialSetelahVN();
         }
     }
@@ -199,7 +199,7 @@ public class VNDialogManager : MonoBehaviour
         }
 
         panelTutorial.SetActive(true);
-        tutorialAnimator.Play("SlideIn", 0, 0f);
+        tutorialAnimator.Play(tutorialAnimName, 0, 0f);
         Invoke(nameof(HideTutorialPanel), tutorialDisplayDuration);
     }
 
