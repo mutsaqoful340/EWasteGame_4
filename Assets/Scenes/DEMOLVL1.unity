@@ -11026,7 +11026,6 @@ Transform:
   m_Children:
   - {fileID: 1518594197}
   - {fileID: 408655799}
-  - {fileID: 1726718050}
   - {fileID: 1803657550}
   - {fileID: 2080297785}
   - {fileID: 1858789880}
@@ -99875,96 +99874,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1726002980}
   m_CullTransparentMesh: 1
---- !u!1 &1726718049
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1726718050}
-  - component: {fileID: 1726718051}
-  m_Layer: 0
-  m_Name: VNDIalogueManagerAwal
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1726718050
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726718049}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 171261489}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1726718051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726718049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a7600d4ef0c2d8409d85a4021a6e288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vnPanel: {fileID: 2078969647}
-  namaText: {fileID: 349517187}
-  dialogText: {fileID: 644652752}
-  btnLanjut: {fileID: 2069008480}
-  dialogList:
-  - namaKarakter: Saka
-    dialog: Oke, sekarang kita fokus ke komponen beracun yang ada di HP kamu. Ini
-      penting banget biar kamu tahu kenapa limbah HP harus didaur ulang dengan benar!
-  - namaKarakter: Saka
-    dialog: "Timbal biasa dipakai buat nyolder komponen di papan sirkuit (PCB) HP.\nBahaya
-      banget kalau bocor ke lingkungan\u2014bisa rusak sistem saraf dan otak, apalagi
-      buat anak kecil."
-  - namaKarakter: Saka
-    dialog: 'Beberapa HP lama punya sensor atau lampu latar yang pakai merkuri.
-
-      Masalahnya,
-      merkuri bisa nyebar ke air, nyerap ke ikan, dan akhirnya kita konsumsi. Bisa
-      ganggu saraf dan hati!'
-  - namaKarakter: Saka
-    dialog: 'Nah ini yang paling penting baterai lithium-ion di HP kamu.
-
-      Kalau
-      rusak atau ditusuk, bisa meledak! Elektrolit di dalamnya juga racun. Makanya,
-      jangan buang HP sembarangan!'
-  - namaKarakter: Saka
-    dialog: 'Biasanya tersembunyi di casing plastik dan papan sirkuit.
-
-      Fungsinya
-      buat tahan api, tapi bisa ganggu hormon, sistem imun, bahkan tiroid kita. Ngeri,
-      kan?'
-  - namaKarakter: Saka
-    dialog: 'Jadi... walaupun HP kecil, bahayanya nggak kecil!
-
-      Kalau udah
-      rusak atau nggak dipakai, pastikan kamu buang ke tempat daur ulang resmi ya.
-      Bukan ke tempat sampah biasa!'
-  typingAudio: {fileID: 2078969648}
-  isVNEnding: 0
-  karakterObjek: {fileID: 1118700708}
-  scaleAmount: 0.9
-  scaleSpeed: 0.5
-  panelTutorial: {fileID: 0}
-  tutorialAnimator: {fileID: 0}
-  tutorialAnimName: LaptopTutorial_SlideIn
-  tutorialDisplayDuration: 3
-  dialogIndex: 0
 --- !u!1 &1727043888
 GameObject:
   m_ObjectHideFlags: 0
@@ -116629,7 +116538,7 @@ GameObject:
   - component: {fileID: 2021492618}
   - component: {fileID: 2021492617}
   m_Layer: 0
-  m_Name: VNDIalogueManagerAwal
+  m_Name: VNDIalogueManagerAwalDipake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
