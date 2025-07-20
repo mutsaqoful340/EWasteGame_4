@@ -12,20 +12,21 @@ public class DoomTutorial : MonoBehaviour
     public bool DTActive = false; // Flag to check if Doom Tutorial is active
     //private int currentDTIndex = 0; // Current index of the tutorial object
     private PlayerControls inputActions;
+    public bool notDay1 = false; // Flag to check if it's not Day 1
 
     public void Start()
     {
         inputActions = new PlayerControls();
         inputActions.Player.Enable();
 
-        DTActive = true; // Reset the flag when starting the tutorial
+        //DTActive = true; // Reset the flag when starting the tutorial
 
         if (!DTActive)
         {
             itemInteractor.enabled = true; // Disable item interaction in GP mode
             fpsController.enabled = true;
 
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
         else
