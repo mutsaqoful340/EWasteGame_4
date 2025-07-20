@@ -43082,7 +43082,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &693516373
 Transform:
   m_ObjectHideFlags: 0
@@ -47622,6 +47622,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 584.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1813556795990105081, guid: 70ec84fec18476d44b0291c9f20eb4e9,
+        type: 3}
+      propertyPath: m_text
+      value: Klik box untuk membukanya dan melihat isinya. Drag sampah dari dalam
+        box ke meja. Lalu, pilih dan Drag and Drop sampah tersebut ke kotak elektronik
+        atau nonorganik sesuai jenisnya.
       objectReference: {fileID: 0}
     - target: {fileID: 2761043706824949135, guid: 70ec84fec18476d44b0291c9f20eb4e9,
         type: 3}
@@ -100447,7 +100454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &1732755300
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -116336,6 +116343,10 @@ MonoBehaviour:
   tutorialAnimName: LaptopTutorial_SlideIn
   tutorialDisplayDuration: 3
   dialogIndex: 1
+  itemInteractor: {fileID: 0}
+  fpsController: {fileID: 0}
+  playerInteraction: {fileID: 0}
+  notDay1: 0
 --- !u!4 &2021492618
 Transform:
   m_ObjectHideFlags: 0
