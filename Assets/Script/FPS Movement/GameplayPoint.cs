@@ -46,7 +46,7 @@ public class GameplayPoint : MonoBehaviour
             itemInteractor.enabled = true; // Disable item interaction in GP mode
             fpsController.enabled = true;
 
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
         else
