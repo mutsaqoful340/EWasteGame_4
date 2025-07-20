@@ -4,12 +4,41 @@ public class TooltipTrigger : MonoBehaviour
 {
     public enum TooltipType { DaurUlang, Dijual }
     public TooltipType tooltipType;
+    private Camera cam;
 
     [HideInInspector] public GameObject tooltipPanelDaurUlang;
     [HideInInspector] public GameObject tooltipPanelDijual;
 
     private bool isTooltipVisible = false;
 
+    void Start()
+    {
+        cam = Camera.main;
+        Ray downRay = new Ray(transform.position + Vector3.up * 2f, Vector3.down);
+    }
+
+    void Update()
+    {
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 10f))
+        {
+            if (hit.collider.gameObject == this.gameObject)
+            {
+                if (!isTooltipVisible)
+                {
+                    ShowTooltip();
+                }
+            }
+            else
+            {
+                if (isTooltipVisible)
+                {
+                    HideAllTooltips();
+                }
+            }
+        }
+    }
+    
     private void OnMouseDown()
     {
         ShowTooltip();
