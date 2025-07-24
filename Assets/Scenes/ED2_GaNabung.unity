@@ -573,7 +573,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1578294732}
-  - {fileID: 1558707229}
   m_Father: {fileID: 1650721893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!320 &985483458
@@ -1121,13 +1120,13 @@ Transform:
   m_GameObject: {fileID: 1558707227}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7.929231, y: 4.4457755, z: 14.666571}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1601417186}
   - {fileID: 1983645063}
-  m_Father: {fileID: 985483457}
+  m_Father: {fileID: 1650721893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1578294731
 GameObject:
@@ -1304,7 +1303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   director: {fileID: 1558707228}
-  sceneName: 3DMainMenu
+  sceneName: 3DMainMenu_FR
 --- !u!1 &1650721892
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,6 +1333,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1558707229}
   - {fileID: 985483457}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
