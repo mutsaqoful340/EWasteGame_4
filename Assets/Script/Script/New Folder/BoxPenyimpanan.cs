@@ -15,6 +15,10 @@ public class BoxPenyimpanan : MonoBehaviour
     public GameObject panelSetelahVN;
     public Button btnLanjutSetelahVN;
 
+    [Header("Game Over UI")]
+    public GameObject gameOverPanel;
+    public Button btnRetry;
+
     private bool sudahMakanHariIni = false;
     private int hariTidakMakan = 0;
 
@@ -58,6 +62,7 @@ public class BoxPenyimpanan : MonoBehaviour
     private bool buffJajanSudahDipakai = false;
     private bool jajanSudahDiterapkan = false;
     private bool isLevel1 = false;
+
     void Start()
     {
         timer = totalTime;
@@ -103,13 +108,18 @@ public class BoxPenyimpanan : MonoBehaviour
         if (panelSetelahVN != null)
             panelSetelahVN.SetActive(false);
 
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+            btnRetry?.onClick.RemoveAllListeners();
+            btnRetry?.onClick.AddListener(() =>
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            });
+        }
+
         UpdateSisaUang();
-
-        // Jangan tampilkan ringkasan langsung di Level 3
-        // Biarkan flag tetap hidup, nanti diproses di GameOver
     }
-
-
 
     void Update()
     {
@@ -133,10 +143,9 @@ public class BoxPenyimpanan : MonoBehaviour
 
         if (timer <= 0f)
         {
-            GameOver(); // Setelah ini, Update() tidak akan jalan lagi karena isGameOver akan true
+            GameOver(); // Setelah ini, Update() tidak akan jalan lagi karena isGameOver = true
         }
     }
-
 
     public void AddItem(string itemType)
     {
@@ -145,13 +154,13 @@ public class BoxPenyimpanan : MonoBehaviour
 
         if (currentItems >= maxItems)
         {
-            StartCoroutine(DelayGameOver()); // Gunakan coroutine delay
+            StartCoroutine(DelayGameOver());
         }
     }
 
     IEnumerator DelayGameOver()
     {
-        yield return new WaitForSeconds(1f); // Atur sesuai durasi animasi penghancuran
+        yield return new WaitForSeconds(1f);
         GameOver();
     }
 
@@ -175,13 +184,16 @@ public class BoxPenyimpanan : MonoBehaviour
     {
         isGameOver = true;
 
-        if (timer <= 0f && isLevel1)
-        {
-            currentReward = Mathf.Max(currentReward, 10000);
-        }
-        else if (timer <= 0f)
+        if (timer <= 0f)
         {
             currentReward = 0;
+
+            if (gameOverPanel != null)
+            {
+                gameOverPanel.SetActive(true);
+            }
+
+            return; // Stop agar tidak lanjut ke VN atau ringkasan
         }
 
         PlayerPrefs.SetInt("SisaUang", currentReward);
@@ -190,7 +202,6 @@ public class BoxPenyimpanan : MonoBehaviour
 
         string currentSceneName = SceneManager.GetActiveScene().name;
 
-        // === LEVEL 2.1_FR: Set flag untuk tampilkan ringkasan di 2.2_FR
         if (currentSceneName == "DEMOLVL2.1_FR")
         {
             PlayerPrefs.SetInt("TampilkanRingkasan", 1);
@@ -198,14 +209,12 @@ public class BoxPenyimpanan : MonoBehaviour
             return;
         }
 
-        // === LEVEL 8.1_FR: Lanjut ke 8.2_FR tanpa ringkasan
         if (currentSceneName == "DEMOLVL8.1_FR")
         {
             GoToNextLevel();
             return;
         }
 
-        // === LEVEL 8.2_FR: Set flag untuk tampilkan ringkasan di 8.3_FR
         if (currentSceneName == "DEMOLVL8.2_FR")
         {
             PlayerPrefs.SetInt("TampilkanRingkasan", 1);
@@ -213,15 +222,12 @@ public class BoxPenyimpanan : MonoBehaviour
             return;
         }
 
-        // === Tampilkan Ringkasan di Scene Tertentu ===
         bool tampilkanRingkasan = false;
 
-        // DEMOLVL1: selalu tampilkan ringkasan
         if (currentSceneName == "DEMOLVL1")
         {
             tampilkanRingkasan = true;
         }
-        // DEMOLVL2.2_FR atau DEMOLVL8.3_FR: tampilkan jika flag sebelumnya aktif
         else if (
             (currentSceneName == "DEMOLVL2.2_FR" || currentSceneName == "DEMOLVL8.3") &&
             (PlayerPrefs.GetInt("TampilkanRingkasan", 0) == 1 || Application.isEditor))
@@ -231,7 +237,6 @@ public class BoxPenyimpanan : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        // === Jalankan VN atau langsung tampilkan ringkasan ===
         if (vnDialogManager != null && vnDialogAkhir != null && vnDialogAkhir.Count > 0)
         {
             vnDialogManager.isVNEnding = true;
@@ -243,19 +248,9 @@ public class BoxPenyimpanan : MonoBehaviour
             if (tampilkanRingkasan)
                 ShowFinanceSummary();
             else
-                GoToNextLevel(); // fallback auto lanjut jika tidak ada ringkasan
+                GoToNextLevel();
         }
-
     }
-
-
-
-
-
-
-
-
-
 
     IEnumerator TungguVNSelesai(bool tampilkanRingkasan)
     {
@@ -282,10 +277,6 @@ public class BoxPenyimpanan : MonoBehaviour
                 GoToNextLevel();
         }
     }
-
-
-
-
 
     void ShowFinanceSummary()
     {
